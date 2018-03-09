@@ -23,6 +23,11 @@ With this process, we are able to determine vertex height as well as the ground 
 
 The node editor I made was heavily inspired by this link : Seneral Node Editor I ended up rewriting it to better fit our needs - but the idea is the same and this is a great open source tool.
 
+
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="400">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="400">
+
+
 ### Advantages
 * We can texture and place vegetation very quickly and easily. 
 * No perlin noise or multiple-octave fractal algorithm involved. With this system, we are able to populate the terrain without any visible patterns and without noise, which are hard to get right a lot of the time. 
