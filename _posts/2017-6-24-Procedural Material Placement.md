@@ -10,7 +10,7 @@ We wanted control over the placement in order to create biomes and realistic lan
 
 ![]({{ site.baseurl }}/images/screen25.png)
 
-[](/images/screen25.png | width=200)
+![]({{ site.baseurl }}/images/screen25.png | width=200)
 
 ### How it works
 The material tree is basically a hierarchical way of ordering the materials in our scenes. Only leaf nodes are actually placed on the terrain - intermediate nodes exists for decision making. 
