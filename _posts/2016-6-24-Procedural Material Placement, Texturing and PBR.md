@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Procedural Material Placement, Texturing and PBR
+excerpt: Showcase of the work I have done on our material placement workflow in the terrain engine.
 ---
 
 Over the past two years, we have been working on a procedural system for material placement in the terrain engine. Here is the main page of the engine if you want to know more about it : Terrain Engine. 
