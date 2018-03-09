@@ -24,8 +24,8 @@ With this process, we are able to determine vertex height as well as the ground 
 The node editor I made was heavily inspired by this link : Seneral Node Editor I ended up rewriting it to better fit our needs - but the idea is the same and this is a great open source tool.
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="490">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="490">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="470">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="470">
 
 
 ### Advantages
@@ -44,12 +44,12 @@ To achieve that, I had to modify Unity Shaders but to keep the part about the ph
 
 This series of article from the Blacksmith were helpful in that regard, firstly because they modified the standard shader too (and that proved it could be done in a reasonable amount of time) and also because they provided good calibration charts for natural materials. The Blacksmith Main Page
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen28.png" width="490">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="490">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen28.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="480">
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="490">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="490">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="460">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="460">
 
 
 ### Future possibilities
