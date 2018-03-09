@@ -8,8 +8,8 @@ Over the past two years, I have been working on a procedural system for material
 
 We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen24.png" width="490">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen25.png" width="490">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen24.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen25.png" width="480">
 
 ### How it works
 The material tree is basically a hierarchical way of ordering the materials in our scenes. Only leaf nodes are actually placed on the terrain - intermediate nodes exists for decision making. 
@@ -24,8 +24,8 @@ With this process, we are able to determine vertex height as well as the ground 
 The node editor I made was heavily inspired by this link : Seneral Node Editor I ended up rewriting it to better fit our needs - but the idea is the same and this is a great open source tool.
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="470">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="470">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="480">
 
 
 ### Advantages
@@ -48,8 +48,8 @@ This series of article from the Blacksmith were helpful in that regard, firstly 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="480">
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="460">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="460">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="480">
 
 
 ### Future possibilities
