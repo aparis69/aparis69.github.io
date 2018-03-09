@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+I am in my last year of master's degree in Computer Graphics at Lyon, France. Currently a research intern at LIRIS, working
+with the Geomod team. I will be blogging about my personal projects and possibly some of the work I have done in the past.
+Feel free to contact me if you have any question.
 
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
-
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+[axel.paris69@gmail.com](mailto:axel.paris69@gmail.com)
