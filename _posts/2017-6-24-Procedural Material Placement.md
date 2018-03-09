@@ -8,7 +8,7 @@ Over the past two years, I have been working on a procedural system for material
 
 We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’.
 
-<img src="https://github.com/Moon519/moon519.github.io/blob/master/images/screen24.png" width="100">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen24.png" width="100">
 
 ### How it works
 The material tree is basically a hierarchical way of ordering the materials in our scenes. Only leaf nodes are actually placed on the terrain - intermediate nodes exists for decision making. 
