@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Procedural Material Placement, Texturing and PBR
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="400" style="float:left;margin:10px;"> <p>Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the [main page](http://newheadstudio.com/) of the engine if you want to know more about it. We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="400" style="float:left;margin-left:10px;"> <p>Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the [main page](http://newheadstudio.com/) of the engine if you want to know more about it. We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled.</p>
 ---
 
 Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the [main page](http://newheadstudio.com/) of the engine if you want to know more about it.
