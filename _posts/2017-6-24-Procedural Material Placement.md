@@ -44,6 +44,13 @@ To achieve that, I had to modify Unity Shaders but to keep the part about the ph
 
 This series of article from the Blacksmith were helpful in that regard, firstly because they modified the standard shader too (and that proved it could be done in a reasonable amount of time) and also because they provided good calibration charts for natural materials. The Blacksmith Main Page
 
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen28.png" width="500">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="500">
+
+
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="500">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="500">
+
 ### Future possibilities
 * Create a custom modification system - something I am now working on is an "Overlay" system. I will probably write something about it when it's done. 
 * Make other scenes. We want to test the possibilities of the material tree by creating different scenes with different biomes. 
