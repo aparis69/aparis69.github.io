@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Procedural Material Placement, Texturing and PBR
-excerpt: <p><img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="480"> Showcase and explanation of the work I have done on our material placement workflow in the terrain engine.</p>
+excerpt: <div><img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="480"> </div> 
+		 <div>Showcase and explanation of the work I have done on our material placement workflow in the terrain engine.</div>
 ---
 
 Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the [main page](http://newheadstudio.com/) of the engine if you want to know more about it.
