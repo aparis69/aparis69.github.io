@@ -8,7 +8,7 @@ Over the past two years, I have been working on a procedural system for material
 
 We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’.
 
-![](/images/screen24.png| width=200)
+[](/images/screen24.png| width=200)
 
 
 ### How it works
