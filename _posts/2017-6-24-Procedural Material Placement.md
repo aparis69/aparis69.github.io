@@ -8,6 +8,9 @@ Over the past two years, I have been working on a procedural system for material
 
 We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’.
 
+
+*Each node can be edited with a Unity-style inspector on the right of the editor window. We made a custom serialization system (txt files) for our trees because we couldn't get the unity scriptable objects to work in game mode in our node editor. This also allow us to easily back up our material trees.*
+
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen24.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen25.png" width="480">
 
@@ -43,6 +46,10 @@ I have also been working on integrating our material tree with the standard shad
 To achieve that, I had to modify Unity Shaders but to keep the part about the physically based rendering. I have to say it was fairly easy to do - the shaders are all well written and documented. In fact, I only had to modify two files : UnityStandardCore and UnityStandardInput. I removed all the reference to forward rendering since we use deferred, and then it was just calling our function to get the texture we want and pass it to the standard shader pipeline. 
 
 This series of article from the Blacksmith were helpful in that regard, firstly because they modified the standard shader too (and that proved it could be done in a reasonable amount of time) and also because they provided good calibration charts for natural materials. The Blacksmith Main Page
+
+
+*See results in the screenshots below. On the left, without PBR and without textures. On the right, with PBR and textures. We use normal maps for rocky materials only.*
+
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen28.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="480">
