@@ -73,7 +73,9 @@ This stage is called Sampling. We use poisson disk to sample our scalar field un
 
 Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as well as the altitude of the cloud. This was done with a the following naive algorithm :
 
-```
+
+```c++
+
 SortCandidatePositions(candidates); // Sort sampled point by distance to camera
 for (int i = 0; i < candidates.size(); i++)
 {
@@ -96,11 +98,13 @@ for (int i = 0; i < candidates.size(); i++)
 			CloudInstances::AddCloud(candidateCloud);
 			break;
 		}
-	// We try to adjust the altitude of the cloud
-	currentAltitude += 100;
+		// We try to adjust the altitude of the cloud
+		currentAltitude += 100;
 	}
 }
+
 ```
+
 
 We also made a refined version of this which is based on a cost function and various variables : visiblity, projected area on the screen, distance to camera, altitude etc... Which got interesting results to the cost of computation time.
 I could get into a lot more details about the implementation, the refined version and the user constraints but it would get quite complicated. Let's just say that at the end of the internship, we had a LOT of parameters allowing the user to
