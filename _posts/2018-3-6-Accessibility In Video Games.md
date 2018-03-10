@@ -8,6 +8,10 @@ As I was traveling in Scotland a few years ago to do my second year internship a
 The idea of this placement was to develop a generic plug in that would provide accessibility features to existing games made with the Unity game engine. Considering this was only a three months placement, I worked with two others friends to make a proof of concept
 of the program.
 
+
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ablegamers.jpg">
+
+
 I learned quite a lot about accessibility in the process and as I said, it is a under investigated topic. If you would like to know more about this, here is a list of very good reference on the subject :
 * [Includification](https://www.includification.com/) Perhaps the most important resources for game developpers, this document explains how you can include accessibility features in your game.
 * [Able Gamers Foundation](http://www.ablegamers.org/) self explanatory.
