@@ -19,7 +19,7 @@ this work stays at small scope : at max a few clouds and a heavy focus on render
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png">
 
-*Figure showing the different types of cloud and altitudes ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.*
+<center><i>Figure showing the different types of cloud and altitudes ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.</i></center>
 
 
 Atmosphere here on earth is composed of multiple layers and multiple things. We focused rapidly on clouds since it is the most observed phenomena. There are different types of clouds, each one having his own properties :
@@ -43,7 +43,7 @@ would take care of all this, solve conflicts between views, and propose a final 
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud2.png">
 
-*Our atmosphere model : divided into four layers that can contains only certain types of clouds, which are modelled as a vector of Spheres/Densities representing the shapes. Extra parameters specify the maximum size of the cloud.*
+<center><i>Our atmosphere model : divided into four layers that can contains only certain types of clouds, which are modelled as a vector of Spheres/Densities representing the shapes. Extra parameters specify the maximum size of the cloud.</i></center>
 
 
 
