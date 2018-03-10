@@ -19,7 +19,7 @@ this work stays at small scope : at max a few clouds and a heavy focus on render
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png">
 
-<center><i>Figure showing the different types of cloud and altitudes ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.</i></center>
+<center><i>Figure showing the different types of cloud and altitude ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.</i></center>
 
 
 Atmosphere here on earth is composed of multiple layers and multiple things. We focused rapidly on clouds since it is the most observed phenomena. There are different types of clouds, each one having his own properties :
@@ -66,8 +66,10 @@ The next figure shows how the projection and the resolution works in the applica
 At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate position from our scalar fields and then find a way to create a cloud from this position.
 This stage is called Sampling. We use poisson disk to sample our scalar field uniformly and get candidate positions. The following figure show how Sampling works in our pipeline.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud5.png" width="480">
+
+
 
 
 #### Amplification
