@@ -57,8 +57,8 @@ The first stage of our pipeline consisted of taking user sketch and translating 
 We also had a conflicts resolution stage, where we basically merged user constraints from different views : the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
 The next figure shows how the projection and the resolution works in the application.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen3.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen4.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud3.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud4.png" width="480">
 
 
 #### Sampling, Instancing
