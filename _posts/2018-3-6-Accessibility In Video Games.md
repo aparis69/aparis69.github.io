@@ -14,12 +14,19 @@ of the program.
 
 I learned quite a lot about accessibility in the process and as I said, it is a under investigated topic. If you would like to know more about this, here is a list of very good reference on the subject :
 * [Includification](https://www.includification.com/) Perhaps the most important resources for game developpers, this document explains how you can include accessibility features in your game.
-* [Able Gamers Foundation](http://www.ablegamers.org/) self explanatory.
+
+* [Able Gamers Foundation](http://www.ablegamers.org/) Trying to improve gamers life by providing custom gaming setups. If you have a disability yourself, you may want to visit this website.
+
+* [Unstoppable Gamers](http://www.unstoppablegamer.com/) This website analyses and writes about all kind of games from the disabled gamer perspective. If you are looking for good (and bad) examples of accessible video games, this is the place.
+
+* [Google](www.google.com) There is a LOT of others resources on the web on how to make your game more accessible and why it matters.
 
 
-To sum up the key points, if you are not convinced you should read more :
+To sum up the key points if you are not convinced you should read more :
 * According to the able gamers foundation, it is estimated over one billion people have some form of a disability worldwide, and around 33 million gamers with disabilities so there is a market.
+
 * "That moment when you realise that your craft isn’t just about entertainment, that you have the opportunity to make a real difference to people, to help change things for the better - it makes a difference to why you get out of bed in the morning." - Ian Hamilton, from the guide above.
+
 * Some accessibility features are VERY easy to implement and could enhance all player experience : key remapping, mouse sensitivity...
 
 
