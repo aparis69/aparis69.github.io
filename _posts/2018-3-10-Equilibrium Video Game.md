@@ -35,6 +35,8 @@ made one happy user at least.
 <center><i>The game menu which took multiple weeks to do - we couldn't agree on the design. The right figure shows the game store where you can 'buy' (with fictive ingame money) some goodies.</i></center>
 
 We also tried to make our own music - but we were not good enough to pull it through so we used the very good music done by [Kevin Macleod](https://incompetech.com/). Altogether, it was a great experience to produce something, even a simple game from start to finish and
-I learned a lot in the process, and not just programming : preparing assets, screenshots, speech and store page were all things I never did before Equilibrium. If you want to create something similar (I can't say for bigger scope projects since I am struggling myself to finish one)
+I learned a lot in the process, and not just programming : preparing assets, screenshots, speech and store page were all things I never did before Equilibrium. 
+
+If you want to create something similar (I can't say for bigger scope projects since I am struggling myself to finish one)
 my advice would be to find a simple core gameplay that can be prototyped quickly (a few weeks is good). Test it on some friends to see if they like it. After that, if you really want to publish it it's just a matter of time and determination before it's done.
 
