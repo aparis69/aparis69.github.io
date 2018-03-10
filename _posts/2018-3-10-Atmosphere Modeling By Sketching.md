@@ -69,6 +69,8 @@ This stage is called Sampling. We use poisson disk to sample our scalar field un
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud5.png" width="480">
 
+<center><i> On the left, a example of poisson sampling. On the right, our density scalar field sampled with poisson disks.</center></i>
+
 Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as well as the altitude of the cloud. This was done with a the following naive algorithm :
 
 ```c++
