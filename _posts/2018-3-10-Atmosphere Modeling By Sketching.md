@@ -69,10 +69,39 @@ This stage is called Sampling. We use poisson disk to sample our scalar field un
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud5.png" width="480">
 
+Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as well as the altitude of the cloud. This was done with a the following naive algorithm :
 
+```c++
+SortCandidatePositions(candidates); // Sort sampled point by distance to camera
+for (int i = 0; i < candidates.size(); i++)
+{
+	Cloud candidateCloud = CloudDatabase::GetCloud(cloudType, worldPosition2D); // Instanciate a cloud at worldPosition2D and altitude 0
+	double minAltitude = skylayer->AltitudeRange[0];
+	double maxAltitude = skylayer->AltitudeRange[1];
+	double currentAltitude = minAltitude;
+	while (currentAltitude < maxAltitude)
+	{
+		candidateCloud.SetAltitude(currentAltitude);
+		
+		// We try to instanciate the cloud based on visibility and collision with other clouds in the scene.
+		// Visibility is defined as the amount of sphere visible on the screen.
+		int score = candidateCloud.GetVisibilityScore();
+		if (score > visibilityThreshold && cloud.isColliding() == false)
+		{
+			CloudInstances::AddCloud(candidateCloud);
+			break;
+		}
+		currentAltitude += 100; // We try to adjust the altitude of the cloud
+	}
+}
+```
 
+We also made a refined version of this which is based on a cost function and various variables : visiblity, projected area on the screen, distance to camera, altitude etc... Which got interesting results to the cost of computation time.
+I could get into a lot more details about the implementation, the refined version and the user constraints but it would get quite complicated. Let's just say that at the end of the internship, we had a LOT of parameters allowing the user to
+tweak every stage of the pipeline, which was the point of the project : give user control to create better scene with beautiful cloud formations.
 
 #### Amplification
+
 
 
 ### Retrospective and Avenue for future work
