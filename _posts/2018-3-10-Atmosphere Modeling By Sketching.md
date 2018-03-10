@@ -63,6 +63,9 @@ The next figure shows how the projection and the resolution works in the applica
 
 #### Sampling, Instancing
 
+At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate position from our scalar fields and then find a way to create a cloud from this position.
+This stage is called Sampling.
+
 
 #### Amplification
 
