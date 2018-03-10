@@ -13,7 +13,7 @@ Atmosphere and clouds have been studied for quite a long time, but there was not
 [Bouthors](https://hal.inria.fr/inria-00537462/file/BN04_clouds.pdf) worked on representing cumulus clouds as a set of spherical sphere defined by an implicit field which can deform under the influence of neighbor particles. [Schpok](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.884.2816&rep=rep1&type=pdf) worked on the rendering of other types as well, but
 this work stays at small scope : at max a few clouds and a heavy focus on rendering instead of representing an entire atmosphere. Therefore, this is where our work standed.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud00.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud00.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud01.png" width="480">
 
 <center><i>Some clouds rendered by Bouthors et Al. and Schpok et Al.</i></center>
