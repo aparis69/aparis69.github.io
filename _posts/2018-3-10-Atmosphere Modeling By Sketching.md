@@ -64,7 +64,10 @@ The next figure shows how the projection and the resolution works in the applica
 #### Sampling, Instancing
 
 At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate position from our scalar fields and then find a way to create a cloud from this position.
-This stage is called Sampling.
+This stage is called Sampling. We use poisson disk to sample our scalar field uniformly and get candidate positions. The following figure show how Sampling works in our pipeline.
+
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud5.png" width="480">
 
 
 #### Amplification
