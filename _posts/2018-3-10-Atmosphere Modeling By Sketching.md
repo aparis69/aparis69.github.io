@@ -114,6 +114,22 @@ to investigate further this area.
 
 ### Retrospective and Avenue for future work
 
+I stumbled on the code a few days ago and thought the final result was good enough to make a blog post. If it inspires you to make something, please let me know, I will be happy to see the results! To be honest, even years after the internship, I am still ok
+with the work we have done. I may want to start over in the next year just to see how I would make it now that I am more experienced.
+
+There is a lot that can be done better : literally every stage of the pipeline use algorithm with a lot of space for improvement and it's what make it a very interesting project and avenue of research. I am sure artist would like such a tool to place clouds in a scene.
+Non Organized ideas to improve :
+
+* Find a way to render the clouds at the end of the pipeline. This was not the goal of the internship but it would have motivate us a lot to see fancy screenshots of our work instead of red spheres everywhere.
+
+* Change the projections and work only with 3D scalar field. At the time, we used some 2D approximations that we could get rid of.
+
+* Ask the user how to resolve conflicts instead of deciding ad hoc how to do it. This would be a pain to program but would give the user full control of the pipeline.
+
+* Cloud Instancing was very naive : we add a cloud 'database' (basically clouds created by hand) and procedural methods to create clouds on the go as we needed, but the code was quite dumb. One could go full procedural or full database.
+
+* As I already said, amplification could profit from a complete rework with more modern/smart methods.
+
 
 ### References
 
