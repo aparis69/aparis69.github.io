@@ -36,7 +36,7 @@ would take care of all this, solve conflicts between views, and propose a final 
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud1.png">
 
-<center>*The big picture of the pipeline, showing literally every step of the program.*</center>
+<center><i>The big picture of the pipeline, showing literally every step of the program.</i></center>
 
 
 #### Atmosphere Model
