@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Equilibrium Video Game
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/equi4.png" width="400" style="float:left;margin-right:15px;"> <p>Equilibrium is an arcade android video game I made with two other friends. The prototype was developed by all three and I continued the programming afterwards, getting help with the game design and the graphics part. The whole project took about two or three month to complete, from the first idea to the publication on the google store.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/equi4.png" width="400" style="float:left;margin-right:15px;"> <p>Equilibrium is an arcade android video game I made with two other friends. The prototype was developed by all three and I continued the programming afterwards, getting help with the game design and the graphics part. The whole project took about two or three month to complete, from the first idea to the publication on the google store. We made a few updates after the launch and got 2000 downloads all together, then stopped working on it. This is post is a bit like a post mortem of the development and update process as well an advertising if you are looking for something to play.</p>
 ---
 
 Equilibrium is an arcade android video game I made with two other friends. The prototype was developed by all three and I continued the programming afterwards, getting help with the game design and the graphics part. The whole project took about two or three month to complete, from the first idea to the publication on the google store.
