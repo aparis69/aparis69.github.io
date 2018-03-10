@@ -40,6 +40,8 @@ subtitles for each one in the lower part of the screen. We also made different s
 Since Unity does not provide key remapping out of the box, we also developed a small utility to do that as an example.
 
 
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibilityScreen1.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibilityScreen2.png" width="480">
 
 
 Of course, each of these thing depends on the game you are making but the point is that it is very likely to be easy to integrate a few in your game, and you should consider it. Source code is available on github, but I would advise just
