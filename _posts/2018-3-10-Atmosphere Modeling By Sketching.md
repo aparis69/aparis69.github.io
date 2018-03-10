@@ -75,28 +75,28 @@ Thanks to our sampling, we now have 2D candidate position for our clouds. We now
 SortCandidatePositions(candidates); // Sort sampled point by distance to camera
 for (int i = 0; i < candidates.size(); i++)
 {
-  // Instanciate a cloud at worldPosition2D and altitude 0
-  Cloud candidateCloud = CloudDatabase::GetCloud(cloudType, worldPosition2D);
-  double minAltitude = skylayer->AltitudeRange[0];
-  double maxAltitude = skylayer->AltitudeRange[1];
-  double currentAltitude = minAltitude;
-  while (currentAltitude < maxAltitude)
-  {
-    candidateCloud.SetAltitude(currentAltitude);
-		
-	// We try to instanciate the cloud based on visibility 
-	// And collision with other clouds in the scene.
-	// Visibility is defined as the amount of sphere visible on the screen.
-	int score = candidateCloud.GetVisibilityScore();
-	if (score > visibilityThreshold 
-	    && cloud.isColliding() == false)
+	// Instanciate a cloud at worldPosition2D and altitude 0
+	Cloud candidateCloud = CloudDatabase::GetCloud(cloudType, worldPosition2D);
+	double minAltitude = skylayer->AltitudeRange[0];
+	double maxAltitude = skylayer->AltitudeRange[1];
+	double currentAltitude = minAltitude;
+	while (currentAltitude < maxAltitude)
 	{
-	  CloudInstances::AddCloud(candidateCloud);
-	  break;
-	}
+		candidateCloud.SetAltitude(currentAltitude);
+
+		// We try to instanciate the cloud based on visibility 
+		// And collision with other clouds in the scene.
+		// Visibility is defined as the amount of sphere visible on the screen.
+		int score = candidateCloud.GetVisibilityScore();
+		if (score > visibilityThreshold 
+		&& cloud.isColliding() == false)
+		{
+			CloudInstances::AddCloud(candidateCloud);
+			break;
+		}
 	// We try to adjust the altitude of the cloud
 	currentAltitude += 100;
-  }
+	}
 }
 ```
 
@@ -107,7 +107,8 @@ tweak every stage of the pipeline, which was the point of the project : give use
 #### Amplification
 
 The last stage of the pipeline was not the simplest one. The whole idea of the project was to enable the user to sketch different view on a scene but not everywhere : the application could provide some sort of amplification process from the atmosphere generated from user sketch.
-We could do this with various methods
+We did this by sampling our scalarfield once again, deciding for each position if a cloud could exist or not based on the existing clouds in the scene and their types, altitudes... The process is quite naive and could be improved a lot, but we did not have enough time
+to investigate further this area.
 
 ### Retrospective and Avenue for future work
 
