@@ -73,7 +73,7 @@ This stage is called Sampling. We use poisson disk to sample our scalar field un
 
 Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as well as the altitude of the cloud. This was done with a the following naive algorithm :
 
-```
+```c++
 SortCandidatePositions(candidates); // Sort sampled point by distance to camera
 for (int i = 0; i < candidates.size(); i++)
 {
