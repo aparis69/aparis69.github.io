@@ -16,7 +16,7 @@ this work stays at small scope : at max a few clouds and a heavy focus on render
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud00.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud01.png" width="480">
 
-<center><i>Some clouds rendered by Bouthors et Al. and Schpok et Al.</i></center>
+<center><i>Some clouds rendered by Bouthors et Al. (left) and Schpok et Al. (right)</i></center>
 
 
 ### Atmosphere, Clouds
