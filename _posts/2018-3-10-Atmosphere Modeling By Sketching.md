@@ -53,7 +53,7 @@ features very realistic cloud rendering in real time.
 
 #### Projection and Conflicts resolution
 
-The first stage of our pipeline consisted of taking user sketch and translating it into densities in our atmosphere model. To do that, we simply projected every pixel of the sketch onto the corresponding sky layers and fill densities in the scalar fields.
+The first stage of our pipeline consisted of taking user sketches and translating these into densities in our atmosphere model. To do that, we simply projected every pixel of the sketch onto the corresponding sky layers and fill densities in the scalar fields.
 We also had a conflicts resolution stage, where we basically merged user constraints from different views : the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
 The next figure shows how the projection and the resolution works in the application.
 
