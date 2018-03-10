@@ -1,5 +1,5 @@
 ---
 layout: post
-title: Terrain Erosion On The GPU
+title: Equilibrium Video Game
 excerpt: Coming soon!
 ---
