@@ -241,8 +241,14 @@ nav {
 // .main
 //
 
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+
 .posts > .post {
-  padding-bottom: 4em;
+  padding-bottom: 5em;
   border-bottom: 1px solid $lightGray;
 }
 

@@ -9,7 +9,7 @@ The idea of this placement was to develop a generic plug in that would provide a
 of the program.
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ablegamers.jpg">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ablegamers.jpg">
 
 
 I learned quite a lot about accessibility in the process and as I said, it is a under investigated topic. If you would like to know more about this, here is a list of very good reference on the subject :
