@@ -45,10 +45,20 @@ would take care of all this, solve conflicts between views, and propose a final 
 
 <center><i>Our atmosphere model : divided into four layers that can contains only certain types of clouds, which are modelled as a vector of Spheres/Densities representing the shapes. Extra parameters specify the maximum size of the cloud.</i></center>
 
-
+Sky layers were implemented as 3D scalar fields, storing different information depending where we are in the pipeline. A possible mistake during the modeling we made was trying to create too much cloud types as you can see on the figure. Each of these has different properties, but for a three month internship we could have focused on cumulus, alto et cirrus clouds only. 
+The model is quite simple and based on the idea that clouds will be represented as a set of spheres, and therefore rendered as well from this representation. This proved to be the main difficult when we got results with our little spheres : how to make a proper rendering from this ? The Geomod team had no rendering pipeline for clouds.
+Me and my friends worked on cloud rendering sooner this year and got interesting results, but the model was not quite ready and had bug to fix (and it is still true today). At the time, cloud rendering became very popular thanks to Guerrila Games and their game, Horizon Zero Dawn which
+features very realistic cloud rendering in real time.
 
 
 #### Projection and Conflicts resolution
+
+The first stage of our pipeline consisted of taking user sketch and translating it into densities in our atmosphere model. To do that, we simply projected every pixel of the sketch onto the corresponding sky layers and fill densities in the scalar fields.
+We also had a conflicts resolution stage, where we basically merged user constraints from different views : the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
+The next figure shows how the projection and the resolution works in the application.
+
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen3.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen4.png" width="480">
 
 
 #### Sampling, Instancing
@@ -57,10 +67,12 @@ would take care of all this, solve conflicts between views, and propose a final 
 #### Amplification
 
 
-### Perspectives and future work
+### Retrospective and Avenue for future work
 
 
 ### References
+
+[Guerilla Clouds Rendering Presentation](http://killzone.dl.playstation.net/killzone/horizonzerodawn/presentations/Siggraph15_Schneider_Real-Time_Volumetric_Cloudscapes_of_Horizon_Zero_Dawn.pdf)
 
 [Modeling clouds shape](https://hal.inria.fr/inria-00537462/file/BN04_clouds.pdf)
 
