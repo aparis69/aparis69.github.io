@@ -17,8 +17,8 @@ The next three months of development were spent doing polish work, graphics, adj
 Unfortunately, I don't have any screenshot from the beginning of the project - but it would look almost the same as it looks now (at least the game scene, we didn't have a menu at first). One could say 90% of the core work, the concept was done in 10% of the time, and it is mostly true for Equilibrium.
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/equi1.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/equi2.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/equi3.png" width="480">
 
 <center><i> Screenshots of the current game available on the store</i></center>
 
