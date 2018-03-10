@@ -73,34 +73,33 @@ This stage is called Sampling. We use poisson disk to sample our scalar field un
 
 Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as well as the altitude of the cloud. This was done with the following naive algorithm :
 
-```ruby
-
-SortCandidatePositions(candidates); // Sort sampled point by distance to camera
-for (int i = 0; i < candidates.size(); i++)
-{
-	// Instanciate a cloud at worldPosition2D and altitude 0
-	Cloud candidateCloud = CloudDatabase::GetCloud(cloudType, worldPosition2D);
-	double minAltitude = skylayer->AltitudeRange[0];
-	double maxAltitude = skylayer->AltitudeRange[1];
-	double currentAltitude = minAltitude;
-	while (currentAltitude < maxAltitude)
+```javascript
+	SortCandidatePositions(candidates); // Sort sampled point by distance to camera
+	for (int i = 0; i < candidates.size(); i++)
 	{
-		candidateCloud.SetAltitude(currentAltitude);
-
-		// We try to instanciate the cloud based on visibility 
-		// And collision with other clouds in the scene.
-		// Visibility is defined as the amount of sphere visible on the screen.
-		int score = candidateCloud.GetVisibilityScore();
-		if (score > visibilityThreshold 
-		&& cloud.isColliding() == false)
+		// Instanciate a cloud at worldPosition2D and altitude 0
+		Cloud candidateCloud = CloudDatabase::GetCloud(cloudType, worldPosition2D);
+		double minAltitude = skylayer->AltitudeRange[0];
+		double maxAltitude = skylayer->AltitudeRange[1];
+		double currentAltitude = minAltitude;
+		while (currentAltitude < maxAltitude)
 		{
-			CloudInstances::AddCloud(candidateCloud);
-			break;
+			candidateCloud.SetAltitude(currentAltitude);
+
+			// We try to instanciate the cloud based on visibility 
+			// And collision with other clouds in the scene.
+			// Visibility is defined as the amount of sphere visible on the screen.
+			int score = candidateCloud.GetVisibilityScore();
+			if (score > visibilityThreshold 
+			&& cloud.isColliding() == false)
+			{
+				CloudInstances::AddCloud(candidateCloud);
+				break;
+			}
+			// We try to adjust the altitude of the cloud
+			currentAltitude += 100;
 		}
-		// We try to adjust the altitude of the cloud
-		currentAltitude += 100;
 	}
-}
 ```
 
 We also made a refined version of this which is based on a cost function and various variables : visiblity, projected area on the screen, distance to camera, altitude etc... Which got interesting results to the cost of computation time.
