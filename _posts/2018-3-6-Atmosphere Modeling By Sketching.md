@@ -5,26 +5,28 @@ excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/m
 ---
 
 This work was done during my third year internship to complete my bachelor degree with one friend of mine also an intern. I worked for three month at LIRIS, France in the [Geomod team](https://projet.liris.cnrs.fr/geomod/). The goal was to develop an atmosphere model only from sketching on screen with different brushes.
-We rapidly focus on the modeling and let the sketching part aside because it was only a programming challenge and not really research work. First, let's take a look at the state of the art in clouds and some scientific background on atmosphere and clouds.
+We rapidly focus on the modeling and let the sketching part aside because it was more of a programming challenge than research. First, let's take a look at the state of the art in clouds and some scientific background on atmosphere and clouds.
 
 ### State of the Art
 
 Atmosphere and clouds have been studied for quite a long time, but there was not work that focused on the modeling of an coherent atmosphere from a global point of view. There was, as always simulation, procedural generation and hand crafted clouds.
 [Bouthors](https://hal.inria.fr/inria-00537462/file/BN04_clouds.pdf) worked on representing cumulus clouds as a set of spherical sphere defined by an implicit field which can deform under the influence of neighbor particles. [Schpok](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.884.2816&rep=rep1&type=pdf) worked on the rendering of other types as well, but
-this work stay at small scope : at max a few clouds and a heavy focus on rendering instead of representing an entire atmosphere. Therefore, this is where our work standed.
+this work stays at small scope : at max a few clouds and a heavy focus on rendering instead of representing an entire atmosphere. Therefore, this is where our work standed.
 
 
 ### Atmosphere, Clouds
 
-*Figure showing the different types of cloud and altitudes ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.*
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png">
+
+*Figure showing the different types of cloud and altitudes ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.*
 
 
 Atmosphere here on earth is composed of multiple layers and multiple things. We focused rapidly on clouds since it is the most observed phenomena. There are different types of clouds, each one having his own properties :
 * Cumulus, or fluffy clouds are the most know type. They appears at low altitudes, typically below 2000m.
 * Alto clouds, appearing as globular masses or rolls in layers or patches.
 * Cirrus clouds characterized by thin, wispy strands at high altitudes.
+* Cumulonimbus clouds, something I call multi-layer clouds, literally going through every sky layers because there are huge.
 
 
 ### The pipeline
@@ -34,6 +36,14 @@ would take care of all this, solve conflicts between views, and propose a final 
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud1.png">
 
+*The big picture of the pipeline, showing literally every step of the program.*
+
+
+#### Atmosphere Model
+
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud2.png">
+
+*Our atmosphere model : divided into four layers that can contains only certain types of clouds, which are modelled as a vector of Spheres/Densities representing the shapes. Extra parameters specify the maximum size of the cloud.*
 
 
 #### Projection and Conflicts resolution
