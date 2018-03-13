@@ -5,13 +5,13 @@ excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/m
 ---
 
 This work was done during my third year internship to complete my bachelor degree (2015) with one friend of mine also an intern. I worked for three month at LIRIS, France in the [Geomod team](https://projet.liris.cnrs.fr/geomod/). The goal was to develop an atmosphere model only from sketching on screen with different brushes.
-We rapidly focus on the modeling and let the sketching part aside because it was more of a programming challenge than research. First, let's take a look at the state of the art in clouds and some scientific background on atmosphere and clouds.
+We rapidly focus on the atmosphere modeling and let the sketching part aside because it was more of a programming challenge than research. First, let's take a look at the state of the art in clouds and some scientific background on atmosphere and clouds.
 
 ### State of the Art
 
-Atmosphere and clouds have been studied for quite a long time, but there was not work that focused on the modeling of an coherent atmosphere from a global point of view. There was, as always simulation, procedural generation and hand crafted clouds.
+Atmosphere and clouds have been studied for quite a long time, but there was not work that focused on the modeling of a coherent atmosphere from a global point of view. There was as always simulation, procedural generation and hand crafted clouds.
 [Bouthors](https://hal.inria.fr/inria-00537462/file/BN04_clouds.pdf) worked on representing cumulus clouds as a set of spherical sphere defined by an implicit field which can deform under the influence of neighbor particles. [Schpok](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.884.2816&rep=rep1&type=pdf) worked on the rendering of other types as well, but
-this work stays at small scope : at max a few clouds and a heavy focus on rendering instead of representing an entire atmosphere. Therefore, this is where our work standed.
+this work stays at small scope : at max a few clouds and a heavy focus on rendering instead of representing an entire atmosphere at big scales. Therefore, this is where our work standed.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud00.jpg" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud01.png" width="480">
@@ -27,7 +27,8 @@ this work stays at small scope : at max a few clouds and a heavy focus on render
 <center><i>Figure showing the different types of cloud and altitude ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.</i></center>
 
 
-Atmosphere here on earth is composed of multiple layers and multiple things. We focused rapidly on clouds since it is the most observed phenomena. There are different types of clouds, each one having his own properties :
+Earth atmosphere is made of multiple layers and many things. We rapidly focused on clouds since it is the most observed phenomena and probably the one with the most impact. 
+There are different types of clouds, each one having his own properties :
 * Cumulus, or fluffy clouds are the most know type. They appears at low altitudes, typically below 2000m.
 * Alto clouds, appearing as globular masses or rolls in layers or patches.
 * Cirrus clouds characterized by thin, wispy strands at high altitudes.
@@ -36,12 +37,12 @@ Atmosphere here on earth is composed of multiple layers and multiple things. We 
 
 ### The pipeline
 To allow the user enough control on the scene, we adopted a sketching approach. The user would draw cloud densities on the screen wherever they wanted, and the application would translate this into real clouds. The user should also be able to specify shadow or sunny area on the screen and the application
-would take care of all this, solve conflicts between views, and propose a final atmosphere model reading for rendering inside or outside of the application. We developed the following pipeline to solve these problems :
+would take care of all this, solve conflicts between views, and propose a final atmosphere model ready for offline or real time rendering. We developed the following pipeline to solve these problems :
 
 
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud1.png">
 
-<center><i>The big picture of the pipeline, showing literally every step of the program.</i></center>
+<center><i>The big picture of the pipeline, showing every step of the program.</i></center>
 
 
 #### Atmosphere Model
@@ -58,8 +59,8 @@ features very realistic cloud rendering in real time.
 
 #### Projection and Conflicts resolution
 
-The first stage of our pipeline consisted of taking user sketches and translating these into densities in our atmosphere model. To do that, we simply projected every pixel of the sketch onto the corresponding sky layers and fill densities in the scalar fields.
-We also had a conflicts resolution stage, where we basically merged user constraints from different views : the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
+The first stage of our pipeline consisted of taking user sketches and translating these into densities in our atmosphere model. To do that, we projected every pixel of the sketch onto the corresponding sky layers and fill densities in the scalar fields.
+We also had a conflicts resolution stage, where we basically merged user constraints from different views: the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
 The next figure shows how the projection and the resolution works in the application.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud3.png" width="480">
@@ -68,7 +69,7 @@ The next figure shows how the projection and the resolution works in the applica
 
 #### Sampling, Instancing
 
-At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate position from our scalar fields and then find a way to create a cloud from this position.
+At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate positions from our scalar fields and then find a way to create a cloud from this position.
 This stage is called Sampling. We use poisson disk to sample our scalar field uniformly and get candidate positions. The following figure show how Sampling works in our pipeline.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.jpg" width="480">
@@ -134,6 +135,7 @@ Non Organized ideas to improve :
 
 * As I already said, amplification could profit from a complete rework with more modern/smart methods.
 
+* Multi Layer clouds were not investigated enough proportionally to their size.
 
 ### References
 
