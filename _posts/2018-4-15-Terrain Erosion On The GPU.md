@@ -40,15 +40,43 @@ But I figured that you only do thermal erosion on big terrains and therefore on 
 
 All algorithms cannot be done on the GPU, which is parallel by nature so I ran a quick benchmark to compare the results of both version of the method.
 
-| Simulation Grid Size | CPU Time (s) | GPU Time (s) |
-| ---- | --- | --- |
-| 128x128 | 5 | 2 |
-| 256x256 | 5 | 2 |
-| 512x512 | 5 | 2 |
-| 1024x1024 | 5 | 2 |
-| 2048x2048 | 5 | 2 |
-| 4096x4096 | 5 | 2 |
-{:.mbtablestyle}
+<table class="tg">
+  <tr>
+    <th class="tg-8o8c">Simulation Grid Size</th>
+    <th class="tg-8o8c">CPU Time (s)</th>
+    <th class="tg-8o8c">GPU Time (s)</th>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">128x128</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">256x256</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">512x512</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">1024x1024</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">2048x2048</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+  <tr>
+    <td class="tg-ml2k">4096x4096</td>
+    <td class="tg-f1li"></td>
+    <td class="tg-f1li"></td>
+  </tr>
+</table>
 
 ### References
 
