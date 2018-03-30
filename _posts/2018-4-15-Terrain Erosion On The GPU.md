@@ -40,14 +40,15 @@ But I figured that you only do thermal erosion on big terrains and therefore on 
 
 All algorithms cannot be done on the GPU, which is parallel by nature so I ran a quick benchmark to compare the results of both version of the method.
 
-Simulation Grid Size | CPU Time (s) | GPU Time (s) 
----- | --- | ---
-128x128 | 5 | 2 
-256x256 | 5 | 2
-512x512 | 5 | 2
-1024x1024 | 5 | 2
-2048x2048 | 5 | 2
-4096x4096 | 5 | 2 
+| Simulation Grid Size | CPU Time (s) | GPU Time (s) |
+| ---- | --- | --- |
+| 128x128 | 5 | 2 |
+| 256x256 | 5 | 2 |
+| 512x512 | 5 | 2 |
+| 1024x1024 | 5 | 2 |
+| 2048x2048 | 5 | 2 |
+| 4096x4096 | 5 | 2 |
+{:.mbtablestyle}
 
 ### References
 

@@ -210,6 +210,14 @@ img {
   }
 }
 
+.mbtablestyle {
+        border-collapse: collapse;
+
+   > table, td, th {
+        border: 1px solid black;
+        }
+}
+
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
