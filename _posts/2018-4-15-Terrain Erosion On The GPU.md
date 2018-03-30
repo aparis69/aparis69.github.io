@@ -6,7 +6,7 @@ excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/m
 
 I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things
 I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have
-been implemented on the GPU. Let's take a look at the state of the art on terrain erosion.
+been implemented on the GPU, but there is not always an open source implementation. Let's take a look at the state of the art on terrain erosion.
 
 ### State of the Art
 
@@ -15,7 +15,7 @@ There are different type of erosion :
 * Hydraulic Erosion : simulate water flows over the terrain. There is also different type of Hydraulic erosion, but all
 are tricky to implement. Still, there is some resources on the Internet and good papers about it.
 
-This is the first article of a series about terrain erosion methods. I will try to implement the ones I find the most interesting, both
+This is the first article of a series about terrain erosion methods - mostly procedural. I will try to implement the ones I find the most interesting, both
 on the CPU and the GPU to compare results (and also because compute shader are fun). Note that my skills in GPGPU programming are 
 not the best and I am open to suggestion when it comes to implementation.
 
@@ -32,8 +32,8 @@ By chance, the algorithm is easily portable to the GPU : in fact, the code is al
 
 [Code snippet]
 
-The only hot point is the use of the atomicAdd function because multiple thread can be adding/removing height from a point at the same time. 
-It forces me to use integer to represents height, which is not great when you have small details in your terrain because it will snap the values to the nearest integers. 
+The only difficult point relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function being
+defined only for integers, it forces me to use an integer array to represent height data, which is not great when you have small details in your terrain because it will snap the values to the nearest integer. 
 But I figured that you only do thermal erosion on big terrains and therefore on large scale (> 1 meters), so using integers is not that much of a problem.
 
 ### Results
@@ -44,6 +44,7 @@ All algorithms cannot be done on the GPU, which is parallel by nature so I ran a
 	<table class="tg">
 	  <tr>
 		<th class="tg-8o8c">Simulation Grid Size</th>
+		<th class="tg-8o8c">Iteration count</th>
 		<th class="tg-8o8c">CPU Time (s)</th>
 		<th class="tg-8o8c">GPU Time (s)</th>
 	  </tr>
@@ -51,9 +52,11 @@ All algorithms cannot be done on the GPU, which is parallel by nature so I ran a
 		<td class="tg-ml2k">128x128</td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
+		<td class="tg-f1li"></td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">256x256</td>
+		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 	  </tr>
@@ -61,9 +64,11 @@ All algorithms cannot be done on the GPU, which is parallel by nature so I ran a
 		<td class="tg-ml2k">512x512</td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
+		<td class="tg-f1li"></td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">1024x1024</td>
+		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 	  </tr>
@@ -71,9 +76,11 @@ All algorithms cannot be done on the GPU, which is parallel by nature so I ran a
 		<td class="tg-ml2k">2048x2048</td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
+		<td class="tg-f1li"></td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">4096x4096</td>
+		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 		<td class="tg-f1li"></td>
 	  </tr>
