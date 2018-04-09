@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Terrain Erosion On The GPU
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png" width="400" style="float:left;margin-right:15px;"> <p>This work was done during my third year internship to complete my bachelor degree with one friend of mine also an intern. I worked for three month at LIRIS, France in the Geomod team. The goal was to develop an atmosphere model only from sketching on screen with different brushes. We rapidly focus on the modeling and let the sketching part aside because it was only a programming challenge and not really research work. First, let's take a look at some scientific background on atmosphere and clouds.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="400" style="float:left;margin-right:15px;"> <p>I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have been implemented on the GPU, but there is not always an open source implementation. Let's take a look at the state of the art on terrain erosion.</p>
 ---
 
 I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things
