@@ -37,7 +37,7 @@ defined only for integers, it forces me to use an integer array to represent hei
 But I figured that you only do thermal erosion on big terrains and therefore on large scale (> 1 meters), so using integers is not that much of a problem. You can see some results in the following figures - left being the base terrain
 and right the result after a few hundreds iteration.
 
-<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal2.png" width="480">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal0.png" width="480">
 <img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="480">
 
 <center><i>The base heightfield on the left, and the results of 300 hundreds thermal erosion iteration on the right</i></center>
