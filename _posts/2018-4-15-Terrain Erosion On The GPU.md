@@ -108,45 +108,28 @@ All algorithms cannot be done on the GPU, which is parallel by nature so I ran a
 	<table class="tg">
 	  <tr>
 		<th class="tg-8o8c">Simulation Grid Size</th>
-		<th class="tg-8o8c">Iteration count</th>
 		<th class="tg-8o8c">CPU Time (s)</th>
 		<th class="tg-8o8c">GPU Time (s)</th>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">128x128</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
+		<td class="tg-f1li">0.434</td>
+		<td class="tg-f1li">0.364</td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">256x256</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
+		<td class="tg-f1li">1.583</td>
+		<td class="tg-f1li">0.838</td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">512x512</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
+		<td class="tg-f1li">6.538</td>
+		<td class="tg-f1li">2.948</td>
 	  </tr>
 	  <tr>
 		<td class="tg-ml2k">1024x1024</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">2048x2048</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">4096x4096</td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
-		<td class="tg-f1li"></td>
+		<td class="tg-f1li">35.135</td>
+		<td class="tg-f1li">7.706</td>
 	  </tr>
 	</table>
 </center>
