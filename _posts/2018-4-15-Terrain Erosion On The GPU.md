@@ -21,13 +21,10 @@ not the best and I am open to suggestion when it comes to implementation.
 
 ### Thermal Erosion
 
-Like I said, Thermal erosion is based on the repose (or talus) angle of the material. The idea is to transport a certain
-amount of material to the lowest neighbor if our talus angle is above the threshold defined by our material. The process is explained
-in the following figure.
+Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain
+amount of material in the steepest direction if our talus angle is above the threshold defined the material.
 
-[Make a figure]
-
-You can imagine the results : the terrain will have a maximum slope that it will try to obtain by moving matters down the slope.
+This process leads to terrain with a maximum slope that it will try to obtain by moving matters down the slope.
 By chance, the algorithm is easily portable to the GPU : in fact, the code is almost identical the CPU version. Here is a snippet of the code :
 
 ```cpp
@@ -36,11 +33,15 @@ layout(binding = 0, std430) coherent buffer HeightfieldData
     int data[];
 };
 
-const int nx = 1024;
+uniform int nx;
+uniform int ny;
+uniform float cellDistX;
+uniform float tanThresholdAngle;
+uniform int amplitude;
 
 bool Inside(int i, int j)
 {
-	if (i < 0 || i >= nx || j < 0 || j >= nx)
+	if (i < 0 || i >= ny || j < 0 || j >= nx)
 		return false;
 	return true;
 }
@@ -50,39 +51,34 @@ int ToIndex1D(int i, int j)
 	return i * nx + j;
 }
 
-layout(local_size_x = 1024) in;
+layout(local_size_x = 512) in;
 void main()
 {
 	uint id = gl_GlobalInvocationID.x;
 	if(id >= data.length())
         return;
 	
-	int amplitude = 1;
-	float tanThresholdAngle = 0.6f;
-	float cellDistX = 2.0f;
-
-	float maxZDiff = 0;
+	float maxZdiff = 0;
 	int neiIndex = -1;
 	int i = int(id) / nx;
 	int j = int(id) % nx;
-	for (int k = -1; k <= 1; k += 2)
+	for (int k = -1; k <= 1; k ++)
 	{
-		for (int l = -1; l <= 1; l += 2)
+		for (int l = -1; l <= 1; l ++)
 		{
 			if (Inside(i + k, j + l) == false)
 				continue;
 			int index = ToIndex1D(i + k, j + l);
-			float h = data[index]; 
-			float z = data[id] - h;
-			if (z > maxZDiff)
+			float h = float(data[index]);
+			float z = float(data[id]) - h;
+			if (z > maxZdiff)
 			{
-				maxZDiff = z;
+				maxZdiff = z;
 				neiIndex = index;
 			}
 		}
 	}
-	
-	if (maxZDiff / cellDistX > tanThresholdAngle)
+	if (maxZdiff / cellDistX > tanThresholdAngle && neiIndex != -1)
 	{
 		atomicAdd(data[id], -amplitude);
 		atomicAdd(data[neiIndex], amplitude);
@@ -98,11 +94,14 @@ and right the result after a few hundreds iteration.
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal0.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="480">
 
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal2.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal3.png" width="480">
+
 <center><i>The base heightfield on the left, and the results of 300 hundreds thermal erosion iteration on the right</i></center>
 
 ### Results
 
-All algorithms cannot be done on the GPU, which is parallel by nature so I ran a quick benchmark to compare the results of both version of the method.
+I ran a quick benchmark to see if I got an interesting speedup. Here are the results after 1000 iterations :
 
 <center>
 	<table class="tg">
