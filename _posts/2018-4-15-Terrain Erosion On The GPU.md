@@ -30,7 +30,65 @@ in the following figure.
 You can imagine the results : the terrain will have a maximum slope that it will try to obtain by moving matters down the slope.
 By chance, the algorithm is easily portable to the GPU : in fact, the code is almost identical the CPU version. Here is a snippet of the code :
 
-[Code snippet]
+```cpp
+layout(binding = 0, std430) coherent buffer HeightfieldData
+{
+    int data[];
+};
+
+const int nx = 1024;
+
+bool Inside(int i, int j)
+{
+	if (i < 0 || i >= nx || j < 0 || j >= nx)
+		return false;
+	return true;
+}
+
+int ToIndex1D(int i, int j)
+{
+	return i * nx + j;
+}
+
+layout(local_size_x = 1024) in;
+void main()
+{
+	uint id = gl_GlobalInvocationID.x;
+	if(id >= data.length())
+        return;
+	
+	int amplitude = 1;
+	float tanThresholdAngle = 0.6f;
+	float cellDistX = 2.0f;
+
+	float maxZDiff = 0;
+	int neiIndex = -1;
+	int i = int(id) / nx;
+	int j = int(id) % nx;
+	for (int k = -1; k <= 1; k += 2)
+	{
+		for (int l = -1; l <= 1; l += 2)
+		{
+			if (Inside(i + k, j + l) == false)
+				continue;
+			int index = ToIndex1D(i + k, j + l);
+			float h = data[index]; 
+			float z = data[id] - h;
+			if (z > maxZDiff)
+			{
+				maxZDiff = z;
+				neiIndex = index;
+			}
+		}
+	}
+	
+	if (maxZDiff / cellDistX > tanThresholdAngle)
+	{
+		atomicAdd(data[id], -amplitude);
+		atomicAdd(data[neiIndex], amplitude);
+	}
+}
+```
 
 The only difficult point relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function being
 defined only for integers, it forces me to use an integer array to represent height data, which is not great when you have small details in your terrain because it will snap the values to the nearest integer. 
