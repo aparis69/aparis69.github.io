@@ -56,7 +56,7 @@ void main()
 {
 	uint id = gl_GlobalInvocationID.x;
 	if(id >= data.length())
-			return;
+		return;
 	
 	float maxZdiff = 0;
 	int neighbourIndex = -1;
