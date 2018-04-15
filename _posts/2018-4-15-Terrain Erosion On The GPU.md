@@ -54,9 +54,9 @@ int ToIndex1D(int i, int j)
 layout(local_size_x = 512) in;
 void main()
 {
-  uint id = gl_GlobalInvocationID.x;
-  if(id >= data.length())
-	return;
+	uint id = gl_GlobalInvocationID.x;
+	if(id >= data.length())
+			return;
 	
 	float maxZdiff = 0;
 	int neighbourIndex = -1;
