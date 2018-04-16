@@ -54,41 +54,41 @@ int ToIndex1D(int i, int j)
 layout(local_size_x = 512) in;
 void main()
 {
-	uint id = gl_GlobalInvocationID.x;
-	if(id >= data.length())
-		return;
+    uint id = gl_GlobalInvocationID.x;
+    if (id >= data.length())
+        return;
 	
-	float maxZdiff = 0;
-	int neighbourIndex = -1;
-	int i = int(id) / nx;
-	int j = int(id) % nx;
-	for (int k = -1; k <= 1; k ++)
-	{
-		for (int l = -1; l <= 1; l ++)
-		{
-			if (Inside(i + k, j + l) == false)
-				continue;
-			int index = ToIndex1D(i + k, j + l);
-			float h = float(data[index]);
-			float z = float(data[id]) - h;
-			if (z > maxZdiff)
-			{
-				maxZdiff = z;
-				neighbourIndex = index;
-			}
-		}
-	}
-	if (maxZdiff / cellSize > tanThresholdAngle && neighbourIndex != -1)
-	{
-		atomicAdd(data[id], -amplitude);
-		atomicAdd(data[neighbourIndex], amplitude);
-	}
+    float maxZdiff = 0;
+    int neighbourIndex = -1;
+    int i = int(id) / nx;
+    int j = int(id) % nx;
+    for (int k = -1; k <= 1; k ++)
+    {
+        for (int l = -1; l <= 1; l ++)
+        {
+            if (Inside(i + k, j + l) == false)
+                continue;
+            int index = ToIndex1D(i + k, j + l);
+            float h = float(data[index]);
+            float z = float(data[id]) - h;
+            if (z > maxZdiff)
+            {
+                maxZdiff = z;
+                neighbourIndex = index;
+            }
+        }
+    }
+    if (maxZdiff / cellSize > tanThresholdAngle && neighbourIndex != -1)
+    {
+        atomicAdd(data[id], -amplitude);
+        atomicAdd(data[neighbourIndex], amplitude);
+    }
 }
 ```
 
-The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function being
-defined only for integers, it forces me to use an integer array to represent height data, which is not great when you have small details in your terrain because it will snap the values to the nearest integer. 
-But I figured that you only do thermal erosion on big terrains and therefore on large scale (amplitude > 1 meters), so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly
+The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function only exists for integers, so it forces me to use 
+an integer array to represent height data, which is not great when you have small details in your terrain because it will snap the values to the nearest integer. But I figured that you only do thermal erosion on 
+big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly
 different results depending on the execution order. My investigation led me to conclude that the results were not very different so I kept the most basic implementation in place.
 You can see some results in the following figures.
 
@@ -98,7 +98,7 @@ You can see some results in the following figures.
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal2.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal3.png" width="480">
 
-<center><i>The base heightfield on the left, and the results of 300 hundreds thermal erosion iteration on the right</i></center>
+<center><i>The base heightfield on the left, and the results of three hundreds thermal erosion iteration on the right</i></center>
 
 ### Results
 
