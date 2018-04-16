@@ -5,7 +5,7 @@ excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/m
 ---
 
 I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things
-I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have
+I do on the GPU. Erosion algorithms take many iteration to converge and are very costly when done on the CPU. Most of these algorithm take advantage of parallelism: many have
 been implemented on the GPU, but there is not always an open source implementation. This is the first article of a series about terrain erosion and procedural generation.
 I will try to implement the things I find the most interesting, both on the CPU and the GPU to compare results (and also because compute shaders are fun). Note that my skills in GPGPU programming are 
 not the best and I am open to suggestion when it comes to implementation. Let's start by taking a look at the state of the art on terrain erosion.
@@ -23,10 +23,10 @@ in Unity by [Digital-Dust](https://www.digital-dust.com/single-post/2017/03/20/I
 ### Thermal Erosion
 
 Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain
-amount of material in the steepest direction if our talus angle is above the threshold defined the material.
+amount of material in the steepest direction if the talus angle is above the threshold defined the material.
 
-This process leads to terrain with a maximum slope that will be obtained by moving matters down the slope.
-By chance, the algorithm is easily portable to the GPU: in fact, the code is almost identical the CPU version. Here is a snippet of the code:
+This process leads to terrain with a maximum slope that will be obtained by moving matter down the slope.
+By chance, the algorithm is easily portable to the GPU: in fact, the code is almost identical to the CPU version. Here is a code snippet:
 
 ```cpp
 layout(binding = 0, std430) coherent buffer HeightfieldData
@@ -87,11 +87,11 @@ void main()
 }
 ```
 
-The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function only exists for integers, so it forces me to use 
-an integer array to represent height data, which is not great when you have small details in your terrain because it will truncate the values to the nearest integers. But I figured that you only do thermal erosion on 
-big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly
-different results depending on the execution order. My investigation led me to conclude that the results were not very different so I kept the most basic implementation in place.
-You can see some results in the following figures.
+The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. 
+This function doesn't exist for floating point values so it forces me to use an integer array to represent height data. This is not perfect when you want to erode at a 
+small scale because it will truncate the values to the nearest integers. But I figured that erosion is more interesting on big terrains and therefore on large scale (amplitude > 1 meter), 
+so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly different results depending on the execution order. 
+My investigation led me to conclude that the results were not very different so I kept the most basic implementation in place. You can see some results in the following figures.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal0.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="480">
@@ -136,7 +136,8 @@ I ran a quick benchmark to see if I got an interesting speedup. Here are the res
 </center>
 
 The global process could be improved by using very large integers to represent height on the GPU to take advantage of the atomicAdd function. Another solution could be to use the [intBitsToFloat](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml)
-and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. If you want deterministic results, you can also use different buffers for input and output. The source code is available on [github](https://github.com/vincentriche/Outerrain/).
+and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. If you want deterministic results, you can also use different buffers for input and output. The source code is available on Github: [C++](https://github.com/vincentriche/Outerrain/blob/master/Outerrain/Source/gpuheightfield.cpp) 
+and [glsl](https://github.com/vincentriche/Outerrain/blob/master/Shaders/heightfieldCompute.glsl).
 
 ### References
 
