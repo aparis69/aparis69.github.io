@@ -94,7 +94,9 @@ small scale because it will truncate the values to the nearest integers.
 
 However, I figured that erosion is most interesting on big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. 
 I use the same buffer for input and output which can lead to slightly different results depending on the execution order. My investigation led me to conclude that the results were not very different 
-so I kept the most basic implementation in place. You can see some results in the following figures.
+so I kept the most basic implementation in place. 
+
+You can see some results in the following figures.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal0.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="480">
