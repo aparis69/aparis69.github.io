@@ -15,6 +15,7 @@ not the best and I am open to suggestion when it comes to implementation. Let's 
 There are different type of erosion:
 * Thermal Erosion: is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". It is the simplest one to implement but does not give realistic results by itself.
 * Hydraulic Erosion: simulates water flows over the terrain. There are different types of Hydraulic erosion, but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.
+* Fluvial Erosion: is the erosion of the bedrock material and its transportation downhill by streams. Usually modeled by the stream power equation as denoted by Cordonnier in 2016.
 
 Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU by Jako in 2011 and also Št’ava in 2008. You can also find a very good implementation of Hydraulic Erosion
 in Unity by [Digital-Dust](https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity).
