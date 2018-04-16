@@ -98,7 +98,7 @@ You can see some results in the following figures.
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal2.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal3.png" width="480">
 
-<center><i>The base heightfield on the left, and the results of three hundreds thermal erosion iteration on the right</i></center>
+<center><i>The base heightfield on the left and the results of three hundreds thermal erosion iteration on the right</i></center>
 
 ### Results
 
