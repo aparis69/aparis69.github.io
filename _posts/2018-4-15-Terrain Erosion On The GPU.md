@@ -127,7 +127,7 @@ I ran a quick benchmark to compare all the method I tried. Here are the results 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench2.png" width="480">
 
 <center><i>On the left, a comparison between all the methods on small grid resolution. On the right, bigger resolution without the CPU version. All time are in seconds.
-T didn't try to increase the grid resolution past 1024 on the CPU because it took too much time, hence the two separate graphics</i></center>
+I didn't try to increase the grid resolution past 1024 on the CPU because it took too much time, hence the two separate graphics</i></center>
 
 As expected, the single floating point buffer is the most efficient one: there is no conversion back and forth between integers and floats, and only one buffer to handle. This is an interesting solution because we compensate our 
 error by increasing iteration count, which is not the most elegant but the most efficient way according to my benchmark in this case.
