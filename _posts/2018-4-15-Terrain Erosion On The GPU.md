@@ -38,15 +38,16 @@ about the race condition happening.
 ### The solution(s)
 
 There are multiple way to solve this problem. My first implementation used a single integer buffer to represent height data. I had to use integers because the atomicAdd function doesn't exist for floating point values. 
-This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meters) because of the integers.
+This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meter) because of integers.
 
-My next attempt used two buffers: a floating value buffer to represent our heightfield data, and an integer buffer to allow the use of the atomicAdd glsl function. You also have to use a barrier to make sure your 
-return buffer is filled properly with the correct final height. This solution works as intended and is also faster than the CPU version but slower than my previous implementation because of the two buffers. 
-The main advantage of this method is that we are no longer limited by the use of integers.
+My next attempt used two buffers: a floating value buffer to represent our heightfield data, and an integer buffer to allow the use of the atomicAdd glsl function. The floating values were handled with [intBitsToFloat](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml)
+and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. You also have to use a barrier to make sure your return buffer is filled properly with the correct final height. 
+This solution worked as intended and was also faster than the CPU version but slower than my previous implementation because of the two buffers. The main advantage of this method is that we are no longer limited by the use 
+of integers.
 
-My last attempt was the one that I should have tried in the first place: simply ignore the race condition and use a single floating value buffer to represent height. Of course, the result will not be deterministic and will contain
+My last attempt was the one that I should have tried in the first place: simply ignore the race condition and use a single floating value buffer to represent height data. Of course, the result will not be deterministic and will contain
 errors but at the end, the algorithm will converge to the same results after a few more hundreds iteration. Another good thing with this version is that we will not have any visually disturbing errors when compared to the other two.
-This is the fastest method for now.
+This is the fastest and simplest method for now.
 
 Here is a code snippet of the last method:
 
