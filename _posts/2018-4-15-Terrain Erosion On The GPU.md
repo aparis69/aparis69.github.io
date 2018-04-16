@@ -12,9 +12,9 @@ not the best and I am open to suggestion when it comes to implementation. Let's 
 
 ### State of the Art
 
-There are different type of erosion :
-* Thermal Erosion : is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". It is the simplest one to implement but does not give realistic results by itself.
-* Hydraulic Erosion : simulates water flows over the terrain. There are different types of Hydraulic erosion, but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.
+There are different type of erosion:
+* Thermal Erosion: is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". It is the simplest one to implement but does not give realistic results by itself.
+* Hydraulic Erosion: simulates water flows over the terrain. There are different types of Hydraulic erosion, but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.
 
 Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU by Jako in 2011 and also Št’ava in 2008. You can also find a very good implementation of Hydraulic Erosion
 in Unity by [Digital-Dust](https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity).
@@ -25,7 +25,7 @@ Thermal erosion is based on the repose or talus angle of the material. The idea 
 amount of material in the steepest direction if our talus angle is above the threshold defined the material.
 
 This process leads to terrain with a maximum slope that will be obtained by moving matters down the slope.
-By chance, the algorithm is easily portable to the GPU : in fact, the code is almost identical the CPU version. Here is a snippet of the code :
+By chance, the algorithm is easily portable to the GPU: in fact, the code is almost identical the CPU version. Here is a snippet of the code:
 
 ```cpp
 layout(binding = 0, std430) coherent buffer HeightfieldData
@@ -87,7 +87,7 @@ void main()
 ```
 
 The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. This function only exists for integers, so it forces me to use 
-an integer array to represent height data, which is not great when you have small details in your terrain because it will snap the values to the nearest integer. But I figured that you only do thermal erosion on 
+an integer array to represent height data, which is not great when you have small details in your terrain because it will truncate the values to the nearest integers. But I figured that you only do thermal erosion on 
 big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly
 different results depending on the execution order. My investigation led me to conclude that the results were not very different so I kept the most basic implementation in place.
 You can see some results in the following figures.
@@ -102,7 +102,7 @@ You can see some results in the following figures.
 
 ### Results
 
-I ran a quick benchmark to see if I got an interesting speedup. Here are the results after 1000 iterations :
+I ran a quick benchmark to see if I got an interesting speedup. Here are the results after 1000 iterations:
 
 <center>
 	<table class="tg">
