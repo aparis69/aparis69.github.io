@@ -41,14 +41,14 @@ uniform int amplitude;			// Erosion amplitude
 
 bool Inside(int i, int j)
 {
-	if (i < 0 || i >= ny || j < 0 || j >= nx)
-		return false;
-	return true;
+    if (i < 0 || i >= ny || j < 0 || j >= nx)
+        return false;
+    return true;
 }
 
 int ToIndex1D(int i, int j)
 {
-	return i * ny + j;
+    return i * ny + j;
 }
  
 layout(local_size_x = 512) in;
@@ -138,6 +138,8 @@ The global process could be improved by using very large integers to represent h
 and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. If you want deterministic results, you can also use different buffers for input and output. The source code is available on [github](https://github.com/vincentriche/Outerrain/).
 
 ### References
+
+[Interactive Erosion in Unity - Digital Dust](https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity)
 
 [Interactive Terrain Modeling Using Hydraulic Erosion - Ondrej Št’ava](http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf)
 
