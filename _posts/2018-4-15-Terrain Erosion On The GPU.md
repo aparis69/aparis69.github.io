@@ -27,74 +27,86 @@ Thermal erosion is based on the repose or talus angle of the material. The idea 
 amount of material in the steepest direction if the talus angle is above the threshold defined the material.
 
 This process leads to terrain with a maximum slope that will be obtained by moving matter down the slope.
-By chance, the algorithm is easily portable to the GPU: in fact, the code is almost identical to the CPU version. Here is a code snippet:
+By chance, the algorithm is easily portable to the GPU: in fact, the core algorithm is almost identical to the CPU version. The difficulty lives in what buffer we use and how much we care about race condition.
+
+### The race condition
+
+GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know in advance which one. Therefore, multiple threads can be adding or removing
+height on the same grid point. This is called a race condition and it needs to be solved in most cases. Sometimes however we are lucky: after trying a few version of the algorithm, I found that the best solution was to just not care
+about the race condition happening.
+
+### The solution(s)
+
+There are multiple way to solve this problem. My first implementation used a single integer buffer to represent height data. I had to use integers because the atomicAdd function doesn't exist for floating point values. 
+This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meters) because of the integers.
+
+My next attempt used two buffers: a floating value buffer to represent our heightfield data, and an integer buffer to allow the use of the atomicAdd glsl function. You also have to use a barrier to make sure your 
+return buffer is filled properly with the correct final height. This solution works as intended and is also faster than the CPU version but slower than my previous implementation because of the two buffers. 
+The main advantage of this method is that we are no longer limited by the use of integers.
+
+My last attempt was the one that I should have tried in the first place: simply ignore the race condition and use a single floating value buffer to represent height. Of course, the result will not be deterministic and will contain
+errors but at the end, the algorithm will converge to the same results after a few more hundreds iteration. Another good thing with this version is that we will not have any visually disturbing errors when compared to the other two.
+This is the fastest method for now.
+
+Here is a code snippet of the last method:
 
 ```cpp
-layout(binding = 0, std430) coherent buffer HeightfieldData
+layout(binding = 0, std430) coherent buffer HeightfieldDataFloat
 {
-    int data[];
+	float floatingHeightBuffer[];
 };
 
-uniform int nx; 			// Grid resolution
-uniform int ny;				// Grid resolution
-uniform float cellSize;			// Cell Size in meters
-uniform float tanThresholdAngle;	// Tangent of the threshold angle of the material
-uniform int amplitude;			// Erosion amplitude
+uniform int nx;
+uniform float amplitude;
+uniform float cellSize;
+uniform float tanThresholdAngle;
 
 bool Inside(int i, int j)
 {
-    if (i < 0 || i >= ny || j < 0 || j >= nx)
-        return false;
-    return true;
+	if (i < 0 || i >= nx || j < 0 || j >= nx)
+		return false;
+	return true;
 }
 
 int ToIndex1D(int i, int j)
 {
-    return i * ny + j;
+	return i * nx + j;
 }
- 
-layout(local_size_x = 512) in;
+
+layout(local_size_x = 1024) in;
 void main()
 {
-    uint id = gl_GlobalInvocationID.x;
-    if (id >= data.length())
+	uint id = gl_GlobalInvocationID.x;
+	if(id >= floatingHeightBuffer.length())
         return;
 	
-    float maxZdiff = 0;
-    int neighbourIndex = -1;
-    int i = int(id) / nx;
-    int j = int(id) % nx;
-    for (int k = -1; k <= 1; k ++)
-    {
-        for (int l = -1; l <= 1; l ++)
-        {
-            if (Inside(i + k, j + l) == false)
-                continue;
-            int index = ToIndex1D(i + k, j + l);
-            float h = float(data[index]);
-            float z = float(data[id]) - h;
-            if (z > maxZdiff)
-            {
-                maxZdiff = z;
-                neighbourIndex = index;
-            }
-        }
-    }
-    if (maxZdiff / cellSize > tanThresholdAngle && neighbourIndex != -1)
-    {
-        atomicAdd(data[id], -amplitude);
-        atomicAdd(data[neighbourIndex], amplitude);
-    }
+	float maxZDiff = 0;
+	int neiIndex = -1;
+	int i = int(id) / nx;
+	int j = int(id) % nx;
+	for (int k = -1; k <= 1; k += 2)
+	{
+		for (int l = -1; l <= 1; l += 2)
+		{
+			if (Inside(i + k, j + l) == false)
+				continue;
+			int index = ToIndex1D(i + k, j + l);
+			float h = floatingHeightBuffer[index]; 
+			float z = floatingHeightBuffer[id] - h;
+			if (z > maxZDiff)
+			{
+				maxZDiff = z;
+				neiIndex = index;
+			}
+		}
+	}
+	if (maxZDiff / cellSize > tanThresholdAngle)
+	{
+		floatingHeightBuffer[id] = floatingHeightBuffer[id] - amplitude;
+		floatingHeightBuffer[neiIndex] = floatingHeightBuffer[neiIndex] + amplitude;
+	}
 }
 ```
-
-The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. 
-This function doesn't exist for floating point values so it forces me to use an integer array to represent height data. This is not perfect when you want to erode at a 
-small scale because it will truncate the values to the nearest integers. 
-
-However, I figured that erosion is most interesting on big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. 
-I use the same buffer for input and output which can lead to slightly different results depending on the execution order. My investigation led me to conclude that the results were not very different 
-so I kept the most basic implementation in place. 
 
 You can see some results in the following figures.
 
@@ -108,41 +120,10 @@ You can see some results in the following figures.
 
 ### Results
 
-I ran a quick benchmark to see if I got an interesting speedup. Here are the results after 1000 iterations:
+I ran a quick benchmark to compare all the method I tried. Here are the results after 1000 iterations:
 
-<center>
-	<table class="tg">
-	  <tr>
-		<th class="tg-8o8c">Simulation Grid Size</th>
-		<th class="tg-8o8c">CPU Time (s)</th>
-		<th class="tg-8o8c">GPU Time (s)</th>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">128x128</td>
-		<td class="tg-f1li">0.434</td>
-		<td class="tg-f1li">0.364</td>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">256x256</td>
-		<td class="tg-f1li">1.583</td>
-		<td class="tg-f1li">0.838</td>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">512x512</td>
-		<td class="tg-f1li">6.538</td>
-		<td class="tg-f1li">2.948</td>
-	  </tr>
-	  <tr>
-		<td class="tg-ml2k">1024x1024</td>
-		<td class="tg-f1li">35.135</td>
-		<td class="tg-f1li">7.706</td>
-	  </tr>
-	</table>
-</center>
-
-The global process could be improved by using very large integers to represent height on the GPU to take advantage of the atomicAdd function. Another solution could be to use the [intBitsToFloat](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml)
-and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. If you want deterministic results, you can also use different buffers for input and output. The source code is available on Github: [C++](https://github.com/vincentriche/Outerrain/blob/master/Outerrain/Source/gpuheightfield.cpp) 
-and [glsl](https://github.com/vincentriche/Outerrain/blob/master/Shaders/heightfieldCompute.glsl).
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench1.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench2.png" width="480">
 
 ### References
 
