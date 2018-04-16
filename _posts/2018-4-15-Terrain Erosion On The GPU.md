@@ -31,7 +31,7 @@ By chance, the algorithm is easily portable to the GPU: in fact, the core algori
 
 ### The race condition
 
-GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know in advance which one. Therefore, multiple threads can be adding or removing
+GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know which one in advance. Therefore, multiple threads can be adding or removing
 height on the same grid point. This is called a race condition and it needs to be solved in most cases. Sometimes however we are lucky: after trying a few version of the algorithm, I found that the best solution was to just not care
 about the race condition happening.
 
@@ -125,6 +125,12 @@ I ran a quick benchmark to compare all the method I tried. Here are the results 
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench1.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench2.png" width="480">
+
+<center><i>On the left, a comparison between all the methods on small grid resolution. On the right, bigger resolution without the CPU version. All time are in seconds.
+T didn't try to increase the grid resolution past 1024 on the CPU because it took too much time, hence the two separate graphics</i></center>
+
+As expected, the single floating point buffer is the most efficient one: there is no conversion back and forth between integers and floats, and only one buffer to handle. This is an interesting solution because we compensate our 
+errors by increasing iteration count, which is not the most elegant but the most efficient according to my benchmark in this case.
 
 ### References
 
