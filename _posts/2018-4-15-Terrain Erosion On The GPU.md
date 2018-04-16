@@ -50,7 +50,7 @@ int ToIndex1D(int i, int j)
 {
 	return i * ny + j;
 }
-
+ 
 layout(local_size_x = 512) in;
 void main()
 {
