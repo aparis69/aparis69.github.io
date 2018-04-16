@@ -9,7 +9,7 @@ I do on the GPU. Erosion being very costly in terms of computation time, GPU is 
 been implemented on the GPU, but there is not always an open source implementation. This is the first article of a series about terrain erosion and procedural generation.
 I will try to implement the things I find the most interesting, both on the CPU and the GPU to compare results (and also because compute shaders are fun). Note that my skills in GPGPU programming are 
 not the best and I am open to suggestion when it comes to implementation. Let's start by taking a look at the state of the art on terrain erosion.
-
+ 
 ### State of the Art
 
 There are different type of erosion:
@@ -139,7 +139,7 @@ and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/f
 
 ### References
 
-[Interactive Terrain Modeling Using Hydraulic Erosion](http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf)
+[Interactive Terrain Modeling Using Hydraulic Erosion - Ondrej Št’ava](http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf)
 
 [Fast Hydraulic and Thermal Erosion on the GPU - Balazs Jako](http://old.cescg.org/CESCG-2011/papers/TUBudapest-Jako-Balazs.pdf)
 
