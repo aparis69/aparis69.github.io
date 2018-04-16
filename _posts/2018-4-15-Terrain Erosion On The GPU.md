@@ -18,7 +18,7 @@ There are different type of erosion:
 * Hydraulic Erosion: simulates water flows over the terrain. There are different types of Hydraulic erosion, but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.
 * Fluvial Erosion: is the erosion of the bedrock material and its transportation downhill by streams. Usually modeled by the stream power equation as denoted by Cordonnier in 2016.
 
-Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU by Jako in 2011 and also Št’ava in 2008. You can also find a very good implementation of Hydraulic Erosion
+Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU by Št’ava in 2008 and Jako in 2011. You can also find a very good implementation of Hydraulic Erosion
 in Unity by [Digital-Dust](https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity).
 
 ### Thermal Erosion
@@ -90,9 +90,11 @@ void main()
 
 The only difficulty relies in the use of the atomicAdd function because multiple threads can be adding or removing height from a point at the same time. 
 This function doesn't exist for floating point values so it forces me to use an integer array to represent height data. This is not perfect when you want to erode at a 
-small scale because it will truncate the values to the nearest integers. But I figured that erosion is more interesting on big terrains and therefore on large scale (amplitude > 1 meter), 
-so using integers is not that much of a problem. I use the same buffer for input and output which can lead to slightly different results depending on the execution order. 
-My investigation led me to conclude that the results were not very different so I kept the most basic implementation in place. You can see some results in the following figures.
+small scale because it will truncate the values to the nearest integers. 
+
+However, I figured that erosion is most interesting on big terrains and therefore on large scale (amplitude > 1 meter), so using integers is not that much of a problem. 
+I use the same buffer for input and output which can lead to slightly different results depending on the execution order. My investigation led me to conclude that the results were not very different 
+so I kept the most basic implementation in place. You can see some results in the following figures.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal0.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal1.png" width="480">
@@ -100,7 +102,7 @@ My investigation led me to conclude that the results were not very different so 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal2.png" width="480">
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal3.png" width="480">
 
-<center><i>The base heightfield on the left and the results of three hundreds thermal erosion iteration on the right</i></center>
+<center><i>The base heightfields on the left and the results of three hundreds thermal erosion iteration on the right</i></center>
 
 ### Results
 
