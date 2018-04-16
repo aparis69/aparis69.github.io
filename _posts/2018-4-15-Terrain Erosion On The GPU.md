@@ -130,7 +130,7 @@ I ran a quick benchmark to compare all the method I tried. Here are the results 
 T didn't try to increase the grid resolution past 1024 on the CPU because it took too much time, hence the two separate graphics</i></center>
 
 As expected, the single floating point buffer is the most efficient one: there is no conversion back and forth between integers and floats, and only one buffer to handle. This is an interesting solution because we compensate our 
-errors by increasing iteration count, which is not the most elegant but the most efficient according to my benchmark in this case.
+error by increasing iteration count, which is not the most elegant but the most efficient way according to my benchmark in this case.
 
 ### References
 
