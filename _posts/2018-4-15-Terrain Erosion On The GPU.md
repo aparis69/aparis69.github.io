@@ -40,10 +40,10 @@ Sometimes however we are lucky: after trying a few version of the algorithm, I f
 There are multiple ways to solve this problem. My first implementation used a single integer buffer to represent height data. I had to use integers because the atomicAdd function doesn't exist for floating point values. 
 This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meter) because of integers.
 
-In my next attempt I used two buffers: a floating value buffer to represent our height field data, and an integer buffer to allow the use of the atomicAdd glsl function. The floating point values were handled with [intBitsToFloat](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml)
-and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. You also have to use a barrier to make sure your return buffer is filled properly with the correct final height. 
-This solution worked as intended and was also faster than the CPU version but slower than my previous implementation because of the two buffers. The main advantage of this method is that we are no longer limited by the use 
-of integers.
+In my next attempt I used two buffers: a floating value buffer to represent our height field data, and an integer buffer to allow the use of the [atomicAdd](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/atomicAdd.xhtml) glsl function. 
+The floating point values were handled with [intBitsToFloat](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml) and [floatBitsToInt](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml) functions. 
+You also have to use a barrier to make sure your return buffer is filled properly with the correct final height. This solution worked as intended and was also faster than the CPU version but slower than my previous implementation because of the two buffers. 
+The main advantage of this method is that we are no longer limited by the use of integers.
 
 My last idea was the one that I should have tried in the first place: simply ignore the race condition and use a single floating point value buffer to represent height data. Of course, the result will not be deterministic and 
 will contain errors but at the end, the algorithm will converge to the same results after a few hundreds more iterations. Another good thing with this version is that we don't have any visually disturbing errors. 
@@ -54,58 +54,58 @@ Here is a code snippet of the last method:
 ```cpp
 layout(binding = 0, std430) coherent buffer HeightfieldDataFloat
 {
-	float floatingHeightBuffer[];
+    float floatingHeightBuffer[];
 };
 
-uniform int nx;
+uniform int gridSize;
 uniform float amplitude;
 uniform float cellSize;
 uniform float tanThresholdAngle;
 
 bool Inside(int i, int j)
 {
-	if (i < 0 || i >= nx || j < 0 || j >= nx)
-		return false;
-	return true;
+    if (i < 0 || i >= gridSize || j < 0 || j >= gridSize)
+        return false;
+    return true;
 }
 
 int ToIndex1D(int i, int j)
 {
-	return i * nx + j;
+    return i * gridSize + j;
 }
 
 layout(local_size_x = 1024) in;
 void main()
 {
-	uint id = gl_GlobalInvocationID.x;
-	if (id >= floatingHeightBuffer.length())
+    uint id = gl_GlobalInvocationID.x;
+    if (id >= floatingHeightBuffer.length())
         return;
 	
-	float maxZDiff = 0;
-	int neiIndex = -1;
-	int i = int(id) / nx;
-	int j = int(id) % nx;
-	for (int k = -1; k <= 1; k += 2)
-	{
-		for (int l = -1; l <= 1; l += 2)
-		{
-			if (Inside(i + k, j + l) == false)
-				continue;
-			int index = ToIndex1D(i + k, j + l);
-			float h = floatingHeightBuffer[index]; 
-			float z = floatingHeightBuffer[id] - h;
-			if (z > maxZDiff)
-			{
-				maxZDiff = z;
-				neiIndex = index;
-			}
-		}
-	}
-	if (maxZDiff / cellSize > tanThresholdAngle)
-	{
-		floatingHeightBuffer[id] = floatingHeightBuffer[id] - amplitude;
-		floatingHeightBuffer[neiIndex] = floatingHeightBuffer[neiIndex] + amplitude;
-	}
+    float maxZDiff = 0;
+    int neiIndex = -1;
+    int i = int(id) / gridSize;
+    int j = int(id) % gridSize;
+    for (int k = -1; k <= 1; k += 2)
+    {
+        for (int l = -1; l <= 1; l += 2)
+        {
+            if (Inside(i + k, j + l) == false)
+                continue;
+            int index = ToIndex1D(i + k, j + l);
+            float h = floatingHeightBuffer[index]; 
+            float z = floatingHeightBuffer[id] - h;
+            if (z > maxZDiff)
+            {
+                maxZDiff = z;
+                neiIndex = index;
+            }    
+        }
+    }
+    if (maxZDiff / cellSize > tanThresholdAngle)
+    {
+        floatingHeightBuffer[id] = floatingHeightBuffer[id] - amplitude;
+        floatingHeightBuffer[neiIndex] = floatingHeightBuffer[neiIndex] + amplitude;
+    }
 }
 ```
 
