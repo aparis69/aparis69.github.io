@@ -119,8 +119,7 @@ You can see some results in the following figures.
 
 I ran a quick benchmark to compare all the method I tried. Here are the results after 1000 iterations:
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench1.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench2.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench.png">
 
 <center><i>On the left, a comparison between all the methods on small grid resolution. On the right, bigger resolution without the CPU version. All time are in seconds.
 I didn't try to increase the grid resolution past 1024 on CPU because it took too much time, hence the two separate graphics</i></center>
