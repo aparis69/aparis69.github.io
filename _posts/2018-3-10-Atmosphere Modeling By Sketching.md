@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Atmosphere Modeling By Sketching
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png" width="400" style="float:left;margin-right:15px;"> <p>This work was done during my third year internship to complete my bachelor degree with one friend of mine also an intern. I worked for three month at LIRIS, France in the Geomod team. The goal was to develop an atmosphere model only from sketching on screen with different brushes. We rapidly focus on the modeling and let the sketching part aside because it was only a programming challenge and not really research work. First, let's take a look at some scientific background on atmosphere and clouds.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud0.png" width="400" style="float:left;margin-right:15px;"> <p>This work was done during my third year internship to complete my bachelor degree with one friend of mine also an intern. I worked for three month at LIRIS, France in the Geomod team. The goal was to develop an atmosphere model only from sketching on screen with different brushes. We rapidly focus on the modeling and let the sketching part aside because it was only a programming challenge and not really research work. First, let's take a look at some scientific background on atmosphere and clouds.</p>
 ---
 
 This work was done during my third year internship to complete my bachelor degree (2015) with one friend of mine also an intern. 
@@ -17,8 +17,8 @@ There was as always simulation, procedural generation and hand crafted clouds.
 [Schpok](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.884.2816&rep=rep1&type=pdf) worked on the rendering of other types as well. Very recently, Webanck et al. proposed an global atmosphere model from a morphing point of view.
 They are the first to propose a large scale atmosphere model and user control. Our work was more oriented toward the control than the simulation and we did not investigate animation or time management.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud00.jpg" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud01.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud00.jpg" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud01.png" width="480">
 
 <center><i>Some clouds rendered by Bouthors et Al. (left) and Schpok et Al. (right)</i></center>
 
@@ -26,7 +26,7 @@ They are the first to propose a large scale atmosphere model and user control. O
 ### Atmosphere, Clouds
 
 
-<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud0.png">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud0.png">
 
 <center><i>Figure showing the different types of cloud and altitude ranges. We can then extract a few types and layer to create our model. See Wikipedia for more information on this topic.</i></center>
 
@@ -44,14 +44,14 @@ To allow the user enough control in the scene, we adopted a sketching approach. 
 model made of clouds. The user should also be able to specify shadow or sunny area on the screen and the application would take care of all this, solve conflicts between views, and propose a final atmosphere model 
 ready for offline or real time rendering. We developed the following pipeline to solve these problems :
 
-<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud1.png">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_pipeline.svg">
 
 <center><i>The big picture of the pipeline, showing every step of the program.</i></center>
 
 
 #### Atmosphere Model
 
-<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud2.png">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_model.svg">
 
 <center><i>Our atmosphere model is divided in 4 layers that can contains only certain types of clouds, which are modeled as an array of Spheres/Densities representing the shapes. 
 Extra parameters specify the maximum size of the cloud.</i></center>
@@ -71,8 +71,7 @@ fill densities in the scalar fields.
 We also had a conflicts resolution stage, where we basically merged user constraints from different views: the shadow and sunny area specified by the user could have intersection/conflicts zone that we solved by some ad hoc rules.
 The next figure shows how the projection and the resolution work in the application.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud3.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud4.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_projection.svg">
 
 
 #### Sampling, Instancing
@@ -80,8 +79,7 @@ The next figure shows how the projection and the resolution work in the applicat
 At this point, we have our sky layers filled with densities. What we want to is actual cloud instances. To do that, we need to compute candidate positions from our densities and then find a way to create a cloud 
 from this position. This stage is called Sampling. We use Poisson disk to sample our scalar field uniformly and get candidate positions. The following figure show how Sampling works in our pipeline.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud6.jpg" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/cloud5.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_sampling.svg">
 
 <center><i> On the left, a example of Poisson sampling. On the right, our density scalar field sampled with Poisson disks.</i></center>
 
