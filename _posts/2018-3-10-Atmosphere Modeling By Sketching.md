@@ -46,7 +46,7 @@ To allow the user enough control in the scene, we adopted a sketching approach. 
 model made of clouds. The user should also be able to specify shadow or sunny area on the screen and the application would take care of all this, solve conflicts between views, and propose a final atmosphere model 
 ready for offline or real time rendering. We developed the following pipeline to solve these problems :
 
-<object type="image/svg+xml" data="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_pipeline.svg">
+<object type="image/svg+xml" data="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/clouds_pipeline.svg&output=embed">
   Your browser does not support SVG.
 </object>
 
