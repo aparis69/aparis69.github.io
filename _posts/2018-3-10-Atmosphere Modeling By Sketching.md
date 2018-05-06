@@ -18,7 +18,7 @@ There was as always simulation, procedural generation and hand crafted clouds.
 They are the first to propose a large scale atmosphere model and user control. Our work was more oriented toward the control than the simulation and we did not investigate animation or time management.
 
 <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud00.jpg" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud01.jpg" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/clouds/cloud01.png" width="480">
 
 <center><i>Some clouds rendered by Bouthors et Al. (left) and Schpok et Al. (right)</i></center>
 
