@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Procedural Material Placement, Texturing and PBR
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="400" style="float:left;margin-right:15px;"> <p>Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the main page of the engine if you want to know more about it. We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’. The material tree is basically a hierarchical way of ordering the materials in our scenes.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen31.png" width="400" style="float:left;margin-right:15px;"> <p>Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the main page of the engine if you want to know more about it. We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’. The material tree is basically a hierarchical way of ordering the materials in our scenes.</p>
 ---
 
 Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the [main page](http://newheadstudio.com/) of the engine if you want to know more about it.
@@ -11,8 +11,8 @@ We wanted control over the placement in order to create biomes and realistic lan
 
 *Each node can be edited with a Unity-style inspector on the right of the editor window. We made a custom serialization system (txt files) for our trees because we couldn't get the unity scriptable objects to work in game mode in our node editor. This also allow us to easily back up our material trees.*
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen24.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen25.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen24.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen25.png" width="480">
 
 ### How it works
 The material tree is basically a hierarchical way of ordering the materials in our scenes. Only leaf nodes are actually placed on the terrain - intermediate nodes exists for decision making. 
@@ -27,8 +27,8 @@ With this process, we are able to determine vertex height as well as the ground 
 The node editor I made was heavily inspired by this link : Seneral Node Editor I ended up rewriting it to better fit our needs - but the idea is the same and this is a great open source tool.
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen26.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen27.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen26.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen27.png" width="480">
 
 
 ### Advantages
@@ -51,12 +51,12 @@ This series of article from the Blacksmith were helpful in that regard, firstly 
 *See results in the screenshots below. On the left, without PBR and without textures. On the right, with PBR and textures. We use normal maps for rocky materials only.*
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen28.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen29.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen28.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen29.png" width="480">
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen30.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen31.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen30.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen31.png" width="480">
 
 
 ### Future possibilities

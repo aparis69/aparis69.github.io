@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Accessibility In Video Games
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ablegamers.jpg" width="400" style="float:left;margin-right:15px;"> <p> As I was traveling in Scotland a few years ago to do my second year internship at Robert Gordon University, I knew approximately nothing about accessibility in video games and I think most people and especially many game developers still don't. The idea of this placement was to develop a generic plug in that would provide accessibility features to existing games made with the Unity game engine. Considering this was only a three months placement, I worked with two others friends to make a proof of concept of the program.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibility/ablegamers.jpg" width="400" style="float:left;margin-right:15px;"> <p> As I was traveling in Scotland a few years ago to do my second year internship at Robert Gordon University, I knew approximately nothing about accessibility in video games and I think most people and especially many game developers still don't. The idea of this placement was to develop a generic plug in that would provide accessibility features to existing games made with the Unity game engine. Considering this was only a three months placement, I worked with two others friends to make a proof of concept of the program.</p>
 ---
 
 As I was traveling in Scotland a few years ago to do my second year internship at Robert Gordon University, I knew approximately nothing about accessibility in video games and I think most people and especially many game developers still don't.
@@ -9,7 +9,7 @@ The idea of this placement was to develop a generic plug in that would provide a
 of the program.
 
 
-<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ablegamers.jpg">
+<img class="displayed" src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibility/ablegamers.jpg">
 
 
 ### Resources on Accessibility
@@ -43,8 +43,8 @@ Since Unity does not provide key remapping out of the box, we also developed a s
 *Two screenshots showing the high contrast post effect shader and the close captioning features. You can see all plug in options on the right part of the screen.*
 
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibilityScreen1.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibilityScreen2.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibility/accessibilityScreen1.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibility/accessibilityScreen2.png" width="480">
 
 
 Of course, each of these thing depends on the game you are making but the point is that it is very likely to be easy to integrate a few in your game, and you should consider it. Source code is available on github, but I would advise just

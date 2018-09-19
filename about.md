@@ -11,8 +11,8 @@ or breaking waves.
 I will be blogging about my research, personal projects and whatever comes to my mind. I am also a part time teacher and love to help, so feel 
 free to contact me if you have any question. [axel.paris69@gmail.com](mailto:axel.paris69@gmail.com)
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen11.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/screen3.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/terrain_engine/screen11.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/terrain_engine/screen3.png" width="480">
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/ssrssao1.png" width="480">
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/outerrain1.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/others/ssrssao1.png" width="480">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/others/outerrain1.png" width="480">

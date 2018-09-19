@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Terrain Erosion On GPU
-excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalResults.png" width="400" style="float:left;margin-right:15px;"> <p>I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have been implemented on the GPU, but there is not always an open source implementation. Let's take a look at the state of the art on terrain erosion.</p>
+excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal_erosion/thermalResults.png" width="400" style="float:left;margin-right:15px;"> <p>I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have been implemented on the GPU, but there is not always an open source implementation. Let's take a look at the state of the art on terrain erosion.</p>
 ---
 
 I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things
@@ -111,7 +111,7 @@ void main()
 
 You can see some results in the following figures.
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalResults.png">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal_erosion/thermalResults.png">
 
 <center><i>The base height fields on the left and the results of three hundred thermal erosion iteration on the right</i></center>
 
@@ -119,7 +119,7 @@ You can see some results in the following figures.
 
 I ran a quick benchmark to compare all the method I tried. Here are the results after 1000 iterations:
 
-<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermalbench.png">
+<img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal_erosion/thermalbench.png">
 
 <center><i>On the left, a comparison between all the methods on small grid resolution. On the right, bigger resolution without the CPU version. All time are in seconds.
 I didn't try to increase the grid resolution past 1024 on CPU because it took too much time, hence the two separate graphics</i></center>
