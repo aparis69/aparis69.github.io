@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Accessibility In Video Games
+date: 08-03-2018
 excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/accessibility/ablegamers.jpg" width="400" style="float:left;margin-right:15px;"> <p> As I was traveling in Scotland a few years ago to do my second year internship at Robert Gordon University, I knew approximately nothing about accessibility in video games and I think most people and especially many game developers still don't. The idea of this placement was to develop a generic plug in that would provide accessibility features to existing games made with the Unity game engine. Considering this was only a three months placement, I worked with two others friends to make a proof of concept of the program.</p>
 ---
 
