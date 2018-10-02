@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Procedural Material Placement, Texturing and PBR
-date: 24-06-2017
+time: 24-06-2017
 excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/material_tree/screen31.png" width="400" style="float:left;margin-right:15px;"> <p>Over the past two years, I have been working on a procedural system for material placement in the terrain engine. Here is the main page of the engine if you want to know more about it. We wanted control over the placement in order to create biomes and realistic landscapes but we couldn’t do everything by hand since our terrain was realistically scaled. The solution we came up with is something we call the ‘Material Tree’. The material tree is basically a hierarchical way of ordering the materials in our scenes.</p>
 ---
 

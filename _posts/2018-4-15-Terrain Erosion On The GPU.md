@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Terrain Erosion On GPU
-date: 15-04-2018
+time: 15-04-2018
 excerpt: <img src="https://raw.githubusercontent.com/Moon519/moon519.github.io/master/images/thermal_erosion/thermalResults.png" width="400" style="float:left;margin-right:15px;"> <p>I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things I do on the GPU. Erosion being very costly in terms of computation time, GPU is the way to go. Fortunately, many erosion algorithm have been implemented on the GPU, but there is not always an open source implementation. Let's take a look at the state of the art on terrain erosion.</p>
 ---
 
