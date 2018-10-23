@@ -6,16 +6,7 @@ body
 	padding-right: 3ch;
 	margin: 0 auto;
 	background: #F5F5F0;
-} 
-
-/* For small screen decices */
-@media (max-width: 500px) 
-{ 
-	body 
-	{
-		font-size: 12px; 
-	}
-}   
+}
 
 a 
 {
@@ -25,7 +16,7 @@ a
 
 img 
 {
-	max-width: 30em;
+	max-width: 1024px;
 	margin-top: 20px;
 	display: block;
 	margin-left: auto;
@@ -37,4 +28,17 @@ p
 	margin-top: 0px;
 	margin-bottom: 25pt;
 	text-align: justify;
+}
+
+/* For small screen decices */
+@media (max-width: 500px) 
+{ 
+	body 
+	{
+		font-size: 12px;
+	}
+	img
+	{
+		max-width: 30em;
+	}
 }
