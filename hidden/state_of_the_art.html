@@ -24,24 +24,43 @@
 	
 	<h3> To sort </h3>
 	Oscar Argudo - PhD Thesis - https://www.tdx.cat/handle/10803/620733
-	Lindsay - Article - http://www.uoguelph.ca/~hydrogeo/pubs/Lindsay-HP-preprint.pdf
 	Gainey - Web - https://experilous.com/1/blog/post/procedural-planet-generation
 	Clyde - Web - http://archive.gamedev.net/archive/reference/programming/features/randomriver/page2.html
 	Soderlund - Master Thesis - http://www.diva-portal.org/smash/get/diva2:817559/FULLTEXT01.pdf
 	<a href="http://cs.brown.edu/~nkhan6/documents/paper.pdf">???? - Khan - Raymarching Multiresolution Procedural Planets</a><br>
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes02ISADS.pdf">???? - Benes - Load Balancing in Parallel Implementation of Hydraulic Erosion Visual Simulations</a><br>
-	<a href="https://www.researchgate.net/publication/286138017_Landscape_specification_resizing">2014 - Cruz - Landscape specification resizing</a><br>
-	<a href="http://graphics.ucsd.edu/~henrik/papers/sig99/weathered_stone.pdf">???? - Dorsey - Modeling and Rendering of Weathered Stone</a><br>
 	<a href="biblio/2013 - Natali - Modeling Terrains and Subsurface Geology.pdf">2013 - Natali - Modeling Terrains and Subsurface Geology</a><br>
 	
 	<h3>Modeling</h3>
+	<a href="https://perso.liris.cnrs.fr/eric.galin/Articles/2015-terrain-from-primitives.pdf">2015 - Génevaux - Terrain Modeling from Feature Primitives</a><br>
+	<p>
+		Introduce a hierarchical tree representation for 2D terrains composed of compact features primitives (noise-based mostly), and operators aggregating their subtrees. Inspired by the BlobTree and 
+		noise-based terrains introduced by Musgrave. The compact terrains can be visualized by either a high-quality mesh extraction or sphere tracing. This paper also shows some Lipschitz constant computation
+		for several node in the tree.
+		Each terrain primitive comes with two functions: an elevation function and a weight function. The main difficulty resides in combining efficiently the primitives together and keeping tracks of the weight of
+		every primitives or sub tree in the scene. Overall, a nice and efficient model which would benefit from an interactive editor to create custom heightmaps. Lots of work could be done on the primitives themselves
+		to create interesting, parameterized features.
+		
+		Pros:
+			-Can virtually represent any 2D features
+			-Compact, memory efficient model
+
+		Cons:
+			-Weight functions to combine primitives are difficult to control.
+			-Visualization is not straightforward - the model is an implicit tree.
+			
+		Potentials:
+			-Interactive editor to place the primitives and create custom heightfields
+			-New primitives to represent different features, like coastlines.
+	</p>
+	<br><br>
 	
 	<a href="https://perso.liris.cnrs.fr/eric.guerin/download/eg2016.pdf">2016 - Guérin - Sparse representation of terrains for procedural modeling</a><br>
-	<a href="https://perso.liris.cnrs.fr/eric.galin/Articles/2015-terrain-from-primitives.pdf">2015 - Génevaux - Terrain Modeling from Feature Primitives</a><br>
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes01SCCG.pdf">???? - Benes - Layered Data Representation for Visual Simulation of Terrain Erosion</a><br>
 	<a href="https://hal.inria.fr/inria-00207679/document">2008 - Bruneton - Real time rendering and editing of vector based terrains</a><br>
 	<a href="http://www.ai.univ-paris8.fr/~amsi/articles/fbelhadj_200511.pdf">???? - Farès - Modeling Landscapes with Ridges and Rivers</a><br>
 	<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1467-8659.2006.00936.x">2006 - Atlan - Interactive Multiresolution Editing and Display of Large Terrains</a><br>
+	<a href="http://graphics.ucsd.edu/~henrik/papers/sig99/weathered_stone.pdf">???? - Dorsey - Modeling and Rendering of Weathered Stone</a><br>
 	
 	<h3>Volumetric Terrains</h3>
 	<a href="https://perso.liris.cnrs.fr/adrien.peytavie/publications/articles/EG2009_ArchesAFrameworkModelingComplexTerrains.pdf">2009 - Peytavie - Arches: a Framework for Modeling Complex Terrains</a><br>
@@ -66,6 +85,8 @@
 	<a href="https://www.researchgate.net/publication/224133576_Controlled_Procedural_Terrain_Generation_Using_Software_Agents">2010 - Doran - Controlled Procedural Terrain Generation Using Software Agents</a><br>
 	<a href="https://core.ac.uk/reader/61795891">2008 - Frade - Genetic Terrain Programming: an aesthetic approach to terrain generation</a><br>
 	<a href="https://people.cs.uct.ac.za/~jgain/publications/fastterrsynth.pdf">2015 - Gain - Parallel, Realistic and Controllable Terrain Synthesis</a><br>
+	<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1467-8659.2010.01806.x">2010 - Hnaidi - Feature based terrain generation using diffusion equation</a><br>
+	<a href="https://hal.archives-ouvertes.fr/hal-01520366">2017 - Argudo - Coherent multi-layer landscape synthesis</a><br>
 		
 	<h3>Simulation</h3>
 	<a href="http://www.theses.fr/2013LIMO4024">2013 - Bézin - Simulation d'évolution topologique - cas de l'interaction fluide-solide</a><br>
@@ -74,6 +95,7 @@
 	<a href="https://ac.els-cdn.com/S1464190901850115/1-s2.0-S1464190901850115-main.pdf?_tid=b846d947-1bda-4044-a95d-90b5932e76ad&acdnat=1540395388_4889f5689a61fc2dc07aa80eb23268ac">2001 - D'Ambrosio - A Cellular Automata Model for Soil Erosion by Water</a><br>
 	<a href="biblio/2009 - Caumon - Surface Based 3D Modeling of Geological Structures.pdf">2009 - Caumon - Surface Based 3D Modeling of Geological Structures</a><br>
 	<a href="/biblio/2014 - Rongier - Simulation of 3D Karst conduits.pdf">2014 - Rongier - Simulation of 3D Karst conduits</a><br>
+	<a href="http://www.uoguelph.ca/~hydrogeo/pubs/Lindsay-HP-preprint.pdf">2016 - Lindsay - Efficient hybrid breaching-filling sink removal methods for flow path enforcement in DEM</a><br>
 				
 	<h3>Interactivity</h3>
 	<a href="http://www.decarpentier.nl/downloads/InteractiveGPUBasedProceduralHeightfieldBrushes_paper.pdf">???? - Carpentier - Interactive GPU-based Procedural Heightfield brushes</a><br>
