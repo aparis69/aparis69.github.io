@@ -36,21 +36,20 @@
 	<p>
 		Introduce a hierarchical tree representation for 2D terrains composed of compact features primitives (noise-based mostly), and operators aggregating their subtrees. Inspired by the BlobTree and 
 		noise-based terrains introduced by Musgrave. The compact terrains can be visualized by either a high-quality mesh extraction or sphere tracing. This paper also shows some Lipschitz constant computation
-		for several node in the tree.
+		for several node in the tree.<br>
 		Each terrain primitive comes with two functions: an elevation function and a weight function. The main difficulty resides in combining efficiently the primitives together and keeping tracks of the weight of
 		every primitives or sub tree in the scene. Overall, a nice and efficient model which would benefit from an interactive editor to create custom heightmaps. Lots of work could be done on the primitives themselves
-		to create interesting, parameterized features.
-		
-		Pros:
-			-Can virtually represent any 2D features
-			-Compact, memory efficient model
+		to create interesting, parameterized features.<br>
+		Pros:<br>
+			-Can virtually represent any 2D features<br>
+			-Compact, memory efficient model<br><br>
 
-		Cons:
-			-Weight functions to combine primitives are difficult to control.
-			-Visualization is not straightforward - the model is an implicit tree.
+		Cons:<br>
+			-Weight functions to combine primitives are difficult to control.<br>
+			-Visualization is not straightforward - the model is an implicit tree.<br><br>
 			
-		Potentials:
-			-Interactive editor to place the primitives and create custom heightfields
+		Potentials:<br>
+			-Interactive editor to place the primitives and create custom heightfields<br>
 			-New primitives to represent different features, like coastlines.
 	</p>
 	<br><br>
