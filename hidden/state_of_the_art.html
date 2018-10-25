@@ -163,10 +163,24 @@
 	<h3>Generation</h3>
 	<a href="https://arches.liris.cnrs.fr/publications/articles/SIGGRAPH2013_PCG_Terrain.pdf">2013 - Génevaux - Terrain Generation Using Procedural Models Based on Hydrology</a><br>
 	<p>
-	
+		Novel terrain generation technique, based on hydrology inspired rules. First generate a river network graph, then divide the space into Voronoi cells an determine which feature primitive will be placed.
+		The method is rather complex et should be implemented carefully to understand the pipeline. Some technical aspects might take some time. The results show interesting terrains with good river networks but
+		the mountains are very hill-shaped. There should be some ridges as well as hills and rivers. The generated terrains are also rather big.
+		<b>Pros:</b> <br>
+			-A Novel method to generate terrains with a correct hydrologic network.<br>
+			-Introduce the feature primitives method as well.<br>
+		<b>Cons:</b> <br>
+			-Might be technically difficult to implement<br>
+			-Ridges are non-existent, mostly due to missing information about the locations and because there was no ridge primitive.
 	</p>
 	
-	<a href="https://hal.inria.fr/hal-01262376/document">2017 - Cordonnier - Large Scale Terrain Generation from Tectonic Uplift and Fluvial Erosion</a><br>
+	<a href="https://hal.inria.fr/hal-01262376/document">2016 - Cordonnier - Large Scale Terrain Generation from Tectonic Uplift and Fluvial Erosion</a><br>
+	<p>
+		This paper focuses on the generation of large-scale terrain made by two processes: Tectonic Uplift (with an uplift map) and Fluvial Erosion (StreamPower Erosion). The algorithms work on a vector-based
+		representation and must then be visualized with feature primitives or a smooth gaussian elevation (interpolation ?). The method produces very interesting shapes depending on the uplift map provided by the user.
+		The paper seems to use several tricks to ensure that moutains remains good looking. Some very steep cliffs can be seens in the results as well.
+	</p>
+	
 	<a href="https://hal.archives-ouvertes.fr/hal-01518967/document">2017 - Cordonnier - Authoring Landscapes by Combining Ecosystem and Terrain Erosion Simulation</a><br>
 	<a href="/biblio/2007 - Anh - Physically Based Hydraulic Erosion Simulation On GPU.pdf">2007 - Anh - Physically Based Hydraulic Erosion Simulation On GPU</a><br>
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes07Vriphys.pdf">2007 - Benes - Real Time Erosion Using Shallow Water Simulation</a><br>
