@@ -23,10 +23,10 @@
 	<hr>
 	
 	<h3> To sort </h3>
-	Oscar Argudo - PhD Thesis - https://www.tdx.cat/handle/10803/620733
-	Gainey - Web - https://experilous.com/1/blog/post/procedural-planet-generation
-	Clyde - Web - http://archive.gamedev.net/archive/reference/programming/features/randomriver/page2.html
-	Soderlund - Master Thesis - http://www.diva-portal.org/smash/get/diva2:817559/FULLTEXT01.pdf
+	Oscar Argudo - PhD Thesis - https://www.tdx.cat/handle/10803/620733<br>
+	Gainey - Web - https://experilous.com/1/blog/post/procedural-planet-generation<br>
+	Clyde - Web - http://archive.gamedev.net/archive/reference/programming/features/randomriver/page2.html<br>
+	Soderlund - Master Thesis - http://www.diva-portal.org/smash/get/diva2:817559/FULLTEXT01.pdf<br>
 	<a href="http://cs.brown.edu/~nkhan6/documents/paper.pdf">???? - Khan - Raymarching Multiresolution Procedural Planets</a><br>
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes02ISADS.pdf">???? - Benes - Load Balancing in Parallel Implementation of Hydraulic Erosion Visual Simulations</a><br>
 	<a href="biblio/2013 - Natali - Modeling Terrains and Subsurface Geology.pdf">2013 - Natali - Modeling Terrains and Subsurface Geology</a><br>
@@ -40,21 +40,36 @@
 		Each terrain primitive comes with two functions: an elevation function and a weight function. The main difficulty resides in combining efficiently the primitives together and keeping tracks of the weight of
 		every primitives or sub tree in the scene. Overall, a nice and efficient model which would benefit from an interactive editor to create custom heightmaps. Lots of work could be done on the primitives themselves
 		to create interesting, parameterized features.<br>
-		Pros:<br>
+		<b>Pros:</b><br>
 			-Can virtually represent any 2D features<br>
-			-Compact, memory efficient model<br><br>
-
-		Cons:<br>
+			-Compact, memory efficient model<br>
+		<b>Cons:</b><br>
 			-Weight functions to combine primitives are difficult to control.<br>
-			-Visualization is not straightforward - the model is an implicit tree.<br><br>
-			
-		Potentials:<br>
+			-Visualization is not straightforward - the model is an implicit tree.<br>		
+		<b>Future Work:</b><br>
 			-Interactive editor to place the primitives and create custom heightfields<br>
 			-New primitives to represent different features, like coastlines.
 	</p>
-	<br><br>
+	<br>
 	
 	<a href="https://perso.liris.cnrs.fr/eric.guerin/download/eg2016.pdf">2016 - Guérin - Sparse representation of terrains for procedural modeling</a><br>
+	<p>
+		<b> TODO: read in much more detail the paper since there is a LOT of information in it.</b>
+		Introduce a sparse representation for 2D terrains based on a dictionnary composed of atoms representing landforms features. Theses features can be either from DEM or procedural primitives.
+		The framework has several interesting applications: inverse modeling, amplification, synthesis from a user sketch. It can also be used for terrain compression, storing few landforms as images 
+		and procedural primitives as compact functions. The notion of hiearchy is not very clear since only blending is used between the primitives. <br>
+		The atoms are computed with Orthogonal Matching Pursuit (OMP), the dictionnary learning is done with a K-SVD.<br>
+		<b>Pros:</b><br>
+			-Lots of possible applications for this method<br>
+			-Novelty: this is a new representation for terrains<br>
+		<b>Cons:</b><br>
+			-Too much information in the paper - it could have been easily splitted in two, showing various application for the model.<br>
+			-The method produce coherent large scale details, but lacks consistency on smaller scales.<br>
+		<b>Future Work:</b><br>
+			-Focus on the compression side - showing a real time visualization of huge terrains (GPU)<br>
+			-Find a way to combine erosion method with the sparse representation: erode the atoms locally ? Store the differences/the erosion as an analytic functions ?
+	</p>
+	
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes01SCCG.pdf">???? - Benes - Layered Data Representation for Visual Simulation of Terrain Erosion</a><br>
 	<a href="https://hal.inria.fr/inria-00207679/document">2008 - Bruneton - Real time rendering and editing of vector based terrains</a><br>
 	<a href="http://www.ai.univ-paris8.fr/~amsi/articles/fbelhadj_200511.pdf">???? - Farès - Modeling Landscapes with Ridges and Rivers</a><br>
