@@ -28,7 +28,7 @@
 	Clyde - Web - http://archive.gamedev.net/archive/reference/programming/features/randomriver/page2.html<br>
 	Soderlund - Master Thesis - http://www.diva-portal.org/smash/get/diva2:817559/FULLTEXT01.pdf<br>
 	<a href="http://cs.brown.edu/~nkhan6/documents/paper.pdf">???? - Khan - Raymarching Multiresolution Procedural Planets</a><br>
-	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes02ISADS.pdf">???? - Benes - Load Balancing in Parallel Implementation of Hydraulic Erosion Visual Simulations</a><br>
+	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes02ISADS.pdf">2002 - Benes - Load Balancing in Parallel Implementation of Hydraulic Erosion Visual Simulations</a><br>
 	<a href="biblio/2013 - Natali - Modeling Terrains and Subsurface Geology.pdf">2013 - Natali - Modeling Terrains and Subsurface Geology</a><br>
 	
 	<h3>Modeling</h3>
@@ -50,11 +50,10 @@
 			-Interactive editor to place the primitives and create custom heightfields<br>
 			-New primitives to represent different features, like coastlines.
 	</p>
-	<br>
 	
 	<a href="https://perso.liris.cnrs.fr/eric.guerin/download/eg2016.pdf">2016 - Guérin - Sparse representation of terrains for procedural modeling</a><br>
 	<p>
-		<b> TODO: read in much more detail the paper since there is a LOT of information in it.</b>
+		<b> TODO: read in much more detail the paper since there is a LOT of information in it.</b><br>
 		Introduce a sparse representation for 2D terrains based on a dictionnary composed of atoms representing landforms features. Theses features can be either from DEM or procedural primitives.
 		The framework has several interesting applications: inverse modeling, amplification, synthesis from a user sketch. It can also be used for terrain compression, storing few landforms as images 
 		and procedural primitives as compact functions. The notion of hiearchy is not very clear since only blending is used between the primitives. <br>
@@ -70,14 +69,43 @@
 			-Find a way to combine erosion method with the sparse representation: erode the atoms locally ? Store the differences/the erosion as an analytic functions ?
 	</p>
 	
-	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes01SCCG.pdf">???? - Benes - Layered Data Representation for Visual Simulation of Terrain Erosion</a><br>
+	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes01SCCG.pdf">2001 - Benes - Layered Data Representation for Visual Simulation of Terrain Erosion</a><br>
+	<p>
+		First introduced the layered representation for terrains, therefore improving the thermal erosion algorithm to better show the interaction between layers. The paper is 
+		oriented toward technical contributions more than mathematicals, and some parallelization was planned.
+	</p>
+	
 	<a href="https://hal.inria.fr/inria-00207679/document">2008 - Bruneton - Real time rendering and editing of vector based terrains</a><br>
-	<a href="http://www.ai.univ-paris8.fr/~amsi/articles/fbelhadj_200511.pdf">???? - Farès - Modeling Landscapes with Ridges and Rivers</a><br>
-	<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1467-8659.2006.00936.x">2006 - Atlan - Interactive Multiresolution Editing and Display of Large Terrains</a><br>
-	<a href="http://graphics.ucsd.edu/~henrik/papers/sig99/weathered_stone.pdf">???? - Dorsey - Modeling and Rendering of Weathered Stone</a><br>
+	<p>
+		This paper seems very complicated in the implementation since it can represent many features: rivers, road, lakes, fields etc... With user control, on large terrain with an adaptative quadtree.
+		However, since the code is provided by Eric Bruneton, it is much simpler to implement the techniques described in the paper.<br>
+		Overall, the contributions are very technical oriented - it seems that there was no real challenge on the scientific side of things. Reimplementing this paper could take months.
+	</p>
+	
+	<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.462.5969&rep=rep1&type=pdf">2005 - Farès - Modeling Landscapes with Ridges and Rivers</a><br>
+	<p>
+		Introduces an original method to generate a set of ridge line and river network. It uses a particle system to choose the futur ridge and river path and displace the terrain all along.
+		The terrains with the ridge lines and river is amplified with a Midpoint displacement and inverse midpoint displacement algorithm, which I don't know. The resulting landscapes are much 
+		better than simple fractal noises, but lacks interesting features apart from the ridges and rivers. The midpoint adds details but not an interesting one. The method also seems to fit in 
+		the user controlled category with the last images - a surrealistic landscape model. Still, this paper would be interesting to implement.<br>
+		<b>Future Work:</b><br>
+			-Try a different amplification method and see the results.
+	</p>
 	
 	<h3>Volumetric Terrains</h3>
 	<a href="https://perso.liris.cnrs.fr/adrien.peytavie/publications/articles/EG2009_ArchesAFrameworkModelingComplexTerrains.pdf">2009 - Peytavie - Arches: a Framework for Modeling Complex Terrains</a><br>
+	<p>
+		Introduce a novel framework to represent volumetric terrains, capable of modeling overhangs, arches and caves. It uses a hybrid representation between voxels and implicit surfaces, and relies on manual editing
+		to create the features, despite having some erosion and stabilization algorithm presented in the PhD thesis of Adrien.<br>
+		<b>Pros:</b><br>
+			-The results are very good looking with a good texturing.<br>
+			-A novel representation at the time, "memory efficient".<br>
+			-Multi layer representation with sand and bedrock as well.<br>
+		<b>Cons:</b><br>
+			-Still not capable of representing large terrains
+			-The paper doesn't describe the erosion algorithms at all.
+	</p>
+	
 	<a href="https://www.researchgate.net/publication/2948853_Procedural_Landscapes_with_Overhangs">2001 - Gamito - Procedural Landscapes with Overhangs</a><br>
 	<a href="/biblio/1993 - Roudier - Landscapes Synthesis through Erosion and Simulation.pdf">1993 - Roudier - Landscapes Synthesis through Erosion and Simulation</a><br>
 	<a href="/biblio/2018 - Becher - Feature Based Volumetric Terrain Generation and Decoration.pdf">2018 - Becher - Feature Based Volumetric Terrain Generation and Decoration</a><br>
