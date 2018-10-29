@@ -182,7 +182,22 @@
 	</p>
 	
 	<a href="https://hal.archives-ouvertes.fr/hal-01518967/document">2017 - Cordonnier - Authoring Landscapes by Combining Ecosystem and Terrain Erosion Simulation</a><br>
+	<p>
+		Introduce a rather complicated framework that simulates lots of effects between multiple materials: ground, water, vegetation, rocks... The events are coherent and temporally bounded between multiple frames.
+		Examples of events: lightning, gravity, forest fire, running water and temperature. The system also allows user control at different stage of the pipeline.
+		<b>Pros:</b> <br>
+			-A Novel method to simulate interconnected events and extract a terrain.<br>
+			-Very cool research theme.<br>
+		<b>Cons:</b> <br>
+			-Technically difficult to implement: parallelization is not trivial because of the interconnection and temporal overlap between events.<br>
+			-Fine-scale details are not represented, the simulation stays at a large scale and piles of rocks might have been manually placed by the user.
+	</p>
+	
 	<a href="/biblio/2007 - Anh - Physically Based Hydraulic Erosion Simulation On GPU.pdf">2007 - Anh - Physically Based Hydraulic Erosion Simulation On GPU</a><br>
+	<p>
+		Describes a GPU implementation of the Hydraulic Erosion algorithm ; seems to be explained better than Benes et al.<b> Look at that paper to make the hydraulic erosion work </b>
+	</p>
+	
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Benes07Vriphys.pdf">2007 - Benes - Real Time Erosion Using Shallow Water Simulation</a><br>
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf">2008 - Stava - Interactive Terrain Modeling Using Hydraulic Erosion</a><br>
 	<a href="http://www.fdg2013.org/program/posters/poster03_cabezas_thompson.pdf">2010 - Cabezas - Real time procedural terrain generation through Swarm Behaviours</a><br>
