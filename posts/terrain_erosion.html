@@ -22,33 +22,72 @@
 	<br>
 	<div>
 	<h2>Terrain Erosion on the GPU</h2>
-	April 15, 2018
+	April 15, 2018. <i>Last updated on January 23, 2019</i>.
 	</div>
 	<hr>
 	<br>
 	I have been playing with different type of terrain erosion lately and one thing I would like to do is implementing all the things
 	I do on GPU. Erosion algorithms take many iterations to converge and are very costly when done on CPU. Most of these algorithms take advantage of parallelism: many have
 	been implemented on GPU, but there is not always an open source implementation. <br><br>
-	This is the first article of a series about terrain erosion and procedural generation. I will try to implement the things I find the most interesting, both on CPU and GPU to compare results (and also because compute shaders are fun). Let's start by taking a look at the state of the art on terrain erosion. <br>
+	This is the first article of a series about terrain erosion and procedural generation. I will try to implement the things I find the most interesting, both on CPU and GPU to compare results. 
+	Let's start by taking a look at the state of the art on terrain erosion. <br>
 	
 	<h3> State of the Art </h3>
 	There are different type of erosion: <br>
 	<ul>
-		<li><b>Thermal Erosion</b>: this is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". It is the simplest one to implement but does not give realistic results by itself. </li> 
-		<li><b>Hydraulic Erosion</b>: simulates water flows over the terrain. There are different types of Hydraulic erosion, but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.</li> 
-		<li><b>Fluvial Erosion</b>: it's the erosion of the bedrock material and its transportation downhill by streams. Usually modeled by the stream power equation as denoted by Cordonnier in 2016.</li> 
+		<li><b>Thermal Erosion</b>: is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". 
+									It is the simplest one to implement (and the focus of this article) but does not give realistic results by itself. </li> 
+		<li><b>Hydraulic Erosion</b>: simulates water flows over the terrain. There are different types of Hydraulic erosion, 
+										but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.</li> 
+		<li><b>Fluvial Erosion</b>: is the erosion of the bedrock material and its transportation downhill by streams. 
+									Usually modeled by the stream power equation as denoted by Guillaume Cordonnier in 2016.</li> 
 	</ul>
-	Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU by Št’ava in 2008 and Jako in 2011. You can also find a very good implementation of Hydraulic Erosion in Unity by <a href="https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity">Digital-Dust</a>.
+	Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU 
+	by Št’ava in 2008 and Jako in 2011. You can also find a very good implementation of Hydraulic Erosion in Unity by 
+	<a href="https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity">Digital-Dust</a>. In this post, we will focus on Thermal Erosion
+	and its implementation on the GPU.
 	
 	<h3> Thermal Erosion </h3>
-	Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain amount of material in the steepest direction if the talus angle is above the threshold defined the material. <br><br>
+	Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain amount of material (mostly sediments) 
+	in the direction of the slope, if the talus angle is above the threshold defined the material. <br><br>
 	
-	This process leads to terrains with a maximum slope that will be obtained by moving matter downhill. By chance, the algorithm is easily portable to the GPU: in fact, the core algorithm is almost identical to the CPU version. The difficulty resides in which buffer we use, how many we use and how much we care about race condition.
+	This process leads to terrains with a maximum slope that will be obtained by moving matter downhill. 
+	By chance, the algorithm is easily portable to the GPU: in fact, the core algorithm is almost identical to the CPU version. 
+	The difficulty resides in which buffer we use, how many we use and how much we care about race condition. I will first describe the CPU implementation
+	and code structure.
 	
-	<h3> The race condition </h3>
+	<h3> CPU Implementation </h3>
+	Most of the work done in Terrain Modeling uses a heightfield structure: a regular grid where every vertex store the height. You can find many articles on the web
+	describing such a structure (XX...) and so I will not go into details on the implementation. Just keep in mind that we use a one dimensionnal array
+	to store the height and access it in 2D by combining the coordinates and the grid dimension: index1D = i * n + j for a grid vertex at coordinate (i, j) 
+	and a grix of size n².<br><br>
+	
+	In scientific papers, you will find a more complicated structure called a layer field, which stores multiple heights for multiple materials using more than one
+	heightfield. The layer field has the advantage of representing different materials (Could be bedrock and sediment in our case for example) and the interactions
+	between them.<br><br>
+	Despite the fact that the layer field is more appropriate and for the sake of simplicity, we will use only a single height field structure to represent height data.
+	
+	<!-- generated by C/C++ to HTML Formatter -->
+	<div style="background-color: rgb(243, 243, 243); font-family: fixed,monospace; border: 1px solid rgb(200, 200, 200); color: RGB(0, 0, 0);"><div style="margin: 10px"><span style="color: rgb(7, 55, 99); font-weight: bold">struct</span> HeightField<br/>
+	{<br/>
+		&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">public</span>:<br/>
+		&emsp;&emsp;&emsp;&emsp;std::vector&lt;foat&gt; heights;<br/>
+		&emsp;&emsp;&emsp;&emsp;Box2D domain;<br/>
+		&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">int</span> n;<br/>
+		<br/>
+		&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">float</span> GetHeight(<span style="color: rgb(7, 55, 99); font-weight: bold">int</span> i, <span style="color: rgb(7, 55, 99); font-weight: bold">int</span> j) <span style="color: rgb(7, 55, 99); font-weight: bold">const</span><br/>
+		&emsp;&emsp;&emsp;&emsp;{<br/>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">return</span> heights[i * n + j];<br/>
+		&emsp;&emsp;&emsp;&emsp;}<br/>
+	};</div></div>
+	<!-- end of generated code -->
+	
+	<h3> GPU Implementation </h3>
+	
+	<h4> The race condition </h4>
 	GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know which one in advance. Therefore, multiple threads can be adding or removing height on the same grid point. This is called a race condition and it needs to be solved in most cases. Sometimes however we are lucky: after trying a few version of the algorithm, I found that the best solution was to just not care about the race condition happening.
 	
-	<h3> The solution(s) </h3>
+	<h4> The solution(s) </h4>
 
 	There are multiple ways to solve this problem. My first implementation used a single integer buffer to represent height data. I had to use integers because the atomicAdd function doesn't exist for floating point values. <br>
 	This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meter) because of integers. <br><br>
