@@ -129,6 +129,14 @@
 	therefore we could be adding matter to a point that will not be stabilized later. This version should be used in a loop to make sure all points
 	are stabilized.</i></center><br/><br/>
 	
+	The erosion amplitude is usually very small (~0.05/0.1 meter) so that the stabilization process can eventually converge (without infinitely moving matter from one cell to another). 
+	The lower the amplitude, the more iteration will be required to get a stabilized terrain. The Next(i, j, k, in, jn) function above returns the index (in, jn) of the k-th neighbour 
+	on the 1-ring neighborhood of the point (i, j). The figure below shows the 1-ring neighborhood of a grid vertex.
+	
+	<img src="../imgs/one-ring-neighborhood.png">
+	<center><i>The 1-ring neighborhood of the point (i, j) is computed with the Next() function in the example above, and k refers the index of the neighour as seen
+	in the figure.</i></center>
+	
 	<h3> GPU Implementation </h3>
 	
 	<h4> The race condition </h4>
