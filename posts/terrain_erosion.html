@@ -58,9 +58,9 @@
 	
 	<h3> CPU Implementation </h3>
 	Most of the work done in Terrain Modeling uses a heightfield structure: a regular grid where every vertex store the height. You can find many articles on the web
-	describing such a structure (XX...) and so I will not go into details on the implementation. Just keep in mind that we use a one dimensionnal array
-	to store the height and access it in 2D by combining the coordinates and the grid dimension: index1D = i * n + j for a grid vertex at coordinate (i, j) 
-	and a grix of size n².<br><br>
+	describing such a structure (which is just an array and a bounding box in world space) and so I will not go into details on the implementation. 
+	Just keep in mind that we use a one dimensionnal array to store the height and access it in 2D by combining the coordinates and the grid dimension: 
+	index1D = i * n + j for a grid vertex at coordinate (i, j) and a grix of size n².<br><br>
 	
 	In scientific papers, you will find a more complicated structure called a layer field, which stores multiple heights for multiple materials using more than one
 	heightfield. The layer field has the advantage of representing different materials (Could be bedrock and sediment in our case for example) and the interactions
@@ -82,7 +82,7 @@
 	};</div></div>
 	<!-- end of generated code -->
 	<center><i>A simple implementation of the HeightField structure to represent terrains. As a side note, heightfields are also very useful to represent
-	water surface. </i></center><br/><br/>
+	water surface, where height is also a function of time. </i></center><br/><br/>
 	
 	The core loop of the Thermal Erosion algorithm is quite simple: loop through all terrain vertices, detect unstable points and stabilize them by moving matter
 	in the slope direction. The version below is an implementation of the <i>steepest</i> method, where matter is only distributed in the steepest direction. A slightly
