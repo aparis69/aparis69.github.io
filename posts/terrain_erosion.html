@@ -50,7 +50,10 @@
 	
 	<h3> Thermal Erosion </h3>
 	Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain amount of material (mostly sediments) 
-	in the direction of the slope, if the talus angle is above the threshold defined the material. <br><br>
+	in the direction of the slope, if the talus angle is above the threshold defined the material. If you want an in depth-article explaining
+	the concept of thermal erosion, I recommend reading this one: <a href="http://web.mit.edu/cesium/Public/terrain.pdf">Olsen 2004</a>. A simple
+	optimized version which gives almost identical visual results is presented. You can also find some details about Hydraulic erosion and its 
+	implementation.<br><br>
 	
 	This process leads to terrains with a maximum slope that will be obtained by moving matter downhill. 
 	By chance, the algorithm is easily portable to the GPU: in fact, the core algorithm is almost identical to the CPU version. 
@@ -235,6 +238,8 @@
 	<h3> References </h3>
 
 	<a href="https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity">Interactive Erosion in Unity - Digital Dust</a> <br> <br>
+	
+	<a href="http://web.mit.edu/cesium/Public/terrain.pdf">Realtime Procedural Terrain Generation - Jacob Olsen</a> <br> <br>
 	
 	<a href="http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf">Interactive Terrain Modeling Using Hydraulic Erosion - Ondrej Št’ava</a> <br> <br>
 	
