@@ -12,6 +12,14 @@ a
 {
 	color: black;
 	font-weight: bold;
+	text-decoration: none;
+}
+
+.aUnderlined
+{
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 img 
