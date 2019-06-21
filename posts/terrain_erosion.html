@@ -14,6 +14,7 @@
 		<br>
 		--------------------------<br>
 		</a>
+		<a class="aUnderlined" href="../index.html">Home</a> &nbsp;
 		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
 		<a class="aUnderlined" href="../cv.html">Resume</a> &nbsp;
 		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
@@ -23,7 +24,7 @@
 	<br>
 	<div>
 	<h2>Terrain Erosion on the GPU</h2>
-	April 15, 2018. <i>Last updated on January 23, 2019</i>.
+	April 15, 2018. <i>Last updated on June 21, 2019</i>.
 	</div>
 	<hr>
 	<br>
@@ -38,22 +39,20 @@
 	<ul>
 		<li><b>Thermal Erosion</b>: is defined as "the erosion of ice-bearing permafrost by the combined thermal and mechanical action of moving water". 
 									It is the simplest one to implement (and the focus of this article) but does not give realistic results by itself. </li> 
-		<li><b>Hydraulic Erosion</b>: simulates water flows over the terrain. There are different types of Hydraulic erosion, 
-										but all are tricky to implement. Combined with Thermal erosion, it can give realistic looking terrain.</li> 
+		<li><b>Hydraulic Erosion</b>: simulates water flows over the terrain. There are many different implementation available on the internet and many
+									are not explained properly or contains bugs. It is a difficult algorithm to implement.</li> 
 		<li><b>Fluvial Erosion</b>: is the erosion of the bedrock material and its transportation downhill by streams. 
 									Usually modeled by the stream power equation as denoted by Guillaume Cordonnier in 2016.</li> 
 	</ul>
 	Musgrave was the first to show some results on both Thermal and Hydraulic erosion. These algorithms were ported to the GPU 
-	by Št’ava in 2008 and Jako in 2011. You can also find a very good implementation of Hydraulic Erosion in Unity by 
-	<a class="aUnderlined" href="https://www.digital-dust.com/single-post/2017/03/20/Interactive-erosion-in-Unity">Digital-Dust</a>. In this post, we will focus on Thermal Erosion
-	and its implementation on the GPU.
+	by <a class="aUnderlined" href="http://hpcg.purdue.edu/bbenes/papers/Stava08SCA.pdf">Št’ava</a> in 2008 and <a class="aUnderlined" href="http://old.cescg.org/CESCG-2011/papers/TUBudapest-Jako-Balazs.pdf)">Jako</a> in 2011. 
+	In this post, we will focus on Thermal Erosion and its implementation on the GPU. Hydraulic Erosion might be the subject of a future post.
 	
 	<h3> Thermal Erosion </h3>
 	Thermal erosion is based on the repose or talus angle of the material. The idea is to transport a certain amount of material (mostly sediments) 
 	in the direction of the slope, if the talus angle is above the threshold defined the material. If you want an in depth-article explaining
 	the concept of thermal erosion, I recommend reading this one: <a class="aUnderlined" href="http://web.mit.edu/cesium/Public/terrain.pdf">Olsen 2004</a>. A simple
-	optimized version which gives almost identical visual results is presented. You can also find some details about Hydraulic erosion and its 
-	implementation.<br><br>
+	optimized version which gives almost identical visual results is presented.
 	
 	This process leads to terrains with a maximum slope that will be obtained by moving matter downhill. 
 	By chance, the algorithm is easily portable to the GPU: in fact, the core algorithm is almost identical to the CPU version. 
@@ -64,20 +63,20 @@
 	Most of the work done in Terrain Modeling uses a heightfield structure: a regular grid where every vertex store the height. You can find many articles on the web
 	describing such a structure (which is just an array and a bounding box in world space) and so I will not go into details on the implementation. 
 	Just keep in mind that we use a one dimensionnal array to store the height and access it in 2D by combining the coordinates and the grid dimension: 
-	index1D = i * n + j for a grid vertex at coordinate (i, j) and a grix of size n².<br><br>
+	index1D = i * n + j for a grid vertex at coordinate (i, j) and a grid dimension n².<br><br>
 	
-	In scientific papers, you will find a more complicated structure called a layer field, which stores multiple heights for multiple materials using more than one
-	heightfield. The layer field has the advantage of representing different materials (Could be bedrock and sediment in our case for example) and the interactions
+	In research papers, you might find a different structure called layer field, which stores multiple heights for multiple materials using multiple
+	heightfields. The layer field has the advantage of representing different materials, such as bedrock, sediment or vegetation, and the interactions
 	between them.<br><br>
-	Despite the fact that the layer field is more appropriate and for the sake of simplicity, we will use only a single height field structure to represent height data.
+	Despite the fact that a layer field is more appropriate (because of a dedicated layer for sediment) and for the sake of simplicity, we will use only a single height field structure to represent our terrain.
 	<br/><br/>
 	<!-- generated by C/C++ to HTML Formatter -->
 	<div style="background-color: rgb(243, 243, 243); font-family: fixed,monospace; border: 1px solid rgb(200, 200, 200); color: RGB(0, 0, 0);"><div style="margin: 10px"><span style="color: rgb(7, 55, 99); font-weight: bold">struct</span> HeightField<br/>
 	{<br/>
 		&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">public</span>:<br/>
-		&emsp;&emsp;&emsp;&emsp;std::vector&lt;float&gt; heights;<br/>
-		&emsp;&emsp;&emsp;&emsp;Box2D domain;<br/>
-		&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">int</span> n;<br/>
+		&emsp;&emsp;&emsp;&emsp;std::vector&lt;float&gt; heights; &emsp;&emsp;&emsp;&emsp;// Array of heights<br/>
+		&emsp;&emsp;&emsp;&emsp;Box2D domain; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;// A World space box<br/>
+		&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">int</span> n;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; // Grid size<br/>
 		<br/>
 		&emsp;&emsp;&emsp;&emsp;<span style="color: rgb(7, 55, 99); font-weight: bold">float</span> GetHeight(<span style="color: rgb(7, 55, 99); font-weight: bold">int</span> i, <span style="color: rgb(7, 55, 99); font-weight: bold">int</span> j) <span style="color: rgb(7, 55, 99); font-weight: bold">const</span><br/>
 		&emsp;&emsp;&emsp;&emsp;{<br/>
@@ -85,12 +84,12 @@
 		&emsp;&emsp;&emsp;&emsp;}<br/>
 	};</div></div>
 	<!-- end of generated code -->
-	<center><i>A simple implementation of the HeightField structure to represent terrains. As a side note, heightfields are also very useful to represent
+	<center><i>A simple implementation of the HeightField structure to represent terrains. As a side note, heightfields are also used to represent
 	water surface, where height is also a function of time. </i></center><br/><br/>
 	
-	The core loop of the Thermal Erosion algorithm is quite simple: loop through all terrain vertices, detect unstable points and stabilize them by moving matter
+	The core loop of the Thermal Erosion is quite simple: loop through all terrain vertices, detect unstable points and stabilize them by moving matter
 	in the slope direction. The version below is an implementation of the <i>steepest</i> method, where matter is only distributed in the steepest direction. A slightly
-	more complicated version exists where matter is distributed equally (based on the relative slope) to all neighbour below the current grid point.
+	more complicated version exists where matter is distributed equally based on the relative slope to all neighbour below the current grid point.
 	<!-- generated by C/C++ to HTML Formatter -->
 	<div style="background-color: rgb(243, 243, 243); font-family: fixed,monospace; border: 1px solid rgb(200, 200, 200); color: RGB(0, 0, 0);"><div style="margin: 10px"><span style="color: rgb(7, 55, 99); font-weight: bold">void</span> ThermalErosionStep()<br/>
 	{<br/>
@@ -130,7 +129,7 @@
 	</div></div>
 	<!-- end of generated code -->
 	<center><i>CPU Implementation of a Thermal Erosion step. Note that this is not strictly correct because our points are not sorted by decreasing height,
-	therefore we could be adding matter to a point that will not be stabilized later. This version should be used in a loop to make sure all points
+	therefore we could be adding matter to a point that will not be stabilized later. This function should be used in a loop to make sure all points
 	are stabilized.</i></center><br/><br/>
 	
 	The erosion amplitude is usually very small (~0.05/0.1 meter) so that the stabilization process can eventually converge (without infinitely moving matter from one cell to another). 
@@ -144,17 +143,23 @@
 	<h3> GPU Implementation </h3>
 	
 	<h4> The race condition </h4>
-	GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know which one in advance. Therefore, multiple threads can be adding or removing height on the same grid point. This is called a race condition and it needs to be solved in most cases. Sometimes however we are lucky: after trying a few version of the algorithm, I found that the best solution was to just not care about the race condition happening.
+	GPU are parallel by nature: hundreds of threads are working at the same time. Thermal erosion needs to move matter from a grid point to another and we can't know which one in advance. 
+	Therefore, multiple threads can be adding or removing height on the same grid point. This is called a race condition and it needs to be solved in most cases. 
+	Sometimes however we are lucky: after trying a few version of the algorithm, I found that the best solution was to just not care about the race condition happening.
 	
 	<h4> The solution(s) </h4>
 
-	There are multiple ways to solve this problem. My first implementation used a single integer buffer to represent height data. I had to use integers because the atomicAdd function doesn't exist for floating point values. <br>
-	This solution worked and was faster than the CPU version but could only handle erosion on large scale (amplitude > 1 meter) because of integers. <br><br>
+	There are multiple ways to solve this problem. My first implementation used a single integer buffer to represent height data on the GPU. I had to use integers because the atomicAdd function doesn't exist for floating point values.
+	Heights was then converted to floating point data at the end on the CPU. This solution worked and was faster than the CPU version, but could only handle erosion on large scale (amplitude > 1 meter) because of integers. This version
+	is called "Single Integer" on the results graph below.<br><br>
 
 	In my next attempt I used two buffers: a floating value buffer to represent our height field data, and an integer buffer to allow the use of the <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/atomicAdd.xhtml">atomicAdd</a> glsl function.
-	The floating point values were handled with <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml">intBitsToFloat</a> and <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml">floatBitsToInt</a> functions. You also have to use a barrier to make sure your return buffer is filled properly with the correct final height. This solution worked as intended and was also faster than the CPU version but slower than my previous implementation because of the two buffers. The main advantage of this method is that we are no longer limited by the use of integers. <br> <br>
+	The floating point values were handled with <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/intBitsToFloat.xhtml">intBitsToFloat</a> and <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/floatBitsToInt.xhtml">floatBitsToInt</a> functions. 
+	You also have to use a barrier to make sure your return buffer is filled properly with the correct final height. This solution worked as intended and was also faster than the CPU version but slower than my previous implementation because of the use of two buffers. 
+	The main advantage of this method is that we are no longer limited by the use of integers. This version is called "Double buffer" is the results graph below. <br> <br>
 
-	My last idea was the one that I should have tried in the first place: simply ignore the race condition and use a single floating point value buffer to represent height data. Of course, the result will not be deterministic and will contain errors but at the end, the algorithm will converge to the same results after a few hundreds more iterations. Another good thing with this version is that we don't have any visually disturbing errors. The results are very similar to the other methods and this is the fastest, simplest method for now.
+	My last idea was the one that I should have tried in the first place: simply ignore the race condition and use a single floating point value buffer to represent height data. Of course, the result will not be deterministic and will contain errors because of race conditions but at the end, 
+	the algorithm will converge to the same visual result after a few more iterations. The results are very similar to the other methods and this is the fastest, simplest method that I implemented.
 	
 	<!-- FIGURE CODE -->
 	Here is a code snippet of the last method: <br><br>

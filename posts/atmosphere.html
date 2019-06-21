@@ -14,6 +14,7 @@
 		<br>
 		--------------------------<br>
 		</a>
+		<a class="aUnderlined" href="../index.html">Home</a> &nbsp;
 		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
 		<a class="aUnderlined" href="../cv.html">Resume</a> &nbsp;
 		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
@@ -23,7 +24,7 @@
 	<br>
 	<div>
 	<h2>Atmosphere Modeling by Sketching</h2>
-	March 10, 2018. <i>Last updated on January 23, 2019</i>.
+	March 10, 2018. <i>Last updated on June 21, 2019</i>.
 	</div>
 	<hr>
 	<br>
@@ -112,10 +113,7 @@
 	<center><i>On the left, a example of Poisson sampling. On the right, our density scalar field sampled with Poisson disks.</i></center> <br>
 	
 	Thanks to our sampling, we now have 2D candidate position for our clouds. We now have to determine the ones we keep as 
-	well as the altitude of the cloud. This was done with the following naive algorithm:
-	
-	<br><br><br> CODE <br><br><br>
-	
+	well as the altitude of the cloud. This was done with a very naive algorithm that worked well enough for our goals.
 	We also made a refined version of this which is based on a cost function and various variables : visibility, projected 
 	area on the screen, distance to camera, altitude etc… Which got interesting results to the cost of computation time. 
 	I could get into a lot more details about the implementation, the refined version and the user constraints but it would 

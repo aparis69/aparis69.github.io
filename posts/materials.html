@@ -14,6 +14,7 @@
 		<br>
 		--------------------------<br>
 		</a>
+		<a class="aUnderlined" href="../index.html">Home</a> &nbsp;
 		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
 		<a class="aUnderlined" href="../cv.html">Resume</a> &nbsp;
 		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
@@ -44,7 +45,8 @@
 		<li> We repeat this until we reach a leaf node - and then we know which material will be on this vertex. </li>
 	</ul>
 	
-	With this process, we are able to determine vertex height as well as the ground material and the vegetation on it : bushes, grass or trees. It has proven to be a pretty solid solution for our needs : thanks to the GUI I developed, we can ‘easily’ modify the rules and see the results on the terrain. <br>
+	With this process, we are able to determine vertex height as well as the ground material and the vegetation on it: bushes, grass or trees. It has proven to be a pretty solid solution for our needs: 
+	thanks to the GUI I developed, we can ‘easily’ modify the rules and see the results on the terrain. <br>
 	The node editor I made was heavily inspired by this link: <a class="aUnderlined" href="">Seneral Node Editor</a>. I ended up rewriting it to better fit our needs - but the idea is the same and this is a great open source tool.
 	
 	<!-- FIGURE 2 -->
@@ -69,9 +71,12 @@
 	
 	
 	<h3> Integration with Unity Standard Shader </h3>
-	I have also been working on integrating our material tree with the standard shader in Unity in order to take advantage of the physically based rendering. I also took the time to integrate texture support (we used simple rgb colors). To achieve that, I had to modify Unity Shaders but to keep the part about the physically based rendering. I have to say it was fairly easy to do - the shaders are all well written and documented. In fact, I only had to modify two files : UnityStandardCore and UnityStandardInput. I removed all the reference to forward rendering since we use deferred, and then it was just calling our function to get the texture we want and pass it to the standard shader pipeline. <br>
+	I have also been working on integrating our material tree with the standard shader in Unity in order to take advantage of the physically based rendering. I also took the time to integrate texture support (we used simple rgb colors). 
+	To achieve that, I had to modify Unity Shaders but to keep the part about the physically based rendering. I have to say it was fairly easy to do - the shaders are all well written and documented. In fact, I only had to modify two files: 
+	UnityStandardCore and UnityStandardInput. I removed all the reference to forward rendering since we use deferred, and then it was just calling our function to get the texture we want and pass it to the standard shader pipeline. <br>
 
-	This series of article from the Blacksmith were helpful in that regard, firstly because they modified the standard shader too (and that proved it could be done in a reasonable amount of time) and also because they provided good calibration charts for natural materials. <a href="">The Blacksmith Main Page</a>.
+	This series of article from the Blacksmith were helpful in that regard, firstly because they modified the standard shader too (and that proved it could be done in a reasonable amount of time) and also because they provided good 
+	calibration charts for natural materials.
  
 	<!-- FIGURE 3 -->
 	<img src="../imgs/material_pbr.jpg">
