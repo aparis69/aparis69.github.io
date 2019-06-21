@@ -30,6 +30,14 @@ a
 	font-size: 12px;
 }
 
+.left {
+	border: 1px solid black;
+	float: left;
+	max-width:20%;
+	margin: 0 10px 0 10px;
+    height:auto;
+}
+
 img 
 {
 	max-width: 1024px;
