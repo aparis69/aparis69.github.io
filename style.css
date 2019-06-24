@@ -26,8 +26,18 @@ a
 {
 	color: black;
 	font-weight: bold;
-	text-decoration: underline;
 	font-size: 12px;
+	border: 1px solid black;
+	padding: 2px;
+}
+
+.aUnderlinedPubli:hover
+{
+	color: blue;
+	font-weight: bold;
+	font-size: 12px;
+	border: 1px solid blue;
+	padding: 2px;
 }
 
 .left {
