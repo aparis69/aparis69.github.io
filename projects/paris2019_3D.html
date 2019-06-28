@@ -24,15 +24,31 @@
 	<br>
 	<div>
 	<h2>Terrain Amplification With Implicit 3D Features</h2>
-	June 21, 2019.
+	June 21, 2019. <i>Last updated on June 28, 2019.</i>
 	</div>
 	<hr>
-	<br>
+	<img src="../imgs/implicitTerrain_representative.jpg"><br>
 	<a class="aUnderlinedPubli" href="https://drive.google.com/file/d/1ljelmNl_LWBoNWV3La0b0F_jMjyRNZbc/view?usp=sharing">[Preprint]</a> 
 	<a class="aUnderlinedPubli" href="">[Paper]</a> 
 	<a class="aUnderlinedPubli" href="https://drive.google.com/file/d/18Uluva-iGTnnLzDgxpzSxYPqmU7qSH-O/view?usp=sharing">[Video]</a> 
 	<a class="aUnderlinedPubli" href="https://drive.google.com/file/d/1JxMYX_68Fyfspegt099U8maXlYAV9BKs/view?usp=sharing">[Supplementary Video]</a> 
-	<a class="aUnderlinedPubli" href="">[Code]</a> <a class="aUnderlinedPubli" href="projects/paris2019_3D.html">[Project]</a><br>
+	<a class="aUnderlinedPubli" href="">[Code]</a> 
+	<br><br>
+	<p>
+	While three-dimensional landforms, such as arches and overhangs, occupy a relatively small proportion of most computer generated landscapes, 
+	they are distinctive and dramatic and have an outsize visual impact. Unfortunately, the dominant heightfield representation of terrain precludes 
+	such features, and existing in-memory volumetric structures are too memory intensive to handle larger scenes. <br><br>
+ 
+	In this paper, we present a novel memory-optimized paradigm for representing and generating volumetric terrain based on implicit surfaces. We 
+	encode feature shapes and terrain geology using construction trees that arrange and combine implicit primitives. The landform primitives themselves 
+	are positioned using Poisson sampling, built using open shape grammars guided by stratified erosion and invasion percolation processes, and, finally, 
+	queried during polygonization.<br>
+	Users can also interactively author landforms using high-level modeling tools to create or edit the underlying construction trees, with support for
+	iterative cycles of editing and simulation.<br><br>
+ 
+	We demonstrate that our framework is capable of importing existing large-scale heightfield terrains and amplifying them with such diverse structures 
+	as slot canyons, sea arches, stratified cliffs, fields of hoodoos, and complex karst cave networks. 
+	</p>
 	
 	<br>
 	<br>
