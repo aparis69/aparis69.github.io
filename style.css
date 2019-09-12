@@ -24,28 +24,35 @@ a
 
 .aUnderlinedPubli
 {
+	border-radius: 5px;
 	color: black;
 	font-weight: bold;
 	font-size: 12px;
 	border: 1px solid black;
-	padding: 2px;
+	padding: 3px;
 }
 
 .aUnderlinedPubli:hover
 {
+	border-radius: 5px;
 	color: blue;
 	font-weight: bold;
 	font-size: 12px;
 	border: 1px solid blue;
-	padding: 2px;
+	padding: 3px;
 }
 
 .left {
 	border: 1px solid black;
 	float: left;
-	max-width:20%;
+	max-width: 20%;
 	margin: 0 10px 0 10px;
     height:auto;
+}
+
+.textPubli
+{
+	font-size: 1.15em;
 }
 
 img 
@@ -62,6 +69,7 @@ p
 	margin-top: 0px;
 	margin-bottom: 25pt;
 	text-align: justify;
+	line-height: 1.3;
 }
 
 /* For small screen devices */
