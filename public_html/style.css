@@ -1,11 +1,12 @@
 body 
 {
-	font-family: Muli, Monospace, Courier;
+	font-family: Candara, Monospace, Courier;
 	max-width: 1030px;  /* for pc */
 	padding-left: 2ch;
 	padding-right: 3ch;
 	margin: 0 auto;
 	background: #F5F5F0;
+	font-size: 1.2em;
 }
 
 a 
@@ -20,6 +21,7 @@ a
 	color: black;
 	font-weight: bold;
 	text-decoration: underline;
+	font-size: 1em;
 }
 
 .aUnderlinedPubli
@@ -27,7 +29,7 @@ a
 	border-radius: 5px;
 	color: black;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 0.7em;
 	border: 1px solid black;
 	padding: 3px;
 }
@@ -37,7 +39,7 @@ a
 	border-radius: 5px;
 	color: blue;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 0.75em;
 	border: 1px solid blue;
 	padding: 3px;
 }
@@ -47,12 +49,7 @@ a
 	float: left;
 	max-width: 20%;
 	margin: 0 10px 0 10px;
-    height:auto;
-}
-
-.textPubli
-{
-	font-size: 1.15em;
+    height: auto;
 }
 
 img 
@@ -85,7 +82,6 @@ p
 	}
 }
 
-/* For small screen devices */
 @media (max-width: 800px) 
 { 
 	img
