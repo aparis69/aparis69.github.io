@@ -27,28 +27,27 @@
 	February 14, 2020.
 	</div>
 	<hr>
-	In my <a class="aUnderlined" href="terrain_erosion.html">previous post</a> on thermal erosion, I tried to implement the naive, straightforward version of the algorithm which
-	can be summarized as this: for every vertex v, check if v is unstable in regards to its neighbours. If so, distribute
-	a certain amount of material to some of the downwards neighbours.
+	In my <a class="aUnderlined" href="terrain_erosion.html">previous post</a> on thermal erosion, I implemented the naive, straightforward 
+	version of the algorithm which can be summarized as this: for every cell <i>C</i>, check the stability in regards to its neighbours. 
+	If <i>C</i> is unstable, distribute a certain amount of material to downwards neighbours.
 	<br><br>
-	The problem with this approach when in a massively parallel context is that we need to write to neighboring cells, which
-	leads to slow atomic operations. However, for several algorithms, what often works is to reverse the thinking: instead
-	of trying to write to neighboring indices in an array, change the method to <i>read</i> from neighbours and <i>only write</i> to
-	myself, therefore avoiding costly atomic operations and race conditions.
+	The problem with this approach in a massively parallel context is the need to write to neighboring cells, which
+	requires slow atomic operations. However, for several algorithms, what often works is to reverse the thinking: instead
+	of trying to write to neighboring cells, change the method to <i>read</i> from neighbours and <i>only write</i> to
+	the current cell, therefore avoiding costly atomic operations and race conditions.
 	<br><br>
-	By chance, it is simple to apply this method to thermal erosion. Here is the revised version of the algorithm:<br><br>
+	By chance, this method can be applied to thermal erosion. The idea for a single cell <i>C</i> is to look for upward points that 
+	will be giving matter to <i>C</i> and do the operation (here, adding matter) on <i>C</i> only. Same thing for the distribution to 
+	downward cells: we remove matter from <i>C</i> only, and let the neighboring cells do the other part of the computation. This has
+	to be done with two buffer to make sure to get a deterministic output. Here is the revised version of the algorithm in a compute
+	shader:<br><br>
 	
 	<br>
-	The idea can be generally applied to other erosion method such as hydraulic erosion.
-	Now the main bottleneck of this approach is the constant read operations occuring in each thread of the shader. Reading from a storage
-	buffer is not as bad as performing a texture sample, but still.
+	This method can generally be applied to other erosion algorithms, such as hydraulic or aeolian erosion.
+	Here is a performance comparison of the method described in this post versus the one from the 
+	<a class="aUnderlined" href="terrain_erosion.html">previous post</a>:
 	<br><br>
-	Here is a performance comparison of the method described in this post versus the one from the previous post:
-	<br><br>
-	The new method outperforms the one from the <a class="aUnderlined" href="terrain_erosion.html">previous post</a> and has no race condition.
-	
-	<h3> References </h3>
-
+	The new method outperforms the one from the previous post and has no race condition.
 	<br>
 	<hr>
  <center>
