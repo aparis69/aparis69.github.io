@@ -29,15 +29,14 @@
 	May 3, 2020.
 	</div>
 	<hr>
-	<img src="../imgs/gradient_teaser.png"> <br>
 	Adding details to implicit surfaces, whether they are defined as distance fields or blob construction trees,
 	has been a challenging problem for many years. As opposed to meshes, implicits do not provide an explicit parameterization of the surface.
 	This prevents the use of classic displacement maps used on mesh models, which are based on texture mapping: the process of applying a 2D image 
 	to a 3D surface.
 	<br><br>
 	Traditionally, adding details to implicits is done by modifying the scalar field with 3D noise using blending or classic CSG operators. You can see many
-	examples of this in Shadertoy: <a>here</a>, <a>here</a> and <a>there</a> just to name a few.<br>
-	While such technique can theoritically add infinite details, the self-similar appearance of the noise function used is limitating. 
+	examples of this in Shadertoy: <a href="https://www.shadertoy.com/view/XsX3RB">here</a> or <a href="https://www.shadertoy.com/view/XdfGz8">here</a> just to name a few.
+	While such technique can theoretically add infinite details, the self-similar appearance of the noise function used is limitating. 
 	Futhermore, adding 3D noise everywhere in the scalarfield may create disjoint fragments in the object, often referred to as floating parts, and usually
 	not desired.
 	<br><br>
@@ -50,32 +49,77 @@
 	in academic research. I suspect this is the case because the technique comes from the industry - but this is still surprising since triplanar mapping is used
 	everywhere in computer graphics. The only citable reference of the  method that we could find is from 
 	<a href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu>">an article</a> in GPU Gems 
-	3 by Ryan Geiss.
+	3 by Ryan Geiss. On the other hand, there are some good blog article on the web that explains triplanar mapping in details and provide examples such as
+	<a href="https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/>">Catlike Coding</a> and <a href="https://www.martinpalko.com/triplanar-mapping/">Martin Palko</a> 
+	posts.
 	<br><br>
 	The idea behind triplanar mapping is to use the world space position of a point `\mathbf{p}` and its normal `\mathbf{n}` to determine a parameterization in 2D space.
 	This has a big advantage: the surface you are trying to map to the texture does not need an explicit parameterization, which is perfect for implicits. The final texture 
-	contribution `f` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
-	<p class="math"> `f(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
+	contribution `T` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
+	<p class="math"> `T(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
 	The weighting function `\alpha_i` computes the contribution of each mapping of `\mathbf{p}` according to the dot product between the normal and the unit axis-aligned vectors:
 	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i` computes the projection of `\mathbf{p}` on the i-th plane in world space and finally, the function `t` denotes 
 	the 2D function which we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
 	<br><br>
-	The function `f(\mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
+	The function `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
 	<img src="../imgs/gradient_teaser.png">
 	<center><i>An implicit sphere and a quadric curve textured using triplanar mapping, with the texture shown in the bottom left. <br>Rendering was performed using Sphere Tracing.</i></center>
 	
 	<br>
-	As I am working on terrain modeling for my PhD, I am trying to determine where the line draws between geometric and texture details, that is "When does geometry become texture ?". When using
-	implicit primitives, you have a very nice and compact representation of the shape - but you have less tools when it comes to texturing. So I thought it was a good idea to extend the use of
-	triplanar mapping for implicit primitive, to create more geometric details on the surface. This can be done by warping space.
+	While using triplanar mapping to compute albedo is pretty straightforward even for implicit surfaces, it is not the case for triplanar <i>displacement</i> whose goal is to modify
+	the geometry of the shape itself. When working with implicits, the equivalent for displacement is called <i>warping</i>.
 	
 	<h3> Warping an implicit surface </h3>
+	A warp is defined as a domain deformation and is widely used in computer graphics: for instance, image warping is commonly found in filters used in messaging apps such as Snapchat to make
+	your pictures look weird; in texture synthesis, warping is an essential tool to create interesting procedural textures; and in implicit modeling, warping is used to create more interesting
+	shapes as it deforms the local space around a point to create new features.
+	<br><br>
+	In essence, a 3D warp is a mapping `\mathbb R^3 \rightarrow \mathbb R^3`. Any deformation is theoretically possible: translation, rotation, bending, twisting... Inigo Quilez makes 
+	a good listing of them on its <a href="https://iquilezles.org/www/articles/distfunctions/distfunctions.htm">blog</a>. In our case, we use a translation operation to emulate a displacement.
+	
+	<br><br>
+	Back to our problem: what we want is the ability to deform our implicit functions using <i>triplanar warping</i>. To do so is not very difficult: instead of treating the 2D information
+	from our function `T` as a color, we treat it as a warping strength. As for the warping direction, we use the normal direction `n` from which we computed our weighting coefficients
+	in the last section. The warping function `w` can then be defined as:
+	<p class="math">`w(\mathbf{p}) = \mathbf{p} - \mathbf{n} \cdot T(\mathbf{p}, \mathbf{n}) `</p>
+	Then, the final implicit function `\tilde{f}` can be defined as the composition of the base shape function `f` and the warping operator:
+	<p class="math">`\tilde{f}(p) = f \circ w(p)`</p>
+	In the paper, we call this operator <i>gradient-based warping</i> to make it clear that it requires the evaluation of the gradient of the underlying implicit function. For the warping
+	operator to work, a correct normalized gradient of `f` must be computed first. The following images shows a serie of sphere warped using various textures - you can see the clear improvement
+	in terms of geometric details.
+	<img src="../imgs/gradient_teaser.png">
+	<center><i>Implicit spheres warped with different textures, rendering using sphere tracing and no albedo texture.</i></center>
+	<br>
+	Up to this point and if you read the paper, you probably didn't learn much. All of this is explained in a more compact (and most likely less friendly due to page limit) way in the paper - except 
+	for the new renderings. But there are a few more interesting things that we can discuss that hopefully will provide value to the reader.
 	
 	<h3> Lipschitz Bound and Sphere Tracing </h3>
+	There are two popular way to extract a rendering out of implicit surfaces: polygonization through algorithms such as <a href="">marching cubes</a>, and ray marching. There are different advantages 
+	and disadvantages to both of these methods and I will not go into details - to me, it is a matter of whatever fits your pipeline best. In this post, we will discuss the second option: ray marching.
+	<br><br>
+	There are different subtypes of raymarching - and the one we are interested in is called sphere tracing. A great introduction to the technique is available <a href="https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields">
+	here</a>. In this section, we will compute a global Lipschitz bound of our gradient-based warping operator to ensure that sphere tracing remains correct and does not miss the surface of our
+	object.
+	
+	<h3> Performance </h3>
+	If you have worked enough with implicit surface, you will know that while they provide powerfull modeling features, they are often terribly inconvenient to use due to their rendering time. A complex
+	scene featuring multiple warping operators, soft union or curve primitives can take several minutes to render using the CPU. Warping especially can crush performance, so it is interesting to measure
+	the actual overhead of our operator. We also have to keep in mind that we use a special kind of triplanar mapping, which already has an overhead when compared to a single texture fetch in traditionnal mesh
+	pipelines.
+	<br><br>
+	The following table reports timings for the scenes shown in this blog post. Rendering was done using sphere tracing with the global lipschitz calculated in the last section. Image size was
+	set to 1000x1000 pixels, and 16 threads were used to compute the final image. No fancy optimization was made in the C++ code to get these times.
+	<br><br>
+	
+	<h3> Limitations and Conclusion </h3>
+	A better, local lipschitz bound could be computed for our warping operator - therefore allowing the use of segment tracing to improve rendering times.
 	
 	<h3> References </h3>
+	<a class="aUnderlined" href="https://prism.ucalgary.ca/bitstream/handle/1880/46254/1998-618-09.pdf?sequence=2&isAllowed=y">Wyvill - The Blob Tree - Warping, Blending and Boolean Operations</a><br>
+	<a class="aUnderlined" href="https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields">ScratchAPixel - Rendering Distance Fields</a><br>
+	<a class="aUnderlined" href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu">Ryan Geiss - Generating Complex Procedural Terrains Using the GPU - GPU Gems 3</a><br>
+	<a class="aUnderlined" href="https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm">Inigo Quilez - 3D Distance functions</a><br>
 	
-	<br>
 	<br>
 	<hr>
  <center>
