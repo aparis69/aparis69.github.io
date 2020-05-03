@@ -99,7 +99,12 @@
 	<br><br>
 	There are different subtypes of raymarching - and the one we are interested in is called sphere tracing. A great introduction to the technique is available <a href="https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields">
 	here</a>. In this section, we will compute a global Lipschitz bound of our gradient-based warping operator to ensure that sphere tracing remains correct and does not miss the surface of our
-	object.
+	object.	First, we define the gradient `\nabla\tilde{f}` from the definiton of our implicit function `\tilde{f}`:
+	<br><br>
+	<p class="math">`\tilde{f} = f \circ w`</p>
+	<p class="math">`\nabla \tilde{f}=\nabla(f \circ w) = \nabla f \circ w \cdot J_w`</p>
+	We compute the Lipschitz bound by bounding the gradient of the field function `f` and the Euclidean norm of the Jacobian matrix `J_w`:
+	<p class="math">`||\nabla(f \circ w)|| \le ||\nabla f \circ w || \quad || J_w\||`</p>
 	
 	<h3> Performance </h3>
 	If you have worked enough with implicit surface, you will know that while they provide powerfull modeling features, they are often terribly inconvenient to use due to their rendering time. A complex
