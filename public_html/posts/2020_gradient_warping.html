@@ -1,0 +1,81 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<title>Axel Paris</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/> 
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+</head>  
+  <body>
+	<br>
+	<center>
+		<a href="../../index.html" style="text-decoration: none;font-size:1.2em"><b>Axel Paris - PhD Student in Computer Graphics</b>
+		<br>
+		<hr style="width:20em;">
+		</a>
+		<a class="aUnderlined" href="../../index.html">Home</a> &nbsp;
+		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
+		<a class="aUnderlined" href="https://drive.google.com/file/d/1j1E-QmeV-LjHUVHJNPQibnm7WlQzME7L/view?usp=sharing">Resume</a> &nbsp;
+		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
+		<a class="aUnderlined" href="https://twitter.com/Axel_Paris">Twitter</a>
+		<br>
+	</center>
+	<br>
+	<div>
+	<h2>Detail Synthesis for Distance Fields and Blobs</h2>
+	May 3, 2020.
+	</div>
+	<hr>
+	<img src="../imgs/gradient_teaser.png"> <br>
+	Adding details to implicit surfaces, whether they are defined as distance fields or blob construction trees,
+	has been a challenging problem for many years. As opposed to meshes, implicits do not provide an explicit parameterization of the surface.
+	This prevents the use of classic displacement maps used on mesh models, which are based on texture mapping: the process of applying a 2D image 
+	to a 3D surface.
+	<br><br>
+	Traditionally, adding details to implicits is done by modifying the scalar field with 3D noise using blending or classic CSG operators. You can see many
+	examples of this in Shadertoy: <a>here</a>, <a>here</a> and <a>there</a> just to name a few.<br>
+	While such technique can theoritically add infinite details, the self-similar appearance of the noise function used is limitating. 
+	Futhermore, adding 3D noise everywhere in the scalarfield may create disjoint fragments in the object, often referred to as floating parts, and usually
+	not desired.
+	<br><br>
+	In our <a href="../projects/paris2020_Blocks.html">paper about block fracturing</a>, we show how to use a popular technique in computer graphics which 
+	is triplanar mapping, and apply it to implicits to increase the level of detail of the shape while retaining control for the designer. The proposed method 
+	has the advantage of offering on-the-fly parameterization of the implicit function.
+	
+	<h3> Triplanar mapping </h3>
+	While trying to find citable references for triplanar mapping when we were writing the paper, I was surprised to find out that it was almost never discussed
+	in academic research. I suspect this is the case because the technique comes from the industry - but this is still surprising since triplanar mapping is used
+	everywhere in computer graphics. The only citable reference of the  method that we could find is from 
+	<a href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu>">an article</a> in GPU Gems 
+	3 by Ryan Geiss.
+	<br><br>
+	The idea behind triplanar mapping is to use the world space position of a point `\mathbf{p}` and its normal `\mathbf{n}` to determine a parameterization in 2D space.
+	This has a big advantage: the surface you are trying to map to the texture does not need an explicit parameterization, which is perfect for implicits. The final texture 
+	contribution `f` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
+	<p class="math"> `f(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
+	The weighting function `\alpha_i` computes the contribution of each mapping of `\mathbf{p}` according to the dot product between the normal and the unit axis-aligned vectors:
+	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i` computes the projection of `\mathbf{p}` on the i-th plane in world space and finally, the function `t` denotes 
+	the 2D function which we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
+	<br><br>
+	The function `f(\mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
+	<img src="../imgs/gradient_teaser.png">
+	<center><i>An implicit sphere and a quadric curve textured using triplanar mapping, with the texture shown in the bottom left. <br>Rendering was performed using Sphere Tracing.</i></center>
+	
+	<br>
+	As I am working on terrain modeling for my PhD, I am trying to determine where the line draws between geometric and texture details, that is "When does geometry become texture ?". When using
+	implicit primitives, you have a very nice and compact representation of the shape - but you have less tools when it comes to texturing. So I thought it was a good idea to extend the use of
+	triplanar mapping for implicit primitive, to create more geometric details on the surface. This can be done by warping space.
+	
+	<h3> Warping an implicit surface </h3>
+	
+	<h3> Lipschitz Bound and Sphere Tracing </h3>
+	
+	<h3> References </h3>
+	
+	<br>
+	<br>
+	<hr>
+ <center>
