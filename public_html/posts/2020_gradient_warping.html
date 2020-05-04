@@ -49,43 +49,42 @@
 	in academic research. I suspect this is the case because the technique comes from the industry - but this is still surprising since triplanar mapping is used
 	everywhere in computer graphics. The only citable reference of the  method that we could find is from 
 	<a href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu>">an article</a> in GPU Gems 
-	3 by Ryan Geiss. On the other hand, there are some good blog article on the web that explains triplanar mapping in details and provide examples such as
-	<a href="https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/>">Catlike Coding</a> and <a href="https://www.martinpalko.com/triplanar-mapping/">Martin Palko</a> 
-	posts.
+	3 by Ryan Geiss. On the other hand, there are some good blog articles on the web that explain triplanar mapping in details and provide examples such as
+	<a href="https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/>">Catlike Coding</a> and <a href="https://www.martinpalko.com/triplanar-mapping/">Martin Palko</a>.
 	<br><br>
 	The idea behind triplanar mapping is to use the world space position of a point `\mathbf{p}` and its normal `\mathbf{n}` to determine a parameterization in 2D space.
 	This has a big advantage: the surface you are trying to map to the texture does not need an explicit parameterization, which is perfect for implicits. The final texture 
-	contribution `T` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
+	contribution `T \quad : \mathbb R^3, \mathbb R^3 \rightarrow \mathbb \R^3` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
 	<p class="math"> `T(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
 	The weighting function `\alpha_i` computes the contribution of each mapping of `\mathbf{p}` according to the dot product between the normal and the unit axis-aligned vectors:
-	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i` computes the projection of `\mathbf{p}` on the i-th plane in world space and finally, the function `t` denotes 
-	the 2D function which we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
+	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i \quad : \quad \mathbb R^3 \rightarrow \mathbb R^2` computes the projection of `\mathbf{p}` on the i-th plane in world space 
+	and finally, the function `t` denotes the 2D function we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
 	<br><br>
 	The function `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
 	<img src="../imgs/gradient_albedo.png">
-	<center><i>Implicit spheres textured using triplanar mapping. <br>Rendering was performed using Sphere Tracing.</i></center>
+	<center><i>Implicit spheres textured using triplanar mapping. Rendering was performed using Sphere Tracing.</i></center>
 	
 	<br>
 	While using triplanar mapping to compute albedo is pretty straightforward even for implicit surfaces, it is not the case for triplanar <i>displacement</i> whose goal is to modify
 	the geometry of the shape itself. When working with implicits, the equivalent for displacement is called <i>warping</i>.
 	
 	<h3> Warping an implicit surface </h3>
-	A warp is defined as a domain deformation and is widely used in computer graphics: for instance, image warping is commonly found in filters used in messaging apps such as Snapchat to make
-	your pictures look weird; in texture synthesis, warping is an essential tool to create interesting procedural textures; and in implicit modeling, warping is used to create more interesting
+	A warp is defined as a domain deformation and is widely used in computer graphics: for instance, image warping is commonly found in filters of messaging apps such as Snapchat to make
+	your pictures look weird; in texture synthesis, warping is an essential tool to create procedural textures; and in implicit modeling, warping is used to create more interesting
 	shapes as it deforms the local space around a point to create new features.
 	<br><br>
-	In essence, a 3D warp is a mapping `\mathbb R^3 \rightarrow \mathbb R^3`. Any deformation is theoretically possible: translation, rotation, bending, twisting... Inigo Quilez makes 
-	a good listing of them on its <a href="https://iquilezles.org/www/articles/distfunctions/distfunctions.htm">blog</a>. In our case, we use a translation operation to emulate a displacement.
+	In essence, a 3D warp is a mapping `\mathbb R^3 \rightarrow \mathbb R^3`. Any deformation is theoretically possible: translation, rotation, bending, twisting... 
+	You can find a listing <a href="https://iquilezles.org/www/articles/distfunctions/distfunctions.htm">here</a>. 
 	
 	<br><br>
-	Back to our problem: what we want is the ability to deform our implicit functions using <i>triplanar warping</i>. To do so is not very difficult: instead of treating the 2D information
-	from our function `T` as a color, we treat it as a warping strength. As for the warping direction, we use the normal direction `n` from which we computed our weighting coefficients
+	Back to our problem: what we want is the ability to deform our implicit function `f \quad : \mathbb R^3 \rightarrow \mathbb \R^3` using <i>triplanar warping</i>. To do so, we will treat the information of our function `T` not as a color, 
+	but as a displacement strength. As for the warping direction, we use the normal direction `n` from which we computed our weighting coefficients
 	in the last section. The warping function `w` can then be defined as:
 	<p class="math">`w(\mathbf{p}) = \mathbf{p} - \mathbf{n} \cdot T(\mathbf{p}, \mathbf{n}) `</p>
 	Then, the final implicit function `\tilde{f}` can be defined as the composition of the base shape function `f` and the warping operator:
 	<p class="math">`\tilde{f}(p) = f \circ w(p)`</p>
-	In the paper, we call this operator <i>gradient-based warping</i> to make it clear that it requires the evaluation of the gradient of the underlying implicit function. For the warping
-	operator to work, a correct normalized gradient of `f` must be computed first. The following images shows a serie of sphere warped using various textures - you can see the clear improvement
+	In the paper, we call this operator <i>gradient-based warping</i> because it requires the evaluation of the gradient of the underlying implicit function `f`. For the warping
+	operator to work, a correct gradient `\nabla f` must be computed first. The following images shows a serie of sphere warped using various textures - you can see the clear improvement
 	in terms of geometric details.
 	<img src="../imgs/gradient_teaser.png">
 	<center><i>Implicit spheres warped with different textures, rendering using sphere tracing and no albedo texture.</i></center>
