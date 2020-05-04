@@ -62,8 +62,8 @@
 	the 2D function which we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
 	<br><br>
 	The function `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
-	<img src="../imgs/gradient_teaser.png">
-	<center><i>An implicit sphere and a quadric curve textured using triplanar mapping, with the texture shown in the bottom left. <br>Rendering was performed using Sphere Tracing.</i></center>
+	<img src="../imgs/gradient_albedo.png">
+	<center><i>Implicit spheres textured using triplanar mapping. <br>Rendering was performed using Sphere Tracing.</i></center>
 	
 	<br>
 	While using triplanar mapping to compute albedo is pretty straightforward even for implicit surfaces, it is not the case for triplanar <i>displacement</i> whose goal is to modify
@@ -115,6 +115,9 @@
 	The following table reports timings for the scenes shown in this blog post. Rendering was done using sphere tracing with the global lipschitz calculated in the last section. Image size was
 	set to 1000x1000 pixels, and 16 threads were used to compute the final image. No fancy optimization was made in the C++ code to get these times.
 	<br><br>
+	
+	<img src="../imgs/gradient_strength.png">
+	<center><i>Implicit curve primitive warped using our gradient-based operator with different warp strength.</i></center>
 	
 	<h3> Limitations and Conclusion </h3>
 	A better, local lipschitz bound could be computed for our warping operator - therefore allowing the use of segment tracing to improve rendering times.
