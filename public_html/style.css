@@ -74,7 +74,21 @@ p
 {
 	text-align:center;
 	font-size: 1.25em;
-}	
+}
+
+table
+{
+	font-size:1.15em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #333;
+}
 
 /* For small screen devices */
 @media (max-width: 500px) 

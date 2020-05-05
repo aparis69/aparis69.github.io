@@ -106,17 +106,51 @@
 	<p class="math">`||\nabla(f \circ w)|| \le ||\nabla f \circ w || \quad || J_w\||`</p>
 	
 	<h3> Performance </h3>
-	If you have worked enough with implicit surface, you will know that while they provide powerfull modeling features, they are often terribly inconvenient to use due to their rendering time. A complex
-	scene featuring multiple warping operators, soft union or curve primitives can take several minutes to render using the CPU. Warping especially can crush performance, so it is interesting to measure
-	the actual overhead of our operator. We also have to keep in mind that we use a special kind of triplanar mapping, which already has an overhead when compared to a single texture fetch in traditionnal mesh
-	pipelines.
+	If you have worked on implicit modeling, you probably know that while it can be a powerful modeling framework, it can also be inconvenient for performance reason. A complex
+	scene featuring warping, sophisticated blending operators and curve primitives can be difficult to edit interactively. Warping especially can drastically lower performance, so it seems interesting to measure
+	the actual overhead of our gradient-based operator. Because we use a special kind of triplanar mapping, we also have an overhead as compared to a single texture fetch of traditional mesh pipelines.<br>
+	The following table reports the time needed to evaluate signed distance field primitives for a hundred million calls, which is something that can happen when you compute the isosurface of your implicit function
+	using marching cubes for example:
 	<br><br>
-	The following table reports timings for the scenes shown in this blog post. Rendering was done using sphere tracing with the global lipschitz calculated in the last section. Image size was
-	set to 1000x1000 pixels, and 16 threads were used to compute the final image. No fancy optimization was made in the C++ code to get these times.
-	<br><br>
+	<table>
+		<tbody>
+			<tr>
+				<td><b>Primitive</b></td>
+				<td><b>Time (ms)</b></td>
+			</tr>
+			<tr>
+				<td>Sphere</td>
+				<td>525</td>
+			</tr>
+			<tr>
+				<td>Sphere + Warping</td>
+				<td>8314</td>
+			</tr>
+			<tr>
+				<td>Quadric Curve</td>
+				<td>8594</td>
+			</tr>
+			<tr>
+				<td>Quadric Curve + Warping</td>
+				<td>68982</td>
+			</tr>
+			<tr>
+				<td>Box</td>
+				<td>1991</td>
+			</tr>
+			<tr>
+				<td>Torus</td>
+				<td>1183</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	As you can see, rhe cost of evaluating our gradient-based warping operator is approximately equivalent to the one of a quadric curve, which is pretty slow. This is one of the reason why we advocate using this operator as a final step
+	of post-processing in your modeling pipeline - most of the geometry in your scene should not be made using the operator, but rather with traditional implicit primitives and operators: spheres, cylinders
+	and blending, CSG operators. Operations such as warping or adding noise function should be done in a second time.
 	
 	<img src="../imgs/gradient_strength.png">
-	<center><i>Implicit curve primitive warped using our gradient-based operator with different warp strength.</i></center>
+	<center><i>Implicit curve primitive warped using our gradient-based operator with different warping strength.</i></center>
 	
 	<h3> Limitations and Conclusion </h3>
 	A better, local lipschitz bound could be computed for our warping operator - therefore allowing the use of segment tracing to improve rendering times.
