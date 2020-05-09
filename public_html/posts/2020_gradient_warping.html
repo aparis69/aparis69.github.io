@@ -58,9 +58,9 @@
 	<p class="math"> `T(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
 	The weighting function `\alpha_i` computes the contribution of each mapping of `\mathbf{p}` according to the dot product between the normal and the unit axis-aligned vectors:
 	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i \quad : \quad \mathbb R^3 \rightarrow \mathbb R^2` computes the projection of `\mathbf{p}` on the i-th plane in world space 
-	and finally, the function `t` denotes the 2D function we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
+	and finally, the function `t \quad : \mathbb R^2 \rightarrow \mathbb \R` denotes the 2D function we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
 	<br><br>
-	The function `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure:
+	If we interpret `t` as a function computing a color, then `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure.
 	<img src="../imgs/gradient_albedo.png">
 	<center><i>Implicit spheres textured using triplanar mapping. Rendering was performed using Sphere Tracing.</i></center>
 	
@@ -89,12 +89,12 @@
 	<img src="../imgs/gradient_teaser.png">
 	<center><i>Implicit spheres warped with different textures, rendering using sphere tracing and no albedo texture.</i></center>
 	<br>
-	Up to this point and if you read the paper, you probably didn't learn much. All of this is explained in a more compact (and most likely less friendly due to page limit) way in the paper - except 
-	for the new renderings. But there are a few more interesting things that we can discuss that hopefully will provide value to the reader.
+	Up to this point and if you read the paper, you probably didn't learn much. All of this is explained in a more compact way in the paper. 
+	But there are a few more interesting things that we can discuss that hopefully will provide value to the reader.
 	
 	<h3> Lipschitz Bound and Sphere Tracing </h3>
-	There are two popular way to extract a rendering out of implicit surfaces: polygonization through algorithms such as <a href="">marching cubes</a>, and ray marching. There are different advantages 
-	and disadvantages to both of these methods and I will not go into details - to me, it is a matter of whatever fits your pipeline best. In this post, we will discuss the second option: ray marching.
+	There are two main ways to render an implicit surfaces: polygonization through algorithms such as <a href="">marching cubes</a> followed by rasterization, and ray marching. There are different advantages 
+	and disadvantages to both of these methods and I will not compare them - it is a matter of what fits your pipeline best. In this post, we will discuss the second option: ray marching.
 	<br><br>
 	There are different subtypes of raymarching - and the one we are interested in is called sphere tracing. A great introduction to the technique is available <a href="https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields">
 	here</a>. In this section, we will compute a global Lipschitz bound of our gradient-based warping operator to ensure that sphere tracing remains correct and does not miss the surface of our
@@ -102,15 +102,14 @@
 	<br><br>
 	<p class="math">`\tilde{f} = f \circ w`</p>
 	<p class="math">`\nabla \tilde{f}=\nabla(f \circ w) = \nabla f \circ w \cdot J_w`</p>
-	We compute the Lipschitz bound by bounding the gradient of the field function `f` and the Euclidean norm of the Jacobian matrix `J_w`:
-	<p class="math">`||\nabla(f \circ w)|| \le ||\nabla f \circ w || \quad || J_w\||`</p>
+	We can then compute a global Lipschitz bound by bounding the gradient of the field function `f` and the Euclidean norm of the Jacobian matrix `J_w`:
+	<p class="math">`||\nabla \tilde{f}|| \le ||\nabla f \circ w || \cdot || J_w\||`</p>
 	
 	<h3> Performance </h3>
-	If you have worked on implicit modeling, you probably know that while it can be a powerful modeling framework, it can also be inconvenient for performance reason. A complex
-	scene featuring warping, sophisticated blending operators and curve primitives can be difficult to edit interactively. Warping especially can drastically lower performance, so it seems interesting to measure
+	If you have worked on implicit modeling, you probably know that while they can be powerful for modeling shapes, they can also be inconvenient for performance reason. A complex
+	scene with warping, sophisticated blending operators and curve primitives can be difficult to edit interactively. Warping especially can drastically lower performance, so it seems interesting to measure
 	the actual overhead of our gradient-based operator. Because we use a special kind of triplanar mapping, we also have an overhead as compared to a single texture fetch of traditional mesh pipelines.<br>
-	The following table reports the time needed to evaluate signed distance field primitives for a hundred million calls, which is something that can happen when you compute the isosurface of your implicit function
-	using marching cubes for example:
+	The following table reports the time needed to evaluate signed distance field primitives for a hundred million calls.
 	<br><br>
 	<table>
 		<tbody>
@@ -145,15 +144,15 @@
 		</tbody>
 	</table>
 	<br>
-	As you can see, rhe cost of evaluating our gradient-based warping operator is approximately equivalent to the one of a quadric curve, which is pretty slow. This is one of the reason why we advocate using this operator as a final step
-	of post-processing in your modeling pipeline - most of the geometry in your scene should not be made using the operator, but rather with traditional implicit primitives and operators: spheres, cylinders
-	and blending, CSG operators. Operations such as warping or adding noise function should be done in a second time.
+	As you can see, the cost of evaluating our gradient-based warping operator is approximately equivalent to the one of a quadric curve, which is pretty slow. This is one of the reason why we advocate using this operator as a final step
+	of post-processing in your modeling pipeline - most of the geometry in your scene should not be modeled using the operator, but rather with traditional primitives and operators: spheres, cylinders
+	and blending, CSG operators. Operations such as warping or adding noise function should be done in a second time as they are more expensive to compute.
 	
 	<img src="../imgs/gradient_strength.png">
 	<center><i>Implicit curve primitive warped using our gradient-based operator with different warping strength.</i></center>
 	
 	<h3> Limitations and Conclusion </h3>
-	A better, local lipschitz bound could be computed for our warping operator - therefore allowing the use of segment tracing to improve rendering times.
+	A better, local lipschitz bound could be computed for our warping operator - therefore allowing the use of better algorithm for rendering implicit surfaces, such as segment tracing.
 	
 	<h3> References </h3>
 	<a class="aUnderlined" href="https://prism.ucalgary.ca/bitstream/handle/1880/46254/1998-618-09.pdf?sequence=2&isAllowed=y">Wyvill - The Blob Tree - Warping, Blending and Boolean Operations</a><br>
