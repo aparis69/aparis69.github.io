@@ -2,6 +2,8 @@ https://aparis69.github.io/public_html/publications.html
 https://aparis69.github.io/public_html/cv.html
 https://aparis69.github.io/public_html/projects/paris2019_3D.html
 https://aparis69.github.io/public_html/projects/paris2019_Deserts.html
+https://aparis69.github.io/public_html/projects/paris2020_Blocks.html
+https://aparis69.github.io/public_html/projects/paris2021_Karsts.html
 https://aparis69.github.io/public_html/posts/accessibility.html
 https://aparis69.github.io/public_html/posts/atmosphere.html
 https://aparis69.github.io/public_html/posts/equilibrium.html
