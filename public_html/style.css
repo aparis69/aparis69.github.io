@@ -33,20 +33,19 @@ blockquote.twitter-tweet a:focus {
 
 body 
 {
-	font-family: Candara, Monospace, Courier;
+	font-family: Arial, Monospace, Courier;
 	max-width: 1030px;  /* for pc */
 	padding-left: 2ch;
 	padding-right: 3ch;
 	margin: 0 auto;
 	background: #F5F5F0;
-	font-size: 1.2em;
+	font-size: 1.0em;
 	text-align:justify;
 }
 
 a 
 {
 	color: black;
-	font-weight: bold;
 	text-decoration: none;
 }
 
@@ -62,8 +61,8 @@ a
 {
 	border-radius: 5px;
 	color: black;
-	font-weight: bold;
 	font-size: 0.7em;
+	font-weight: bold;
 	border: 1px solid black;
 	padding: 3px;
 }
@@ -72,8 +71,8 @@ a
 {
 	border-radius: 5px;
 	color: blue;
-	font-weight: bold;
 	font-size: 0.75em;
+	font-weight: bold;
 	border: 1px solid blue;
 	padding: 3px;
 }
