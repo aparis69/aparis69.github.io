@@ -12,13 +12,12 @@
   <body>
 	<br>
 	<center>
-		<a href="../../index.html" style="text-decoration: none;font-size:1.2em"><b>Axel Paris - PhD Student in Computer Graphics</b>
+		<a href="../../index.html" style="text-decoration: none;font-size:1.2em"><b>Axel Paris - Research Scientist</b>
 		<br>
 		<hr style="width:20em;">
 		</a>
 		<a class="aUnderlined" href="../../index.html">Home</a> &nbsp;
 		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
-		<a class="aUnderlined" href="https://drive.google.com/file/d/1j1E-QmeV-LjHUVHJNPQibnm7WlQzME7L/view?usp=sharing">Resume</a> &nbsp;
 		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
 		<a class="aUnderlined" href="https://twitter.com/Axel_Paris">Twitter</a>
 		<br>
@@ -29,29 +28,29 @@
 	March 2, 2024.
 	</div>
 	<hr>
-	Adding details to implicit surfaces	has been a challenging problem for many years. As opposed to meshes, implicits do not provide an explicit parameterization of the surface. This prevents the use of displacement mapping typically used on mesh models, which are based on texture mapping: the process of applying a 2D image to a 3D surface.	However there are still methods to work around the issue, which is the topic of this post. The goal here is not to be exhaustive - those are mostly notes and code snippets for my future self which may be useful to other people. I'll focus here on implicit surfaces represented as signed distance functions (SDF).
+	Adding details to implicit surfaces	has been a challenging problem for many years. As opposed to meshes, implicits do not provide an explicit parameterization of the surface which prevents the use of displacement mapping typically used on mesh models.	However there are still methods to work around the issue, which is the topic of this post. The goal is not to be exhaustive - these are mostly notes and code snippets for my future self which may be useful to other people. I'll focus here on implicit surfaces represented as signed distance functions (SDF). Everything written can also be tested in this <a class="aUnderlined" href="https://www.shadertoy.com/view/4XXXW8">shadertoy</a>.
 	<br><br>
 
 	<h3> Noise-based details </h3>
-	The first, probably most straightforward technique is to add a 3D noise to the SDF. You can see many examples of this in Shadertoy, <a class="aUnderlined" href="https://www.shadertoy.com/view/XsX3RB">here</a> or <a class="aUnderlined" href="https://www.shadertoy.com/view/XdfGz8">here</a>, just to name a few. While such technique can theoretically add infinite details, all features come from the same noise function which suffer from its self-similar appearance. This may be solved by combining different noise function depending on which region of space we are. Another more difficult problem is to solve is that adding 3D noise everywhere may create floaters in space, which is usually not desired.
+	The first, probably most straightforward technique to add details is to treat a 3D noise as a distance function itself, and add it to the SDF. You can see many examples of this in Shadertoy, <a class="aUnderlined" href="https://www.shadertoy.com/view/XsX3RB">here</a> or <a class="aUnderlined" href="https://www.shadertoy.com/view/XdfGz8">here</a>, just to name a few. This is also referred to as hypertexturing in the litterature. While such technique can theoretically add infinite details, all features come from the same noise function which suffers from its self-similar appearance. This may be solved by combining different noise functions depending on which region of space the point is. Another more difficult problem is to solve is that adding 3D noise everywhere may create floaters (detached surface parts floating in space), which is usually not desired.
 
 	<img src="../imgs/noise_details.png">
 	<center><i>Implicit primitives combined with different noise functions. As the amount of octaves in the noise goes up, floaters may appear.</i></center>
 	<br>
-	There is no miracle solution to this problem. However, we can work around this issue if we refine the problem a little bit. Implicit primitives are also often called skeletal primitives, and their function is often decomposed into a distance to an infinitly-thin skeleton, and a substraction by a radius. So now, instead of adding noise to the global implicit function, we will add details to a given primitive in the scene (a sphere, box, or cylinder for instance).
+	There is no miracle solution to this problem. However, we can work around this issue if we refine the problem a little bit. Implicit primitives are also often called skeletal primitives, and their function is often decomposed into a distance to an infinitly-thin skeleton, and a substraction by a radius. So instead of adding noise to the global SDF, we now add details to a given, specific primitive (a sphere, box, or cylinder for instance).
 	Let's study the case of a sphere, whose SDF is the following:
 	<br><br>
 	<p class="math"> `f(\mathbf{p}) = ||\mathbf{p} - \mathbf{c}|| - r` </p>
-	With `\mathbf{c}` the center of the sphere and `r` the radius. Now let's make the radius a function `r \quad : \mathbb R^3 \rightarrow \mathbb \R`:
+	With `\mathbf{c}` the center of the sphere and `r` the radius. Now let's make the radius a function `r \quad : \mathbb R^3 \rightarrow \mathbb \R` and define it using a noise function `n`:
 	<br><br>
 	<p class="math"> `f(\mathbf{p}) = ||\mathbf{p} - \mathbf{c}|| - r(\mathbf{p})` </p>
 	<p class="math"> `r(\mathbf{p}) = r + a n({\pi(\mathbf{p})} / l)` </p>
-	With `a` the noise amplitude, `l` the wavelength, and `\pi \quad : \mathbb R^3 \rightarrow \mathbb \R^3` the projection function to the surface of the primitive (in this case a sphere). More precisely, the goal is to modify the radius of the primitive with noise - but this time, the noise evaluation is constrained to the <i>surface</i> of the primitive. This avoids the creation of floaters as noise is not evaluated for every different point in 3D space. This kind of noise-based primitive is also called star-shaped noise, and has been detailed in several papers (here, and here).
+	With `a` the noise amplitude, `l` the wavelength, and `\pi \quad : \mathbb R^3 \rightarrow \mathbb \R^3` the projection function to the surface of the primitive (in this case a sphere). More precisely, the goal is to modify the radius of the primitive with noise - but this time, the noise evaluation is constrained to the <i>surface</i> of the primitive. This avoids the creation of floaters as noise is not evaluated for every different point in 3D space. This kind of noise-based primitive is also called star-shaped noise, and has been detailed in several papers (<a class="aUnderlined" href="https://www.shadertoy.com/view/XsX3RB">here</a>, and <a class="aUnderlined" href="https://www.shadertoy.com/view/XsX3RB">here</a>).
 
 	<img src="../imgs/noise_details_star.png">
 	<center><i>So-called star-shaped noise primitives ensure that there are no floaters in the scene. The noise evaluation is constrained to the surface of the underlying skeletal primitive.</i></center>
 	<br>
-	Of course using noise is great, but as mentioned before the self-similarity of the function can be an issue. Ideally we would want the same flexibility that we have when working with meshes and displacement maps - which is not possible because of the lack of parameterization of implicit surfaces. Let's look into potential solutions.
+	This does not come without limitations. As opposed to hypertexturing presented above, star-shaped noise primitive cannot create <i>overhangs</i> on the shape, so the details appear a little more uniform. Details also come from the same noise function, which provides less expressivity and control than traditional texture mapping. Ideally we would want the same flexibility than meshes and displacement maps - which is not possible because of the lack of parameterization of implicit surfaces. Let's look into potential solutions.
 	<br><br>
 
 	<h3> Warping implicit surfaces </h3>
@@ -59,36 +58,33 @@
 	<img src="../imgs/noise_details_star.png">
 	<center><i>Warping is a powerful modeling technique that has been used for decades in implicit modeling.</i></center>
 	<br>
-	Now the question is how to parameterize our implicit primitives, and use it for warping? One classical solution in the industry is to use triplanar mapping and apply it in our context.
-
+	Now the question is how to parameterize our implicit primitives, and use it for warping? One classical UV-less pipeline used in the industry is based on triplanar mapping (also called box mapping), and it is possible to apply it to implicit surfaces and not just for texturing.
 	<br><br>
 
 	<h3> Triplanar warping </h3>
-	Triplanar mapping is a well-known technique for on-the-fly parameterization, as it only requires the position and normal. Greats references, in the form of <a class="aUnderlined" href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu>">an article</a> in GPU Gems 
-	3 by Ryan Geiss is available online, and there are also great blog posts explaining the details such as
-	<a class="aUnderlined" href="https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/>">Catlike Coding</a> and <a class="aUnderlined" href="https://www.martinpalko.com/triplanar-mapping/">Martin Palko</a>. The idea behind triplanar mapping is to use the world space position of a point `\mathbf{p}` and its normal `\mathbf{n}` to determine a parameterization in 2D space.
+	Triplanar mapping is a well-known technique for on-the-fly parameterization, as it only requires the position and normal. A great reference from <a class="aUnderlined" href="https://developer.nvidia.com/gpugems/gpugems3/part-i-geometry/chapter-1-generating-complex-procedural-terrains-using-gpu>">an article</a> in GPU Gems 3 by Ryan Geiss is available online, and there are also great blog posts explaining the details from <a class="aUnderlined" href="https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/>">Catlike Coding</a> and <a class="aUnderlined" href="https://www.martinpalko.com/triplanar-mapping/">Martin Palko</a>. The idea behind triplanar mapping is to use the world space position of a point `\mathbf{p}` and its normal `\mathbf{n}` to determine a parameterization in 2D space.
 	This has a big advantage: the surface you are trying to map to the texture does not need an explicit parameterization, which is perfect for implicits. The final texture 
-	contribution `T \quad : \mathbb R^3, \mathbb R^3 \rightarrow \mathbb \R^3` at a given point `\mathbf{p}` and normal `\mathbf{n}` can be defined as:
+	contribution `T \quad : \mathbb R^3, \mathbb R^3 \rightarrow \mathbb \R^3` at a given point `\mathbf{p}` and normal `\mathbf{n}` (considering we sample a RGB texture) can be defined as:
 	<p class="math"> `T(\mathbf{p}, \mathbf{n}) = \sum_{i=0}^{3} \alpha_i(\mathbf{n}) \cdot t \circ  \gamma_i(\mathbf{p})` </p>
 	The weighting function `\alpha_i` computes the contribution of each mapping of `\mathbf{p}` according to the dot product between the normal and the unit axis-aligned vectors:
 	`\alpha_i(\mathbf{n}) = | \mathbf{n} \cdot u_i |`. The function `\gamma_i \quad : \quad \mathbb R^3 \rightarrow \mathbb R^2` computes the projection of `\mathbf{p}` on the i-th plane in world space 
 	and finally, the function `t \quad : \mathbb R^2 \rightarrow \mathbb \R` denotes the 2D function we want to map to our surface, and can be anything from a baked texture to a procedural sum of noises.
 	<br><br>
-	If we interpret `t` as a function computing a color, then `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo, as shown in the following figure.
-	<img src="../imgs/gradient_albedo.png">
-	<center><i>Implicit spheres textured using triplanar mapping. Rendering was performed using Sphere Tracing.</i></center>
-	
-	<br>
-	Now what we want here is the ability to deform our implicit function `f \quad : \mathbb R^3 \rightarrow \mathbb \R^3` using <i>triplanar warping</i>. To do so, we treat the information of our function `T` not as a color, but as a displacement strength. As for the warping direction, we use the normal direction `n` from which we computed our weighting coefficients in the last section. The warping function `w` can then be defined as:
+	If we interpret `t` as a function computing a color, then `T(mathbf{p}, \mathbf{n})` can be used directly to texture a implicit surfaces with albedo. Now what we can also do is deform the geometry of our implicit shape using <i>triplanar warping</i>. In this case, `t` is now a heightfield (or displacement map) and evaluting `T(mathbf{p}, \mathbf{n})` allows to compute the <i>warping strength</i>. As for the warping direction, we use the normal direction `n` from which we computed our weighting coefficients in the last section. The final warping function `w` is then be defined as:
 	<br><br>
 	<p class="math">`w(\mathbf{p}) = \mathbf{p} - \mathbf{n} \cdot T(\mathbf{p}, \mathbf{n}) `</p>
-	Then, the final implicit function `\tilde{f}` can be defined as the composition of the base shape function `f` and the warping operator:
+	Then, the implicit function `\tilde{f}` is  defined as the composition of the base shape function `f` and the warping operator:
 	<br><br>
 	<p class="math">`\tilde{f}(p) = f \circ w(p)`</p>
+	As with star-shaped noise, triplanar warping is applied to a specific primitive - a sphere in the following figure.
 	<img src="../imgs/gradient_teaser.png">
 	<center><i>Implicit spheres warped (or displaced) with different textures.</i></center>
 	<br><br>
-	The only requirement for this to work is that the normal should be <i>continuous</i>: discontinuities in the normal will lead to discontinuities in the object itself, as these normal directions are used to define a warping direction in the function `\tilde{f}`.
+	While this technique is powerful, it also has limitations. A requirement is that the normal should be <i>continuous</i>: discontinuities will lead to discontinuities in the object itself, as normals are used to define warping directions. So a typical failure case is a sharp box primitive - we would need a rounded box for this the operator without visual artifacts. Another thing to know is that it is computationally expensive: triplanar mapping in general is not free, and warping is also known to be expensive in implicit modeling. One could investigate the use of <a class="aUnderlined" href="https://iquilezles.org/articles/biplanar/">biplanar mapping</a> to save some texture fetchs.
+	<br><br>
+	Using this technique also not only break the Euclidean distance property of the SDF, but is also far from being gentle on the Lipschitz constant of the function (the upper bound of the norm of the gradient, which is 1 for SDF, and is less than 1 known for lower signed distance bounds). The actual Lipschitz constant remains to be computed in this case, but you'll need to divide your sphere tracing steps for the final rendering to be artifacts free. This is also the case for the other two methods presented in this post - but it is more noticeable in the case of triplanar warping.
+	<br><br>
+	Again, all the results presented in this blog post can be explored in this <a class="aUnderlined" href="https://www.shadertoy.com/view/4XXXW8">shadertoy</a>.
 
 	<h3> References </h3>
 	<a class="aUnderlined" href="https://prism.ucalgary.ca/bitstream/handle/1880/46254/1998-618-09.pdf?sequence=2&isAllowed=y">Wyvill - The Blob Tree - Warping, Blending and Boolean Operations</a><br><br>
