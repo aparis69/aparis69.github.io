@@ -9,20 +9,22 @@
       
       
       
+        <link rel="prev" href="../..">
       
-        <link rel="next" href="fundamentals/noise/">
+      
+        <link rel="next" href="../implicits/">
       
       
-      <link rel="icon" href="img/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.14">
     
     
       
-        <title>Learn Procedural Generation</title>
+        <title>Noise - Learn Procedural Generation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.10ba22f1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.10ba22f1.min.css">
       
       
 
@@ -41,9 +43,9 @@
       
     
     
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="../../css/style.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#procedural-noise" class="md-skip">
           Skip to content
         </a>
       
@@ -78,9 +80,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Learn Procedural Generation" class="md-header__button md-logo" aria-label="Learn Procedural Generation" data-md-component="logo">
+    <a href="../.." title="Learn Procedural Generation" class="md-header__button md-logo" aria-label="Learn Procedural Generation" data-md-component="logo">
       
-  <img src="img/logo.png" alt="logo">
+  <img src="../../img/logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -97,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Noise
             
           </span>
         </div>
@@ -172,9 +174,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Learn Procedural Generation" class="md-nav__button md-logo" aria-label="Learn Procedural Generation" data-md-component="logo">
+    <a href="../.." title="Learn Procedural Generation" class="md-nav__button md-logo" aria-label="Learn Procedural Generation" data-md-component="logo">
       
-  <img src="img/logo.png" alt="logo">
+  <img src="../../img/logo.png" alt="logo">
 
     </a>
     Learn Procedural Generation
@@ -184,6 +186,73 @@
     
       
       
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Fundamentals
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Fundamentals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
     
@@ -202,18 +271,18 @@
           
   
   <span class="md-ellipsis">
-    Introduction
+    Noise
   </span>
   
 
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Introduction
+    Noise
   </span>
   
 
@@ -235,45 +304,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-procedural-generation" class="md-nav__link">
+  <a href="#going-further" class="md-nav__link">
     <span class="md-ellipsis">
-      What is Procedural Generation?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#do-i-need-to-know-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      Do I need to know Math?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting started
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#faq" class="md-nav__link">
-    <span class="md-ellipsis">
-      FAQ
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#giving-feedback" class="md-nav__link">
-    <span class="md-ellipsis">
-      Giving feedback
+      Going Further
     </span>
   </a>
   
@@ -286,73 +319,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Fundamentals
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            Fundamentals
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="fundamentals/noise/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Noise
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -362,7 +328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fundamentals/implicits/" class="md-nav__link">
+      <a href="../implicits/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -383,7 +349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fundamentals/interpolation/" class="md-nav__link">
+      <a href="../interpolation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -404,7 +370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fundamentals/glossary/" class="md-nav__link">
+      <a href="../glossary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -479,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/intro/" class="md-nav__link">
+      <a href="../../terrain/intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -547,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/procedural/noise_for_terrains/" class="md-nav__link">
+      <a href="../../terrain/procedural/noise_for_terrains/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -568,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/procedural/designing_primitives/" class="md-nav__link">
+      <a href="../../terrain/procedural/designing_primitives/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -589,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/procedural/designing_operators/" class="md-nav__link">
+      <a href="../../terrain/procedural/designing_operators/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -610,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/procedural/terrain_construction_tree/" class="md-nav__link">
+      <a href="../../terrain/procedural/terrain_construction_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -684,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_hydraulic/" class="md-nav__link">
+      <a href="../../terrain/simulation/erosion_hydraulic/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -705,7 +671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_thermal/" class="md-nav__link">
+      <a href="../../terrain/simulation/erosion_thermal/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -726,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_streampower/" class="md-nav__link">
+      <a href="../../terrain/simulation/erosion_streampower/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -800,7 +766,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/volumetric/going_3D/" class="md-nav__link">
+      <a href="../../terrain/volumetric/going_3D/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -821,7 +787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/volumetric/voxels/" class="md-nav__link">
+      <a href="../../terrain/volumetric/voxels/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -842,7 +808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/volumetric/implicits/" class="md-nav__link">
+      <a href="../../terrain/volumetric/implicits/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -923,7 +889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="rivers/intro/" class="md-nav__link">
+      <a href="../../rivers/intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -944,7 +910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="rivers/hydrology_correction/" class="md-nav__link">
+      <a href="../../rivers/hydrology_correction/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -965,7 +931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="rivers/river_generation/" class="md-nav__link">
+      <a href="../../rivers/river_generation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -993,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="about/" class="md-nav__link">
+      <a href="../../about/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1033,45 +999,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-procedural-generation" class="md-nav__link">
+  <a href="#going-further" class="md-nav__link">
     <span class="md-ellipsis">
-      What is Procedural Generation?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#do-i-need-to-know-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      Do I need to know Math?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting started
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#faq" class="md-nav__link">
-    <span class="md-ellipsis">
-      FAQ
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#giving-feedback" class="md-nav__link">
-    <span class="md-ellipsis">
-      Giving feedback
+      Going Further
     </span>
   </a>
   
@@ -1094,61 +1024,24 @@
 
 <style>body {text-align: justify}</style>
 
-<h1 id="introduction">Introduction</h1>
-<p>Welcome to the Procedural Generation guide. This is aimed at people that want to learn more about <em>world</em> generation, featuring terrain generation, ecosystem simulation, river animation, just to name a few. On top of being the most accessible to everyone, the goal here is to provide <strong>explanations, mathematical formulas, clear code, demos, and exercises</strong> for all examples. </p>
-<p>Interactive demos are made possible thanks to the great <a href="https://threejs.org/">Three.js</a> library. Only basic knowledge in Computer Graphics should be required to go through this guide.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This guide is currently (as of 2024) being written and is thus a <strong>work in progress</strong>. Except significant changes, errors, and new content being added. Feedback is welcome.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Todolist:</p>
+<h1 id="procedural-noise">Procedural Noise</h1>
+<p>TODO: introduce what is noise, and give a brief overview of the different types, as well as references on nice libraries (FastNoise, things available in UE or Unity, etc...). Try to keep the overview 2D only for textures, do not mention terrains yet and stay general enough. Speak about higher dimensional noises as well.</p>
+<p>List of types that should be mentioned/shown:</p>
 <ul>
-<li>Add a screenshot of all the interactive examples on this page. This should be as colorful as possible.</li>
-<li>Find some good default parameters for each example. Visuals must be great at first glance.</li>
-<li>Each page should have at least one interactive example to play with.</li>
+<li>Perlin/Gradient</li>
+<li>Value</li>
+<li>Ridge</li>
+<li>Simplex</li>
+<li>Cellular</li>
+<li>Sparse Convolution</li>
+<li>Gabor</li>
+<li>Explain what is a Turbulence as well</li>
 </ul>
-</div>
-<h2 id="what-is-procedural-generation">What is Procedural Generation?</h2>
-<p>Procedural Generation refers to a way of creating digital content, let it be 3D models, textures, patterns, colors, and so on. The idea is that data is <em>generated</em> more or less  automatically through the use of an algorithm or a <em>procedure</em>, rather than created manually. Generating content procedurally can provide many advantages, including scalability (with the ability to generate a large set of different shapes), memory efficiency (by only storing the generation procedure, and not its output), and a lot more. Procedural generation is a powerful tool that artists use in their day to day life.</p>
-<p>Computer Graphics has been a great playground for Procedural Generation throughout the years, with the first papers going back to 1990 with Frank Ebert.</p>
-<p>Note that there is not a single definition for these terms. This is just my personal one and the one that will be used throughout this guide.</p>
-<h2 id="do-i-need-to-know-math">Do I need to know Math?</h2>
-<p>Only a <strong>very basic</strong> knowledge of linear algebra and math is expected. When possible, I provide the equivalence between math and code so that it is accessible to more people. For vector and matrice types, we will extensively use the strutures provided by Three.js, such as <a href="https://threejs.org/docs/#api/en/math/Vector2">Vector2</a>, 
- <a href="https://threejs.org/docs/#api/en/math/Vector3">Vector3</a>, and <a href="https://threejs.org/docs/#api/en/math/Matrix4">Matrix4</a>.</p>
-<h2 id="getting-started">Getting started</h2>
-<p>This guide is separated in multiple parts, each one covering a different aspect of world generation. These are mostly independent and can be read in any order. All sections are illustrated with <strong>interactive examples</strong> that run directly in your web browser. <strong>Small exercises</strong> are mentioned at the end of each page, if you want to go deeper into a given topic.</p>
+<h2 id="going-further">Going Further</h2>
+<p>Exercise: </p>
 <ul>
-<li>📚 Fundamentals, which covers some basics that help you understand the next parts. You can skip this section, or just go back to it from time to time if you don't understand some concept. It also contains a <a href="fundamentals/glossary/">glossary</a> of all the technical terms used throughout the guide.   </li>
-<li>⛰️ <a href="terrain/intro/">Terrain</a>, where you will about the different techniques for generating terrains, including procedural noise and erosion simulation.</li>
-<li>🌊 <a href="rivers/intro/">Rivers</a>, with everything you need to know to generate realistic river trajectories as well as animated water surfaces.</li>
-<li>More to come!</li>
+<li>What is the max of a Turbulence parameterized by a, f, o?</li>
 </ul>
-<p>The concepts presented in this guide are <strong>not new groundbreaking research</strong>. Everything has either been published in research papers, used in multiple video games, or written and explained in various blogs. The end goal of this guide is to be <strong>as complete as possible</strong> and become a go-to <strong>reference for Procedural World Generation</strong>.</p>
-<h2 id="faq">FAQ</h2>
-<details class="question">
-<summary>Why another Procedural Generation guide?</summary>
-<p>There are a lot of great resources online to get started - but none of them was complete enough for my tastes. </p>
-</details>
-<details class="question">
-<summary>Can I use the code written here?</summary>
-<p>The code that uses Three.js is under MIT License - and the rest, written by me, is released under <strong>MIT</strong> unless specified otherwise.</p>
-</details>
-<details class="question">
-<summary>Why Javascript and not C++?</summary>
-<p>It is true that Computer Graphics topics in general are usually explained in C++, but I wanted this guide to be <strong>as interactive as possible</strong>, which is easier in Javascript (although I am not a fan nor an expert of this language).</p>
-</details>
-<details class="question">
-<summary>I saw an error/a typo. Where can I report it?</summary>
-<p>You can send me an email at <strong><a href="mailto:axel.paris69@gmail.com">axel.paris69@gmail.com</a></strong>.</p>
-</details>
-<details class="question">
-<summary>Will you cover X in your guide?</summary>
-<p>I cannot guarantee that. What I can say is that I want to write about this list of topics in the near future: <strong>trees and ecosystem simulation</strong>, <strong>building</strong>, <strong>cities</strong>, and <strong>road generation</strong>, and <strong>clouds</strong>. No timeline though.</p>
-</details>
-<h2 id="giving-feedback">Giving feedback</h2>
-<p>As this guide has been mostly written by a single person, feedback is more than welcome. If you see something that could be explained better or is simply wrong, you can email me directly at <strong><a href="mailto:axel.paris69@gmail.com">axel.paris69@gmail.com</a></strong>.</p>
 
 
 
@@ -1195,12 +1088,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand", "navigation.indexes"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.bd41221c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
       
-        <script src="js/libs/mathjax.js"></script>
+        <script src="../../js/libs/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

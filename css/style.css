@@ -1,0 +1,9 @@
+.threeJsCanvas {
+    position: relative;
+    margin: auto;
+}
+
+#gui {
+    position: absolute;
+    z-index: 2;
+}
