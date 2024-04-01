@@ -1,0 +1,129 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<title>Axel Paris</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/> 
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>  
+  <body>
+	<br>
+	<center>
+		<a href="../../index.html" style="text-decoration: none;font-size:1.2em"><b>Axel Paris - Research Scientist</b>
+		<br>
+		<hr style="width:20em;">
+		</a>
+		<a class="aUnderlined" href="../../index.html">Home</a> &nbsp;
+		<a class="aUnderlined" href="../publications.html">Publications</a> &nbsp;
+		<a class="aUnderlined" href="mailto:axel.paris69@gmail.com">Email</a> &nbsp;
+		<a class="aUnderlined" href="https://twitter.com/Axel_Paris">Twitter</a>
+		<br>
+	</center>
+	<br>
+	<div>
+	<h2>Terrain Erosion on the GPU #2</h2>
+	February 14, 2020.
+	</div>
+	<hr>
+	In my <a class="aUnderlined" href="terrain_erosion.html">previous post</a> on thermal erosion, I implemented the naive, straightforward 
+	version of the algorithm which can be summarized as this: for every cell <i>C</i>, check the stability in regards to its neighbours. 
+	If <i>C</i> is unstable, distribute a certain amount of material to downwards neighbours.
+	<br><br>
+	The problem with this approach in a massively parallel context is the need to write to neighboring cells, which
+	requires slow atomic operations. However, for several algorithms, what often works is to reverse the thinking: instead
+	of trying to write to neighboring cells, change the method to <i>read</i> from neighbours and <i>only write</i> to
+	the current cell, therefore avoiding costly atomic operations and race conditions.
+	<br><br>
+	By chance, this method can be applied to thermal erosion. The idea for a single cell <i>C</i> is to look for upward points that 
+	will be giving matter to <i>C</i> and do the operation (here, adding matter) on <i>C</i> only. Same thing for the distribution to 
+	downward cells: we remove matter from <i>C</i> only, and let the neighboring cells do the other part of the computation. This has
+	to be done with two buffer: one for reading and one for writing. After each step n, the buffer must be swapped for the step n + 1. 
+	Here is the revised version of the algorithm in a compute shader:<br><br>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">layout(binding <span style="color: #666666">=</span> <span style="color: #666666">0</span>, std430) readonly buffer ElevationDataBufferIn
+{
+	<span style="color: #B00040">float</span> data[];
+};
+layout(binding <span style="color: #666666">=</span> <span style="color: #666666">1</span>, std430) writeonly buffer ElevationDataBufferOut
+{
+	<span style="color: #B00040">float</span> out_data[];
+};
+
+uniform <span style="color: #B00040">int</span> nx;
+uniform <span style="color: #B00040">int</span> ny;
+uniform <span style="color: #B00040">float</span> amplitude;
+uniform <span style="color: #B00040">float</span> cellSize;
+uniform <span style="color: #B00040">float</span> tanThresholdAngle;
+
+<span style="color: #B00040">bool</span> <span style="color: #0000FF">Inside</span>(<span style="color: #B00040">int</span> i, <span style="color: #B00040">int</span> j)
+{
+	<span style="color: #008000; font-weight: bold">if</span> (i <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span> <span style="color: #666666">||</span> i <span style="color: #666666">&gt;=</span> nx <span style="color: #666666">||</span> j <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span> <span style="color: #666666">||</span> j <span style="color: #666666">&gt;=</span> ny)
+		<span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">false</span>;
+	<span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">true</span>;
+}
+
+<span style="color: #B00040">int</span> <span style="color: #0000FF">ToIndex1D</span>(<span style="color: #B00040">int</span> i, <span style="color: #B00040">int</span> j)
+{
+	<span style="color: #008000; font-weight: bold">return</span> i <span style="color: #666666">*</span> nx <span style="color: #666666">+</span> j;
+}
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">NoRaceConditionVersion</span>(<span style="color: #B00040">int</span> x, <span style="color: #B00040">int</span> y)
+{
+	<span style="color: #408080; font-style: italic">// Sample a 3x3 grid around the pixel</span>
+	<span style="color: #B00040">float</span> samples[<span style="color: #666666">9</span>];
+	<span style="color: #008000; font-weight: bold">for</span> (<span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0</span>; i <span style="color: #666666">&lt;</span> <span style="color: #666666">3</span>; i<span style="color: #666666">++</span>)
+	{
+		<span style="color: #008000; font-weight: bold">for</span> (<span style="color: #B00040">int</span> j <span style="color: #666666">=</span> <span style="color: #666666">0</span>; j <span style="color: #666666">&lt;</span> <span style="color: #666666">3</span>; j<span style="color: #666666">++</span>)
+		{
+			ivec2 tapUV <span style="color: #666666">=</span> (ivec2(x, y) <span style="color: #666666">+</span> ivec2(i, j) <span style="color: #666666">-</span> ivec2(<span style="color: #666666">1</span>,<span style="color: #666666">1</span>) <span style="color: #666666">+</span> ivec2(nx, ny)) <span style="color: #666666">%</span> ivec2(nx, ny);
+			samples[i <span style="color: #666666">*</span> <span style="color: #666666">3</span> <span style="color: #666666">+</span> j] <span style="color: #666666">=</span> data[ToIndex1D(tapUV.x, tapUV.y)];
+		}
+	}
+		
+	<span style="color: #408080; font-style: italic">// Check stability with all neighbours</span>
+	<span style="color: #B00040">int</span> id <span style="color: #666666">=</span> ToIndex1D(x, y);
+	<span style="color: #B00040">float</span> z <span style="color: #666666">=</span> data[id];
+	<span style="color: #B00040">bool</span> willReceiveMatter <span style="color: #666666">=</span> <span style="color: #008000">false</span>;
+	<span style="color: #B00040">bool</span> willDistributeMatter <span style="color: #666666">=</span> <span style="color: #008000">false</span>;
+	<span style="color: #008000; font-weight: bold">for</span> (<span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0</span>; i <span style="color: #666666">&lt;</span> <span style="color: #666666">9</span>; i<span style="color: #666666">++</span>)
+	{
+		<span style="color: #B00040">float</span> zd <span style="color: #666666">=</span> samples[i] <span style="color: #666666">-</span> z;
+		<span style="color: #008000; font-weight: bold">if</span> (zd <span style="color: #666666">/</span> cellSize <span style="color: #666666">&gt;</span> tanThresholdAngle)
+			willReceiveMatter <span style="color: #666666">=</span> <span style="color: #008000">true</span>;
+		
+		zd <span style="color: #666666">=</span> z <span style="color: #666666">-</span> samples[i];
+		<span style="color: #008000; font-weight: bold">if</span> (zd <span style="color: #666666">/</span> cellSize <span style="color: #666666">&gt;</span> tanThresholdAngle)
+			willDistributeMatter <span style="color: #666666">=</span> <span style="color: #008000">true</span>;
+	}
+	
+	<span style="color: #408080; font-style: italic">// Add/Remove matter if necessary</span>
+	<span style="color: #B00040">float</span> zOut <span style="color: #666666">=</span> z <span style="color: #666666">+</span> (willReceiveMatter <span style="color: #666666">?</span> amplitude <span style="color: #666666">:</span> <span style="color: #666666">0.0f</span>) <span style="color: #666666">-</span> (willDistributeMatter <span style="color: #666666">?</span> amplitude <span style="color: #666666">:</span> <span style="color: #666666">0.0f</span>);
+	out_data[id] <span style="color: #666666">=</span> zOut;
+}
+
+layout(local_size_x <span style="color: #666666">=</span> <span style="color: #666666">8</span>, local_size_y <span style="color: #666666">=</span> <span style="color: #666666">8</span>, local_size_z <span style="color: #666666">=</span> <span style="color: #666666">1</span>) in;
+<span style="color: #B00040">void</span> <span style="color: #0000FF">main</span>()
+{
+	<span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #B00040">int</span>(gl_GlobalInvocationID.x);
+    <span style="color: #B00040">int</span> j <span style="color: #666666">=</span> <span style="color: #B00040">int</span>(gl_GlobalInvocationID.y);	
+	<span style="color: #008000; font-weight: bold">if</span> (i <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span>) <span style="color: #008000; font-weight: bold">return</span>;
+	<span style="color: #008000; font-weight: bold">if</span> (j <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span>) <span style="color: #008000; font-weight: bold">return</span>;
+	<span style="color: #008000; font-weight: bold">if</span> (i <span style="color: #666666">&gt;=</span> nx) <span style="color: #008000; font-weight: bold">return</span>;
+	<span style="color: #008000; font-weight: bold">if</span> (j <span style="color: #666666">&gt;=</span> ny) <span style="color: #008000; font-weight: bold">return</span>;
+	
+	NoRaceConditionVersion(i, j);
+}
+</pre></div>
+
+	<br>
+	This method can generally be applied to other erosion algorithms, such as hydraulic or aeolian erosion.
+	Compared to the previous post where the race condition was ultimately ignored, this version is 4 to 5 times slower
+	in my benchmark. This makes sense since we are reading multiples values from the input buffer, and swapping input/output
+	buffers after each step. The main advantage of this method is the deterministic output of the algorithm, which is quite
+	important in the case of erosion simulation.
+	<br>
+	If you want to compare both version side by side, here they are: <a class="aUnderlined" href="../code/thermal-racecondition.glsl">Race condition shader</a> and <a class="aUnderlined" href="../code/thermal-noracecondition.glsl">Correct shader</a>
+	<br>
+	<br>
+	<hr>
+ <center>
