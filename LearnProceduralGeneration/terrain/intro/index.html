@@ -1534,7 +1534,7 @@
 <h2 id="interactive-example">Interactive Example</h2>
 <p>All sections in this guide will be illustrated with figures and interactive examples thanks to Three.js. The one below uses the classes created in this page, and shows both discrete and procedural heightfields rendered as 3D meshes. The discrete version is initialized from a small DEM of the french alps. Move around the scene with the mouse!</p>
 <div class="threeJsCanvas" id="ExampleIntro"></div>
-<script type="application/x-javascript" src="/js/terrain/intro/example-intro.js"> </script>
+<script type="module" src="/js/terrain/intro/example-intro.js"> </script>
 
 <h2 id="appendix-storing-heightfields-as-images">Appendix: Storing Heightfields as Images</h2>
 <p>A typical way of storing heightfield data on a disk is to use <strong>images</strong>, which makes complete sense because we store a single elevation value for each grid sample. You can find many examples of this online, as DEMs are typically shared as PNG files. However, an image only provides incomplete information about a terrain: there is no way to know the <strong>world space extent</strong> nor the <strong>altitude range</strong>. It is thus not unusual to see online posts with terrains exaggerated vertically or horizontally. This is a good reminder that <strong>terrains are not images.</strong></p>
@@ -1605,10 +1605,6 @@
       <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
       
         <script src="../../js/libs/mathjax.js"></script>
-      
-        <script src="../../js/libs/noiselib.js"></script>
-      
-        <script src="../../js/terrain/intro/example-intro.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
