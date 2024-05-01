@@ -1101,7 +1101,7 @@
     "imports": {
       "three": "https://unpkg.com/three/build/three.module.js",
       "three/addons/": "https://unpkg.com/three/examples/jsm/",
-      "js/": "/js/"
+      "js/": "../../../js/"
     }
   }
 </script>
@@ -1113,14 +1113,14 @@
 <h2 id="simple-primitives">Simple Primitives</h2>
 <p>TODO: The most basic example of a compact primitive is a noise combined with a simple skeleton, such as a point. This limits the influence of the noise in space, and allows to use something else elsewhere in the scene.</p>
 <div class="threeJsCanvas" id="NoisePrimitive"></div>
-<script type="module" src="/js/terrain/procedural/primitives/example-compactPrimitive.js"> </script>
+<script type="module" src="../../../js/terrain/procedural/primitives/example-compactPrimitive.js"> </script>
 
 <h2 id="curve-based-primitive">Curve-based primitive</h2>
 <p>TODO: show a river carved on a plane.</p>
 <h2 id="designing-meta-primitives">Designing Meta Primitives</h2>
 <p>It is possible to use procedural noise, or even simpler trigonometric functions to create interesting shapes. For instance, transverse dunes, which are very common in arid deserts, can be modeled using a cosinus function. Another cool example is the crater primitive. Show that we are only limited to our imagination, and our knowledge in Maths. Mention Desmos as a useful tool for playing with mathematical functions, which are just like building blocks that we manipulate. For all these examples, show the function written in Latex next to the example.</p>
 <div class="threeJsCanvas" id="MetaPrimitive"></div>
-<script type="module" src="/js/terrain/procedural/primitives/example-metaPrimitive.js"> </script>
+<script type="module" src="../../../js/terrain/procedural/primitives/example-metaPrimitive.js"> </script>
 
 <h2 id="going-further">Going further</h2>
 <p>TODO: do a small exercice where the reader must design a canyon primitive between two points. Parameters must be easy to manipulate while retaining expressivity for the end user.</p>
