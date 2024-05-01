@@ -121,7 +121,7 @@ function loadHeightfieldFromFile(file) {
 function initTerrain() {
 	if (stateGUI.TerrainType == 0) {
 		// Discrete heightfield
-		loadHeightfieldFromFile("/js/terrain/intro/heightfield.png"); // This calls initTerrainGeometry() already
+		loadHeightfieldFromFile("./heightfield.png"); // This calls initTerrainGeometry() already
 	}
 	else if (stateGUI.TerrainType == 1) {
 		// Analytic heightfield
