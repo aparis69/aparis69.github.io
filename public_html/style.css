@@ -103,6 +103,13 @@ a
     height: auto;
 }
 
+.leftNoBorder {
+	float: left;
+	max-width: 20%;
+	margin: 0 10px 0 10px;
+    height: auto;
+}
+
 img 
 {
 	max-width: 1024px;
