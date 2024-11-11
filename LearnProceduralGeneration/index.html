@@ -442,6 +442,8 @@
       
         
       
+        
+      
     
     
     
@@ -643,10 +645,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -684,53 +682,11 @@
   
   
     <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_hydraulic/" class="md-nav__link">
+      <a href="terrain/simulation/simulation_intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Hyraulic Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_thermal/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Thermal Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="terrain/simulation/erosion_streampower/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Stream Power Erosion
+    Introduction
   </span>
   
 
@@ -847,6 +803,76 @@
   
   <span class="md-ellipsis">
     Using Implicit Surfaces
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Texturing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Texturing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="terrain/texturing/texturing_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
   </span>
   
 
@@ -1095,7 +1121,7 @@
 <style>body {text-align: justify}</style>
 
 <h1 id="introduction">Introduction</h1>
-<p>Welcome to the Procedural Generation guide. This is aimed at people that want to learn more about <em>world</em> generation, featuring terrain generation, ecosystem simulation, river animation, just to name a few. On top of being the most accessible to everyone, the goal here is to provide <strong>explanations, mathematical formulas, clear code, demos, and exercises</strong> for all examples. </p>
+<p>Welcome to the Procedural Generation guide. This is aimed at people that want to learn more about <em>world</em> generation, featuring terrain, ecosystem simulation, river animation, just to name a few. On top of being as accessible as possible to everyone, the goal here is to provide <strong>explanations, mathematical formulas, clear code, demos, and exercises</strong> for all examples. </p>
 <p>Interactive demos are made possible thanks to the great <a href="https://threejs.org/">Three.js</a> library. Only basic knowledge in Computer Graphics should be required to go through this guide.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1108,6 +1134,8 @@
 <li>Add a screenshot of all the interactive examples on this page. This should be as colorful as possible.</li>
 <li>Find some good default parameters for each example. Visuals must be great at first glance.</li>
 <li>Each page should have at least one interactive example to play with.</li>
+<li>It should be easy to modify the example, maybe directly in the page? Or by clicking on a button that opens a setup JS playground?</li>
+<li>At the beginning (or end?) of each page, do a 'Summary' or 'Takeaways' of the main points.</li>
 </ul>
 </div>
 <h2 id="what-is-procedural-generation">What is Procedural Generation?</h2>
@@ -1129,7 +1157,7 @@
 <h2 id="faq">FAQ</h2>
 <details class="question">
 <summary>Why another Procedural Generation guide?</summary>
-<p>There are a lot of great resources online to get started - but none of them was complete enough for my tastes. </p>
+<p>There are a lot of great resources online to get started - but none of them was <strong>interactive</strong> and <strong>accessible</strong> enough for my tastes. </p>
 </details>
 <details class="question">
 <summary>Can I use the code written here?</summary>

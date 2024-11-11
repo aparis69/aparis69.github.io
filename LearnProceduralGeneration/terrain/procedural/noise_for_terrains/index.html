@@ -361,6 +361,8 @@
       
         
       
+        
+      
     
     
     
@@ -510,9 +512,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#our-first-noise-based-terrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Our first noise-based terrain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-issues-of-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      The issues of Noise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multifractals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multifractals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#going-further" class="md-nav__link">
     <span class="md-ellipsis">
       Going further
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#associated-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Associated files
     </span>
   </a>
   
@@ -609,10 +647,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -650,53 +684,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../simulation/erosion_hydraulic/" class="md-nav__link">
+      <a href="../../simulation/simulation_intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Hyraulic Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../simulation/erosion_thermal/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Thermal Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../simulation/erosion_streampower/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Stream Power Erosion
+    Introduction
   </span>
   
 
@@ -813,6 +805,76 @@
   
   <span class="md-ellipsis">
     Using Implicit Surfaces
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Texturing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Texturing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../texturing/texturing_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
   </span>
   
 
@@ -999,9 +1061,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#our-first-noise-based-terrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Our first noise-based terrain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-issues-of-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      The issues of Noise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multifractals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multifractals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#going-further" class="md-nav__link">
     <span class="md-ellipsis">
       Going further
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#associated-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Associated files
     </span>
   </a>
   
@@ -1035,11 +1133,63 @@
 </script>
 
 <h1 id="using-noise-for-terrain-generation">Using Noise for Terrain Generation</h1>
-<p>TODO: explain how noise can be used to define an elevation function. Explain how they are limited, and how Multifractals do not solve everything. Thus the need for primitives and operators to create more interesting scenes.</p>
+<p><a href="../../../fundamentals/noise/">Noise</a> is a powerful tool that has been applied in many (if not all) subdomains of Computer Graphics. Terrain generation is no exception. In fact, using noise to generate mountains was one of the first application, going back as far as the late eighties with the <a href="https://dl.acm.org/doi/10.1145/74334.74337">seminal work</a> of Kenton Musgrave. </p>
+<p>For terrains, the core idea is to use the scalar value returned by the noise as <em>the altitude at a given point</em>. You can think of this as a world-space plane, with the elevation of points defined by the noise function. Below is an example of the same noise rendered on a 2D texture and on a 3D mesh.</p>
+<p style="text-align:center;">
+    <img src="../../../img/noise_textureAndMesh.jpg" width="700px"></img>
+</p>
+
+<p>Now let's see how to do that in practice. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to dig into the details of how noise functions work, please refer to <a href="../../../fundamentals/noise/">this page</a>.</p>
+</div>
+<h2 id="our-first-noise-based-terrain">Our first noise-based terrain</h2>
+<p>Noise functions are simply dependent on the position at which they are evaluated - they thus belong to the category of <strong>procedural functions</strong>, as they are no or very few data and instead rely on a procedure to compute a scalar value. If we extend our ProceduralHeightField class introduced in the <a href="../../intro/">previous part</a>, we can now define the Elevation function again using our Perlin noise:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">ProceduralHeightField</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">BaseHeightField</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">horizontalExtents</span><span class="p">,</span><span class="w"> </span><span class="nx">verticalExtents</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">super</span><span class="p">(</span><span class="nx">horizontalExtents</span><span class="p">,</span><span class="w"> </span><span class="nx">verticalExtents</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Compute the altitude of a 2D point procedurally using Perlin noise</span>
+<span class="w">    </span><span class="nx">Elevation</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">perlin</span><span class="p">.</span><span class="nx">noise</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This gives us the following result. Use the mouse to turn around it!</p>
+<div class="threeJsCanvas" id="NoiseTerrainBasic"></div>
+<script type="module" src="../../../js/terrain/procedural/noiseForTerrains/example-noiseTerrainBasic.js"> </script>
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For the noise function itself, we use Three.js Perlin noise implementation, which was itself used to showcase a procedural terrain <a href="https://threejs.org/examples/?q=terrain#webgl_geometry_terrain_raycast">here</a> with the <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_terrain_raycast.html">code here</a>.</p>
+</div>
+<p>At this point you may not really believe that noise function can be used to create realistic (or at least, visually appealing) terrains. You can play around with the amplitude, frequency, and number of octaves in the example above and will probably improve the results quite a lot. However, noise-based terrains still have several limitations. </p>
+<h2 id="the-issues-of-noise">The issues of Noise</h2>
+<p>Creating terrains using this kind of fractal noise has been done extensively in video games for multiple decades. While you can definitely get a mountainous look for your terrain, getting a proper valley for instance might be more difficult, or even impossible if you're limited to <strong>simple, uniform fractal noise</strong>. If we were to list all the limitations of the above example, it would look like this:</p>
+<ul>
+<li>
+<p>No valleys: you either get a very mountainous terrain or a very flat terrain, but having a mix of both is difficult.</p>
+</li>
+<li>
+<p>You may notice the same kinds of pattern everywhere. This is one interesting property of noise function: self-similarity. In our case, it's also a limitation.</p>
+</li>
+<li>
+<p>Mountains are only just isolated peaks, lacking ridge structures typically found in real mountain ranges.</p>
+</li>
+</ul>
+<p>In the end, it seems that noise is only capable of generating small bumps. Can we alleviate this issue somehow?</p>
+<h2 id="multifractals">Multifractals</h2>
+<p>Some of these problems can be partially solved by using a more advanced technique called a <strong>multifractal noise</strong>. The core idea is to modulate the amplitude of successive octave based on previous iterations. This way, areas with a low amplitude will never get too spiky, but instead remain relatively flat, and the opposite will happen for mountainous areas. The example below shows different types of noise for generating terrain shapes, including classical perlin and ridge noise, as well as their multifractal variants. Play around with the different settings to get a feel of how noise behaves.</p>
 <div class="threeJsCanvas" id="NoiseForTerrain"></div>
 <script type="module" src="../../../js/terrain/procedural/noiseForTerrains/example-noiseForTerrain.js"> </script>
 
+<p>Multifractals still do not solve everything. However, the idea of using procedural functions to generate shapes is interesting and can be pushed further: what if we could create function to represent dunes, cliffs, mountains, mountain ridges, rivers, and more? This will be the subject of the following chapters, where we will try to design a small library of primitives and operators to create more visually interesting and varied terrains.</p>
 <h2 id="going-further">Going further</h2>
+<p>If you want to go further, you may try to use other kinds of noise to create terrains, for instance <a href="https://github.com/zsoltc/worley-noise">Worley (or cellular) noise</a>, its fractal variants, or try to model different effects such as <a href="https://iquilezles.org/articles/warp/">domain warp</a>. </p>
+<h2 id="associated-files">Associated files</h2>
+<p>Files associated with this page are available <a href="https://github.com/aparis69/LearnProceduralGeneration/tree/main/docs/js/terrain/intro">here</a>.</p>
 
 
 

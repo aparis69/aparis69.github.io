@@ -361,6 +361,8 @@
       
         
       
+        
+      
     
     
     
@@ -711,10 +713,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -752,53 +750,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../simulation/erosion_hydraulic/" class="md-nav__link">
+      <a href="../simulation/simulation_intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Hyraulic Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../simulation/erosion_thermal/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Thermal Erosion
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../simulation/erosion_streampower/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Stream Power Erosion
+    Introduction
   </span>
   
 
@@ -915,6 +871,76 @@
   
   <span class="md-ellipsis">
     Using Implicit Surfaces
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Texturing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Texturing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../texturing/texturing_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
   </span>
   
 
@@ -1351,13 +1377,17 @@
 <p class="admonition-title">Note</p>
 <p>This class contains redundant data, which is on purposes to speed-up computation and facilitate reading. This is not the most optimal.</p>
 </div>
-<p>We were able to factorize some class members: not matter the representation, a heightfield has three dimensions (two horizontals, one vertical). Another interesting thing that we are able to put here is the <code>Vertex</code> function, which computes a position on the heightfield over a virtual grid characterized by its dimensions. This will be very handy in the next sections when we will create a <em>mesh</em> out of our heightfield.</p>
+<p>This way, we factorize some class members: not matter the representation, a heightfield has three dimensions (two horizontals, one vertical). Another interesting thing that we are able to put here is the <code>Vertex</code> function, which computes a position on the heightfield over a virtual grid characterized by its dimensions. This will be very handy in the next sections when we will create a <em>mesh</em> out of our heightfield.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>An important thing to note is that we need the minimum and maximum elevation of the terrain. No matter the representation, we usually manipulate altitudes in some normalized form, thus the need to transform to world-space at the end of the computation.</p>
 </div>
-<p>Of course, this class is not enough by itself. It is just an <strong>abstraction layer</strong> that we will now use for both discrete and procedural cases.</p>
-<p>For <strong>discrete heightfields</strong>, we must first transform our world-space point <span class="arithmatex">\(\mathbf{p}\)</span> to the space in which our samples live (grid-space), and compute the interpolation between our samples. We will use bilinear interpolation in this example. On the other hand, for <strong>procedural heightfields</strong>, we need to write the mathematical function that compute the altitude. Here we will use a cosinus, which is of course in no way realistic but still works. </p>
+<p>Of course, this class is not enough by itself. It is just an <strong>abstraction layer</strong> that we will now use for both discrete and procedural cases - as can be seen on the figure below.</p>
+<p style="text-align:center;">
+    <img src="../../img/inheritance.jpg" width="600px"></img>
+</p>
+
+<p>We still need additional data depending on what we choose. For <strong>discrete heightfields</strong>, we must first transform our world-space point <span class="arithmatex">\(\mathbf{p}\)</span> to the space in which our samples live (grid-space), and compute the interpolation between our samples. We will use bilinear interpolation in this example. On the other hand, for <strong>procedural heightfields</strong>, we need to write the mathematical function that compute the altitude. Here we will use a cosinus, which is of course in no way realistic but still works. </p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Discrete</label><label for="__tabbed_2_2">Procedural</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1525,12 +1555,12 @@
 <p>Note that the resolution of our discrete heightfield has no connection with the resolution of our mesh: we can completely create a 1024x1024 mesh out of a 256x256 heightfield thanks to interpolation. However, this may lead to visual artifacts, especially when using only bilinear interpolation.</p>
 </div>
 <h3 id="sphere-tracing">Sphere tracing</h3>
-<p>An alternative which shines best for procedural representations, is to avoid the creation of a 3D mesh and render the terrain directly <strong>using raymarching or sphere tracing</strong>. While being theoritically elegant and simple to implement, this is however less adapted to current graphics and physics pipelines which mainly work with triangle meshes. For a procedural heightfield, another downfall is that the <strong>rendering performance is directly tied to the complexity of the underlying function</strong>, which can quickly get really complicated.</p>
+<p>An alternative which shines best for procedural representations is to avoid the creation of a 3D mesh and render the terrain directly <strong>using raymarching or sphere tracing</strong>. While being theoritically elegant and simple to implement, this is however a little less adapted to current graphics and physics pipelines, which mainly work with triangle meshes. For a procedural heightfield, another downfall is that the <strong>rendering performance is directly tied to the complexity of the underlying function</strong>, which can quickly get really complicated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There are many ways to <strong>optimize the evaluation of a procedural function</strong> (for heightfields, or more generally <a href="../../fundamentals/implicits/">implicit surfaces</a>), including <em>bounding volume hierarchies</em>, <em>expression simplification</em>, and many others. The guide may be extended to include these in the (long-term) future.</p>
 </div>
-<p>In this guide, we will mostly use the <strong>triangle mesh representation</strong> and work with heightfields of relatively low resolution. When appropriate, a slider to modify the grid discretization will be exposed.</p>
+<p>In this guide, we will mostly use the <strong>mesh representation</strong> and work with heightfields of relatively low resolution. When appropriate, a slider to modify the grid discretization will be exposed. If you want to learn more about sphere tracing terrains, you can take a look at <a href="https://www.shadertoy.com/results?query=terrain">shadertoy</a>, which is full of great examples.</p>
 <h2 id="interactive-example">Interactive Example</h2>
 <p>All sections in this guide will be illustrated with figures and interactive examples thanks to Three.js. The one below uses the classes created in this page, and shows both discrete and procedural heightfields rendered as 3D meshes. The discrete version is initialized from a small DEM of the french alps. Move around the scene with the mouse!</p>
 <div class="threeJsCanvas" id="ExampleIntro"></div>
@@ -1546,7 +1576,7 @@
 
 <p>There is no real solution to this problem, except that you should provide additional information alongside the image file of your heightfield. Image files are still vastly used because they are easy to share and can be opened and edited using various softwares. </p>
 <h2 id="appendix-going-further">Appendix: Going further</h2>
-<p>Different models were developed throughout the years to represent a terrain on a computer - for the discrete case we covered regular heightfields, which are the most popular representation, but there are others:</p>
+<p>Different models were developed throughout the years to represent a terrain on a computer - for the discrete case we covered regular heightfields, which are the most popular representation, but there are others that I did not cover:</p>
 <ul>
 <li>Hexagon and triangular fields <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1467-8659.1310037">[Dixon et al. 1994]</a></li>
 <li>Combinatorial maps <a href="https://www.researchgate.net/publication/264287426_Generalized_Maps_for_Erosion_and_Sedimentation_Simulation">[Crespin et al. 2014]</a></li>

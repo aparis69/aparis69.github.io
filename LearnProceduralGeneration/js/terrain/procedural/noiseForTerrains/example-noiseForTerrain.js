@@ -8,7 +8,7 @@ state = {
 	scene: null,
 	renderer: null,
 	camera: null,
-	width: 800,
+	width: 700,
 	height: 600,
 	object: null,
 	controls: null,
@@ -19,7 +19,7 @@ state = {
 	canvasName: "NoiseForTerrain",
 }
 stateGUI = {
-	NoiseType: 0,
+	NoiseType: 3,
 	Frequency: 0.35,
 	Amplitude: 1.3,
 	Octave: 6

@@ -1,72 +1,36 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
-import { precomputeSpectralWeights, fBm, falloff } from 'js/libs/noiselib.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+import { precomputeSpectralWeights, fBm } from 'js/libs/noiselib.js';
 
 state = {
 	scene: null,
 	renderer: null,
 	camera: null,
-	width: 800,
+	width: 700,
 	height: 600,
 	object: null,
 	controls: null,
 	gridRes: 256,
 	terrainSize: 10,
 	perlin: null,
-	spectralWeights: null,
-	canvasName: "MetaPrimitive",
+
+	canvasName: "NoiseTerrainBasic",
 }
 stateGUI = {
-	PrimitiveType: 1,
-
-	Radius: 3.5,
-	Frequency: 2.0,
-	Amplitude: 0.75,
+	NoiseType: 0,
+	Frequency: 0.35,
+	Amplitude: 1.3,
+	Octave: 6
 }
 var state;
 var stateGUI;
 
-function dunePrimitive(x, y) {
-	let n = fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
-	let h = stateGUI.Amplitude * (1.0 - Math.abs(Math.cos((x + n) * stateGUI.Frequency)));
-	return h;
-}
-
-function sharpFalloff(d) {
-	if (d > 3.15 * stateGUI.Radius)
-		return 0.0;
-	return stateGUI.Amplitude * (1.0 - Math.abs(Math.cos(d / stateGUI.Radius)));
-}
-
-function craterPrimitive(x, y) {
-	let d = (x * x + y * y);
-	let w = sharpFalloff(d);
-	let n = fBm(x, y, state.perlin, 0.8, 1.5, 2, 0) * w; 
-	return sharpFalloff(d + n);
-}
-
-function mountainPrimitive(x, y) {
-	return 0;
-}
-
-function cliffPrimitive(x, y) {
-	return 0;
-}
-
-function computeElevationForVertices(vertices) {
+function addNoiseToVertices(vertices) {
 	for (let i = 0; i < vertices.length; i += 3) {
 		let x = vertices[i];
 		let y = vertices[i + 2];
-		if (stateGUI.PrimitiveType == 0)
-			vertices[i + 1] = dunePrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 1)
-			vertices[i + 1] = craterPrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 2)
-			vertices[i + 1] = mountainPrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 3)
-			vertices[i + 1] = cliffPrimitive(x, y);
+		vertices[i + 1] = state.perlin.noise(x, y, 0.0); 
 	}
 }
 
@@ -115,30 +79,13 @@ function initScene() {
 }
 
 function initGUI() {
-	const gui = new GUI({autoPlace: false, width: 200})
-	gui.domElement.id = 'gui';
-	var customContainer = document.getElementById(state.canvasName);
-	customContainer.appendChild(gui.domElement);
-
-	gui.add(stateGUI, 'PrimitiveType', 
-	{ 
-		'Dune': 0, 
-		'Crater': 1, 
-		'Mountain': 2, 
-		'Cliff': 3, 
-	}).onChange(value => { stateGUI.PrimitiveType = value; initTerrain(); });
-	
-	// Controls
-	gui.add(stateGUI, 'Frequency', 1, 5).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Amplitude', 0.1, 1.0).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Radius', 2.0, 7.0).onChange(value => { initTerrain(); });
 }
 
-function initTerrain() {
+function initTerrain(noiseType) {
 	// Create geometry
 	const geometry = new THREE.PlaneGeometry(state.terrainSize, state.terrainSize, state.gridRes, state.gridRes);
 	geometry.rotateX(-Math.PI / 2);
-	computeElevationForVertices(geometry.attributes.position.array);
+	addNoiseToVertices(geometry.attributes.position.array);
 	geometry.computeVertexNormals();
 	
 	// Create object in scene
