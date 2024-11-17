@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../procedural/terrain_construction_tree/">
+        <link rel="prev" href="../noise_for_terrains/">
       
       
-        <link rel="next" href="../../volumetric/going_3D/">
+        <link rel="next" href="../curve_based_primitives/">
       
       
       <link rel="icon" href="../../../img/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Introduction - Learn Procedural Generation</title>
+        <title>Our first primitive - Learn Procedural Generation</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#creating-our-first-terrain-primitive" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Our first primitive
             
           </span>
         </div>
@@ -416,8 +416,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -434,13 +436,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -454,7 +454,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Procedural
@@ -468,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../procedural/noise_for_terrains/" class="md-nav__link">
+      <a href="../noise_for_terrains/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -486,10 +486,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../procedural/our_first_primitive/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Our first primitive
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -498,6 +518,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#designing-transverse-dunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing Transverse Dunes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#geometric-skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Geometric Skeletons
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#designing-a-mountain-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing a Mountain primitive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math-function-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math function utilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      Going further
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -510,7 +595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../procedural/curve_based_primitives/" class="md-nav__link">
+      <a href="../curve_based_primitives/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -531,7 +616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../procedural/designing_operators/" class="md-nav__link">
+      <a href="../designing_operators/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -552,7 +637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../procedural/terrain_construction_tree/" class="md-nav__link">
+      <a href="../terrain_construction_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -578,8 +663,6 @@
                 
   
   
-    
-  
   
   
     
@@ -590,11 +673,13 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
         
           
           <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
@@ -608,7 +693,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_3">
             <span class="md-nav__icon md-icon"></span>
             Simulation
@@ -619,19 +704,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../simulation/simulation_intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -640,7 +716,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1002,6 +1077,59 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#designing-transverse-dunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing Transverse Dunes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#geometric-skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Geometric Skeletons
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#designing-a-mountain-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Designing a Mountain primitive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math-function-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math function utilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      Going further
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1015,7 +1143,83 @@
                   
 
 
-<h1 id="introduction">Introduction</h1>
+<style>body {text-align: justify}</style>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three/examples/jsm/",
+      "js/": "../../../js/"
+    }
+  }
+</script>
+
+<h1 id="creating-our-first-terrain-primitive">Creating our First Terrain Primitive</h1>
+<p>Simply using uniform fractal or multifractal noise is not enough for creating realistic terrains: we simply lack <strong>the variety</strong> found in real terrains. The compact procedural aspect of noise functions remains interesting - we are however limited by our ability to design a function that represents the desired landforms. In this part we will see how to design such shapes only using basic mathematical tools.</p>
+<p>The core idea of this chapter is that <strong>procedural heightfields are not limited to noise</strong>: we can use other functions, such as <em>trigonometric functions</em> (cos, sin, tan) as well as <em>geometric skeletons</em> (explained in a bit). You may think of all of these as 1D or 2D functions of different shapes that we will combine together using simple operators such as addition and multiplication, to achieve a desired appearance. In concrete terms, we will design <em>terrain primitives</em>, and later combine them together to create a large-scale terrain.</p>
+<p>This may still be a little abstract - Let's take an example: How about creating sand dunes? 🏜️</p>
+<h2 id="designing-transverse-dunes">Designing Transverse Dunes</h2>
+<p>Sand dunes are a very good and educational example when it comes to creating <em>terrain primitives</em>. For those not familiar with how sand dunes look like, the figure below recaps the most common shapes identified by geomorphologists.</p>
+<p style="text-align:center;">
+    <img src="../../../img/dunes.jpg" width="600px"></img>
+</p>
+
+<p>Sand dunes emerge from the interplay between wind of variable strength and direction over time, sand, and bare bedrock underneath. Here we focus on <em>transverse dunes</em>, which exhibit regular longitudinal patterns orthogonal to the wind direction. </p>
+<p>The first observation is that the pattern is repeating over space at <strong>mostly regular intervals</strong>; the second observation is that the atomic repeating element is <strong>almost a straight line</strong>. If we take a side-view perspective, these dunes almost look like... a <em>cosinus function</em>. This is actually the only thing that we need to model such shape: we can use a 1D cosinus as our procedural heightfield function <span class="arithmatex">\(h\)</span>, taking as parameter the <span class="arithmatex">\(x\)</span> or <span class="arithmatex">\(y\)</span> coordinate of the point <span class="arithmatex">\(\mathbf{p}\)</span>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Math</label><label for="__tabbed_1_2">Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="arithmatex">\(h(\mathbf{p}) : \cos(\mathbf{p}_x)\)</span></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">function</span><span class="w"> </span><span class="nf">computeElevation</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Put in 3D, it looks like this.</p>
+<p style="text-align:center;">
+    <img src="../../../img/transverse01.jpg" width="500px"></img>
+</p>
+
+<p>This is already quite good, although a bit 'hilly'. We are missing the sharp aspect of crests at the top of the dunes. This can done basically inverting the shape of our cosinus using an <strong>absolute value</strong>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Math</label><label for="__tabbed_2_2">Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="arithmatex">\(h(\mathbf{p}) : 1 - | \cos(\mathbf{p}_x) |\)</span></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">function</span><span class="w"> </span><span class="nf">computeElevation</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Which leads to the following 3D result. Notice how we managed to create sharp features using a simple absolute value. This trick is similar to the one used to create <strong>ridge noise</strong>.</p>
+<p style="text-align:center;">
+    <img src="../../../img/transverse02.jpg" width="500px"></img>
+</p>
+
+<p>This is already pretty satisfying, can we do better? The result is still lacking some <em>irregularities</em>: nothing is as straight and as regular in real life. <strong>Noise</strong> is a great tool for such task: it is increadibly useful to add variety and details on terrain primitives. There are several ways to do this: for instance a small layer of noise may be added at the top or bottom of the dunes, or a warp the input position may be used to to add irregularities to the crest directions. You may refer to the interactive example below to compare the different versions with various additional parameters.</p>
+<div class="threeJsCanvas" id="PrimitiveDune"></div>
+<script type="module" src="../../../js/terrain/procedural/primitives/example-primitiveDune.js"> </script>
+
+<p>For the rest, the only limitation is your imagination and your ability to picture the combination of different mathematical functions. It's fun to do but still require a bit of practice.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is sometimes easier to visualize and design shapes in 1D rather than 2D or 3D: for that, <a href="https://www.desmos.com/">Desmos</a> is a great tool that I use regularly. <a href="https://www.shadertoy.com/">Shadertoy</a> is also a great source of inspiration.</p>
+</div>
+<h2 id="geometric-skeletons">Geometric Skeletons</h2>
+<p>The sand dunes example is good and all, but what if our landforms is not periodic but rather punctual? For instance, what if we want to design a single mountain peak, a hill, or a crater? For that, trigonometric functions may be a little less useful - we need another tool, which we refer to as <strong>geometric skeletons</strong>.</p>
+<p>TODO: explain point, disk, and curve skeleton. Provide distance formula for all, and design a mountain primitive</p>
+<h2 id="designing-a-mountain-primitive">Designing a Mountain primitive</h2>
+<h2 id="math-function-utilities">Math function utilities</h2>
+<p>TODO: recap all useful math functions to design terrain primitives</p>
+<h2 id="going-further">Going further</h2>
 
 
 

@@ -1,37 +1,54 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
-import { precomputeSpectralWeights, fBm } from 'js/libs/noiselib.js';
+import { precomputeSpectralWeights, fBm, falloff } from 'js/libs/noiselib.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 state = {
 	scene: null,
 	renderer: null,
 	camera: null,
-	width: 700,
+	width: 800,
 	height: 600,
 	object: null,
 	controls: null,
 	gridRes: 256,
 	terrainSize: 10,
 	perlin: null,
-
-	canvasName: "NoiseForTerrain",
+	spectralWeights: null,
+	canvasName: "PrimitiveDune",
 }
 stateGUI = {
-	NoiseType: 2,
-	Frequency: 0.35,
-	Amplitude: 1.3,
-	Octave: 6
+	PrimitiveType: 2,
+	Frequency: 1.5,
+	Amplitude: 0.75,
 }
 var state;
 var stateGUI;
 
-function addNoiseToVertices(vertices) {
+function dunePrimitive(x, y) {
+	let h = 0.0;
+	if (stateGUI.PrimitiveType == 2) {
+		// Warped sharp cosinus
+		let n = fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
+		h = stateGUI.Amplitude * (1.0 - Math.abs(Math.cos((x + n) * stateGUI.Frequency)));
+	}
+	else if (stateGUI.PrimitiveType == 1) {
+		// Sharp cosinus
+		h = stateGUI.Amplitude * (1.0 - Math.abs(Math.cos(x * stateGUI.Frequency)));
+	}
+	else if (stateGUI.PrimitiveType == 0) {
+		// Simpler version
+		h = stateGUI.Amplitude * (Math.cos(x * stateGUI.Frequency));
+	}
+	return h;
+}
+
+function computeElevationForVertices(vertices) {
 	for (let i = 0; i < vertices.length; i += 3) {
 		let x = vertices[i];
 		let y = vertices[i + 2];
-		vertices[i + 1] = fBm(x, y, state.perlin, stateGUI.Amplitude, stateGUI.Frequency, stateGUI.Octave, stateGUI.NoiseType); 
+		vertices[i + 1] = dunePrimitive(x, y);
 	}
 }
 
@@ -83,27 +100,24 @@ function initGUI() {
 	gui.domElement.id = 'gui';
 	var customContainer = document.getElementById(state.canvasName);
 	customContainer.appendChild(gui.domElement);
-	
-	// Buttons
-	gui.add(stateGUI, 'NoiseType', 
-	{ 
-		'Perlin': 0, 
-		'Ridge': 1, 
-		"PerlinMultifractal": 2,  
-		"RidgeMultifractal": 3 
-	}).onChange(value => { initTerrain(); });
 
+	gui.add(stateGUI, 'PrimitiveType', 
+	{ 
+		'Cosinus': 0, 
+		'Sharp Cosinus': 1, 
+		'Warped Sharp Cosinus': 2, 
+	}).onChange(value => { stateGUI.PrimitiveType = value; initTerrain(); });
+	
 	// Controls
-	gui.add(stateGUI, 'Frequency', 0, 1).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Amplitude', 0.1, 2.0).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Octave', 1, 8, 1).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'Frequency', 1, 5).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'Amplitude', 0.1, 1.0).onChange(value => { initTerrain(); });
 }
 
-function initTerrain(noiseType) {
+function initTerrain() {
 	// Create geometry
 	const geometry = new THREE.PlaneGeometry(state.terrainSize, state.terrainSize, state.gridRes, state.gridRes);
 	geometry.rotateX(-Math.PI / 2);
-	addNoiseToVertices(geometry.attributes.position.array);
+	computeElevationForVertices(geometry.attributes.position.array);
 	geometry.computeVertexNormals();
 	
 	// Create object in scene

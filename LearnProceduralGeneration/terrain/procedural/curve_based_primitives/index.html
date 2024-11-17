@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../noise_for_terrains/">
+        <link rel="prev" href="../our_first_primitive/">
       
       
         <link rel="next" href="../designing_operators/">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Designing primitives - Learn Procedural Generation</title>
+        <title>Curve based primitives - Learn Procedural Generation</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#combining-noise-and-primitives" class="md-skip">
+        <a href="#curve-based-primitives" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Designing primitives
+              Curve based primitives
             
           </span>
         </div>
@@ -431,6 +431,8 @@
       
         
       
+        
+      
     
     
     
@@ -484,6 +486,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../our_first_primitive/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Our first primitive
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -500,7 +523,7 @@
           
   
   <span class="md-ellipsis">
-    Designing primitives
+    Curve based primitives
   </span>
   
 
@@ -511,7 +534,7 @@
         
   
   <span class="md-ellipsis">
-    Designing primitives
+    Curve based primitives
   </span>
   
 
@@ -533,36 +556,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#geometric-skeletons" class="md-nav__link">
+  <a href="#distance-to-a-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Geometric Skeletons
+      Distance to a curve
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distance to a curve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quadric-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quadric curve
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simple-primitives" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#cubic-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Simple Primitives
+      Cubic curve
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#curve-based-primitive" class="md-nav__link">
-    <span class="md-ellipsis">
-      Curve-based primitive
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#designing-meta-primitives" class="md-nav__link">
+  <a href="#putting-that-on-a-terrain-rivers-roads-canyons" class="md-nav__link">
     <span class="md-ellipsis">
-      Designing Meta Primitives
+      Putting that on a terrain: rivers, roads, canyons
     </span>
   </a>
   
@@ -1061,36 +1090,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#geometric-skeletons" class="md-nav__link">
+  <a href="#distance-to-a-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Geometric Skeletons
+      Distance to a curve
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distance to a curve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quadric-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quadric curve
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simple-primitives" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#cubic-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Simple Primitives
+      Cubic curve
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#curve-based-primitive" class="md-nav__link">
-    <span class="md-ellipsis">
-      Curve-based primitive
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#designing-meta-primitives" class="md-nav__link">
+  <a href="#putting-that-on-a-terrain-rivers-roads-canyons" class="md-nav__link">
     <span class="md-ellipsis">
-      Designing Meta Primitives
+      Putting that on a terrain: rivers, roads, canyons
     </span>
   </a>
   
@@ -1132,24 +1167,12 @@
   }
 </script>
 
-<h1 id="combining-noise-and-primitives">Combining Noise and Primitives</h1>
-<p>TODO: noise is not enough for creating realistic terrains. However, a combination of different noise can create much more interesting results, provided that we have and can design primitives that represent some specific landforms.</p>
-<h2 id="geometric-skeletons">Geometric Skeletons</h2>
-<p>TODO: explain point, disk, and curve skeleton. Provide distance formula for all? Or find a JS package that does that. Shade 3D Canvas with colors on the ground to show the weight.</p>
-<h2 id="simple-primitives">Simple Primitives</h2>
-<p>TODO: The most basic example of a compact primitive is a noise combined with a simple skeleton, such as a point. This limits the influence of the noise in space, and allows to use something else elsewhere in the scene.</p>
-<div class="threeJsCanvas" id="NoisePrimitive"></div>
-<script type="module" src="../../../js/terrain/procedural/primitives/example-compactPrimitive.js"> </script>
-
-<h2 id="curve-based-primitive">Curve-based primitive</h2>
-<p>TODO: show a river carved on a plane.</p>
-<h2 id="designing-meta-primitives">Designing Meta Primitives</h2>
-<p>It is possible to use procedural noise, or even simpler trigonometric functions to create interesting shapes. For instance, transverse dunes, which are very common in arid deserts, can be modeled using a cosinus function. Another cool example is the crater primitive. Show that we are only limited to our imagination, and our knowledge in Maths. Mention Desmos as a useful tool for playing with mathematical functions, which are just like building blocks that we manipulate. For all these examples, show the function written in Latex next to the example.</p>
-<div class="threeJsCanvas" id="MetaPrimitive"></div>
-<script type="module" src="../../../js/terrain/procedural/primitives/example-metaPrimitive.js"> </script>
-
+<h1 id="curve-based-primitives">Curve-based Primitives</h1>
+<h2 id="distance-to-a-curve">Distance to a curve</h2>
+<h3 id="quadric-curve">Quadric curve</h3>
+<h3 id="cubic-curve">Cubic curve</h3>
+<h2 id="putting-that-on-a-terrain-rivers-roads-canyons">Putting that on a terrain: rivers, roads, canyons</h2>
 <h2 id="going-further">Going further</h2>
-<p>TODO: do a small exercice where the reader must design a canyon primitive between two points. Parameters must be easy to manipulate while retaining expressivity for the end user.</p>
 
 
 

@@ -29,8 +29,9 @@ var state;
 var stateGUI;
 
 function dunePrimitive(x, y) {
-	let n = fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
+	let n = 0.0; //fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
 	let h = stateGUI.Amplitude * (1.0 - Math.abs(Math.cos((x + n) * stateGUI.Frequency)));
+	//let h = stateGUI.Amplitude * (Math.cos((x + n) * stateGUI.Frequency));
 	return h;
 }
 
@@ -84,7 +85,7 @@ function initScene() {
 
 	// Background and ground mesh
 	state.scene.background = new THREE.Color( 0xa0a0a0 );
-	state.scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
+	//state.scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
 
 	const mesh = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshPhongMaterial());
 	mesh.position.y = -2.0;

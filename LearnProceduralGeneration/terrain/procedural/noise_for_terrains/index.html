@@ -12,7 +12,7 @@
         <link rel="prev" href="../../intro/">
       
       
-        <link rel="next" href="../designing_primitives/">
+        <link rel="next" href="../our_first_primitive/">
       
       
       <link rel="icon" href="../../../img/favicon.png">
@@ -431,6 +431,8 @@
       
         
       
+        
+      
     
     
     
@@ -530,9 +532,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multifractals" class="md-nav__link">
+  <a href="#multifractals-to-the-rescue" class="md-nav__link">
     <span class="md-ellipsis">
-      Multifractals
+      Multifractals to the rescue?
     </span>
   </a>
   
@@ -572,11 +574,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../designing_primitives/" class="md-nav__link">
+      <a href="../our_first_primitive/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Designing primitives
+    Our first primitive
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../curve_based_primitives/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Curve based primitives
   </span>
   
 
@@ -1079,9 +1102,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multifractals" class="md-nav__link">
+  <a href="#multifractals-to-the-rescue" class="md-nav__link">
     <span class="md-ellipsis">
-      Multifractals
+      Multifractals to the rescue?
     </span>
   </a>
   
@@ -1139,13 +1162,13 @@
     <img src="../../../img/noise_textureAndMesh.jpg" width="700px"></img>
 </p>
 
-<p>Now let's see how to do that in practice. </p>
+<p>Now let's see how to do that in practice. Our goal is to define the procedural elevation function <span class="arithmatex">\(h\)</span> as some sort of noise function <span class="arithmatex">\(n\)</span>. Recall that <span class="arithmatex">\(h\)</span> takes a 2D point in input and return the elevation, or put otherwise it is defined as <span class="arithmatex">\(h(\mathbf{p}) : \mathbb{R}^2 \rightarrow \mathbb{R}\)</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you want to dig into the details of how noise functions work, please refer to <a href="../../../fundamentals/noise/">this page</a>.</p>
+<p>If you want to dig into the details of how noise functions work internally, please refer to <a href="../../../fundamentals/noise/">this page</a>.</p>
 </div>
 <h2 id="our-first-noise-based-terrain">Our first noise-based terrain</h2>
-<p>Noise functions are simply dependent on the position at which they are evaluated - they thus belong to the category of <strong>procedural functions</strong>, as they are no or very few data and instead rely on a procedure to compute a scalar value. If we extend our ProceduralHeightField class introduced in the <a href="../../intro/">previous part</a>, we can now define the Elevation function again using our Perlin noise:</p>
+<p>Noise functions are simply dependent on the position at which they are evaluated - they thus belong to the category of <strong>procedural functions</strong>. They require only very few data to be stored and rely on a <em>procedure</em> to compute a scalar value. If we extend our ProceduralHeightField class introduced in the <a href="../../intro/">previous part</a>, we may define the elevation function <span class="arithmatex">\(h\)</span> again using our Perlin noise:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">ProceduralHeightField</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">BaseHeightField</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">horizontalExtents</span><span class="p">,</span><span class="w"> </span><span class="nx">verticalExtents</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">super</span><span class="p">(</span><span class="nx">horizontalExtents</span><span class="p">,</span><span class="w"> </span><span class="nx">verticalExtents</span><span class="p">);</span>
@@ -1153,7 +1176,7 @@
 
 <span class="w">    </span><span class="c1">// Compute the altitude of a 2D point procedurally using Perlin noise</span>
 <span class="w">    </span><span class="nx">Elevation</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">perlin</span><span class="p">.</span><span class="nx">noise</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">amplitude</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">perlin</span><span class="p">.</span><span class="nx">noise</span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">freq</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">freq</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -1161,33 +1184,115 @@
 <div class="threeJsCanvas" id="NoiseTerrainBasic"></div>
 <script type="module" src="../../../js/terrain/procedural/noiseForTerrains/example-noiseTerrainBasic.js"> </script>
 
+<p>Notice the impact of <em>amplitude</em> which vertically stretch the terrain, and <em>frequency</em> which changes the horizontal scales of the bumps. These two values are just a way to modify the output of our function according to our needs. </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>For the noise function itself, we use Three.js Perlin noise implementation, which was itself used to showcase a procedural terrain <a href="https://threejs.org/examples/?q=terrain#webgl_geometry_terrain_raycast">here</a> with the <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_terrain_raycast.html">code here</a>.</p>
+<p>For the noise algorithm, we rely on Three.js Perlin noise implementation, which was itself used to showcase a procedural terrain <a href="https://threejs.org/examples/?q=terrain#webgl_geometry_terrain_raycast">here</a> with the <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_terrain_raycast.html">code here</a>.</p>
 </div>
-<p>At this point you may not really believe that noise function can be used to create realistic (or at least, visually appealing) terrains. You can play around with the amplitude, frequency, and number of octaves in the example above and will probably improve the results quite a lot. However, noise-based terrains still have several limitations. </p>
+<p>Another common control not showcased here is the number of successive <em>octaves</em>, which is used for doing sum of perlin noise, also called a fractal noise. If we were to write the equivalent formula and code for a fractal sum of noise, it would look like this:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Math</label><label for="__tabbed_1_2">Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="arithmatex">\(h(\mathbf{p}) = \sum_{i=0}^{o} a_i n (\mathbf{p} f_i)\)</span></p>
+<p><span class="arithmatex">\(a_i = a_0 / 2i\)</span></p>
+<p><span class="arithmatex">\(f_i = f_0~2i\)</span></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm">* Fractal sum of perlin noise.</span>
+<span class="cm">* p: 2D point with x and y members.</span>
+<span class="cm">* a0 is the amplitude of the first octave.</span>
+<span class="cm">* f0 is the frequency of the first octave.</span>
+<span class="cm">*/</span>
+<span class="n">function</span><span class="w"> </span><span class="nf">computeElevation</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">var</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">var</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">var</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">var</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">o</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">perlin</span><span class="p">.</span><span class="n">noise</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
+<span class="w">        </span><span class="n">f</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>With <span class="arithmatex">\(a_0\)</span> the base amplitude, <span class="arithmatex">\(f_0\)</span> the base frequency. Notice how at the same time, we increase the frequency of successive octaves, and decrease their amplitude. This function is also commonly referred to as a <strong>turbulence</strong>, or <strong>fractional brownian motion</strong> (<em>fBm</em> for short). </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The multipliers for the amplitude and frequency are respectively called the <em>lacunarity</em> and <em>persistence</em>. You may slightly change their values and create terrains with slightly different looks. Try it!</p>
+</div>
+<p>At this point you may not really believe that noise function can create realistic or at least visually appealing terrains. You can play around with the amplitude, frequency and will probably improve the results quite a lot. However, noise-based terrains still have <strong>several limitations</strong>. </p>
 <h2 id="the-issues-of-noise">The issues of Noise</h2>
-<p>Creating terrains using this kind of fractal noise has been done extensively in video games for multiple decades. While you can definitely get a mountainous look for your terrain, getting a proper valley for instance might be more difficult, or even impossible if you're limited to <strong>simple, uniform fractal noise</strong>. If we were to list all the limitations of the above example, it would look like this:</p>
+<p>Creating terrains using fractal noise has been done extensively in video games for multiple decades. While you can definitely get a mountainous look for your terrain, getting a proper valley for instance might be more difficult, or even impossible if you limit yourself to <strong>simple, uniform fractal noise</strong>. We could list some of the limitations of the above example, including:</p>
 <ul>
 <li>
 <p>No valleys: you either get a very mountainous terrain or a very flat terrain, but having a mix of both is difficult.</p>
 </li>
 <li>
-<p>You may notice the same kinds of pattern everywhere. This is one interesting property of noise function: self-similarity. In our case, it's also a limitation.</p>
+<p>You may notice the same kinds of pattern everywhere. This is one interesting property of noise function: <em>self-similarity</em>. In our case, it's also a limitation.</p>
 </li>
 <li>
-<p>Mountains are only just isolated peaks, lacking ridge structures typically found in real mountain ranges.</p>
+<p>Mountains created with noise are only just isolated peaks, and lacks the ridge structure typically found in real mountain ranges.</p>
 </li>
 </ul>
 <p>In the end, it seems that noise is only capable of generating small bumps. Can we alleviate this issue somehow?</p>
-<h2 id="multifractals">Multifractals</h2>
-<p>Some of these problems can be partially solved by using a more advanced technique called a <strong>multifractal noise</strong>. The core idea is to modulate the amplitude of successive octave based on previous iterations. This way, areas with a low amplitude will never get too spiky, but instead remain relatively flat, and the opposite will happen for mountainous areas. The example below shows different types of noise for generating terrain shapes, including classical perlin and ridge noise, as well as their multifractal variants. Play around with the different settings to get a feel of how noise behaves.</p>
+<h2 id="multifractals-to-the-rescue">Multifractals to the rescue?</h2>
+<p>Some of these problems can be partially solved by using a more advanced technique called a <strong>multifractal noise</strong>. The core idea is to modulate the amplitude <span class="arithmatex">\(a\)</span> of successive octave based on the noise value of previous iterations. This way areas with a low amplitude at iteration <span class="arithmatex">\(k\)</span> will get a noise value of lower amplitude at iteration <span class="arithmatex">\(k+1\)</span>, and the opposite will happen for mountainous areas. </p>
+<p>Let <span class="arithmatex">\(t_k\)</span> denote the fractal noise at iteration <span class="arithmatex">\(k\)</span>, this gives us the following maths and code:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Math</label><label for="__tabbed_2_2">Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="arithmatex">\(t_{k+1}(\mathbf{p}) = t_k(\mathbf{p}) + \alpha(t_k(\mathbf{p}))~a_{k+1}~n(\mathbf{p}f_i) \qquad t_0(\mathbf{p}) = a_0~n(\mathbf{p}f_i)\)</span></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm">* Weight function for multifractal perlin noise.</span>
+<span class="cm">* t accumulated turbulence value so far.</span>
+<span class="cm">* o current iteration number</span>
+<span class="cm">*/</span>
+<span class="n">function</span><span class="w"> </span><span class="nf">alpha</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">o</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">let</span><span class="w"> </span><span class="n">frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">let</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.75</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">let</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">o</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">frequency</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="n">pow</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">H</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm">* Multifractal perlin noise.</span>
+<span class="cm">* p: 2D point with x and y members.</span>
+<span class="cm">* a0 is the amplitude of the first octave.</span>
+<span class="cm">* f0 is the frequency of the first octave.</span>
+<span class="cm">*/</span>
+<span class="n">function</span><span class="w"> </span><span class="nf">computeElevation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">var</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">var</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">var</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">o</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">alpha</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">perlin</span><span class="p">.</span><span class="n">noise</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">a0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The function <span class="arithmatex">\(\alpha : \mathbb{R} \rightarrow \mathbb{R}\)</span> computes the weight of the next octave <span class="arithmatex">\(k\)</span> based on the total accumulated value so far <span class="arithmatex">\(t_k\)</span>.</p>
+<p>Below is an example that shows different types of noise for generating terrain shapes, including classical perlin and ridge noise, as well as their multifractal variants. Play around with the different settings to get a feel of how noise behaves.</p>
 <div class="threeJsCanvas" id="NoiseForTerrain"></div>
 <script type="module" src="../../../js/terrain/procedural/noiseForTerrains/example-noiseForTerrain.js"> </script>
 
-<p>Multifractals still do not solve everything. However, the idea of using procedural functions to generate shapes is interesting and can be pushed further: what if we could create function to represent dunes, cliffs, mountains, mountain ridges, rivers, and more? This will be the subject of the following chapters, where we will try to design a small library of primitives and operators to create more visually interesting and varied terrains.</p>
+<p>Multifractals still do not solve everything. However, the idea of using procedural functions to generate shapes is interesting and can be pushed further: what if we could create function to represent <strong>dunes, cliffs, mountains, mountain ridges, rivers, and more?</strong> </p>
+<p>This will be the subject of the following chapters, where we design a library of procedural primitives and operators to create more visually interesting and varied terrains.</p>
 <h2 id="going-further">Going further</h2>
-<p>If you want to go further, you may try to use other kinds of noise to create terrains, for instance <a href="https://github.com/zsoltc/worley-noise">Worley (or cellular) noise</a>, its fractal variants, or try to model different effects such as <a href="https://iquilezles.org/articles/warp/">domain warp</a>. </p>
+<p>If you want to go further, you may try to use other kinds of noise to create terrains, for instance <a href="https://github.com/zsoltc/worley-noise">Worley (or cellular) noise</a>, its fractal variants, Billowy noise, or try to model different effects such as <a href="https://iquilezles.org/articles/warp/">domain warp</a>. </p>
 <h2 id="associated-files">Associated files</h2>
 <p>Files associated with this page are available <a href="https://github.com/aparis69/LearnProceduralGeneration/tree/main/docs/js/terrain/intro">here</a>.</p>
 

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import { precomputeSpectralWeights, fBm } from 'js/libs/noiselib.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 state = {
 	scene: null,
@@ -18,10 +19,8 @@ state = {
 	canvasName: "NoiseTerrainBasic",
 }
 stateGUI = {
-	NoiseType: 0,
-	Frequency: 0.35,
+	Frequency: 0.65,
 	Amplitude: 1.3,
-	Octave: 6
 }
 var state;
 var stateGUI;
@@ -30,7 +29,7 @@ function addNoiseToVertices(vertices) {
 	for (let i = 0; i < vertices.length; i += 3) {
 		let x = vertices[i];
 		let y = vertices[i + 2];
-		vertices[i + 1] = state.perlin.noise(x, y, 0.0); 
+		vertices[i + 1] = fBm(x, y, state.perlin, stateGUI.Amplitude, stateGUI.Frequency, 1, 0); 
 	}
 }
 
@@ -47,8 +46,7 @@ function initScene() {
 	document.getElementById(state.canvasName).appendChild(state.renderer.domElement);
 
 	// Background and ground mesh
-	state.scene.background = new THREE.Color( 0xa0a0a0 );
-	state.scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
+	state.scene.background = new THREE.Color().setRGB(1.0, 1.0, 1.0);
 
 	const mesh = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshPhongMaterial());
 	mesh.position.y = -2.0;
@@ -79,6 +77,14 @@ function initScene() {
 }
 
 function initGUI() {
+	const gui = new GUI({autoPlace: false, width: 200})
+	gui.domElement.id = 'gui';
+	var customContainer = document.getElementById(state.canvasName);
+	customContainer.appendChild(gui.domElement);
+
+	// Controls
+	gui.add(stateGUI, 'Frequency', 0, 1).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'Amplitude', 0.1, 2.0).onChange(value => { initTerrain(); });
 }
 
 function initTerrain(noiseType) {
@@ -91,7 +97,6 @@ function initTerrain(noiseType) {
 	// Create object in scene
 	state.scene.remove(state.object);
 	state.object = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial( { color: 0xcfbfae, side: THREE.DoubleSide} ));
-	state.object.castShadow = true;
 	state.scene.add(state.object);
 }
 
