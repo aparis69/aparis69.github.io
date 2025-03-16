@@ -16,60 +16,48 @@ state = {
 	terrainSize: 10,
 	perlin: null,
 	spectralWeights: null,
-	canvasName: "MetaPrimitive",
+	canvasName: "DuneAndMountains",
 }
 stateGUI = {
-	PrimitiveType: 1,
-
-	Radius: 3.5,
-	Frequency: 2.0,
-	Amplitude: 0.75,
+	DuneFrequency: 3.5,
+	DuneAmplitude: 0.25,
+	MountainFrequency: 0.5,
+	MountainAmplitude: 1.8,
+	MountainRadius: 4.5,
 }
 var state;
 var stateGUI;
 
-function dunePrimitive(x, y) {
-	let n = fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
-	let h = stateGUI.Amplitude * (1.0 - Math.abs(Math.cos((x + n) * stateGUI.Frequency)));
-	return h;
-}
-
-function sharpFalloff(d) {
-	if (d > 3.15 * stateGUI.Radius)
+function skeleton(x, y) {
+	let d = x * x + y * y;
+	if (d > stateGUI.MountainRadius)
 		return 0.0;
-	return stateGUI.Amplitude * (1.0 - Math.abs(Math.cos(d / stateGUI.Radius)));
-}
-
-function craterPrimitive(x, y) {
-	let d = (x * x + y * y);
-	let w = sharpFalloff(d);
-	let n = fBm(x, y, state.perlin, 0.8, 1.5, 2, 0) * w; 
-	return sharpFalloff(d + n);
+	else
+		return 1 - (d / stateGUI.MountainRadius);
 }
 
 function mountainPrimitive(x, y) {
-	let d = (x * x + y * y);
-	let n = Math.abs(fBm(x, y, state.perlin, 1.8, 0.5, 5, 1));
-	let s = falloff(d, stateGUI.Radius * stateGUI.Radius);
+	let n = Math.abs(fBm(x, y, state.perlin, stateGUI.MountainAmplitude, stateGUI.MountainFrequency, 5, 1));
+	let s = skeleton(x, y);
 	return n * s;
 }
 
-function cliffPrimitive(x, y) {
-	return 0;
+function dunePrimitive(x, y) {
+	let n = fBm(x, y, state.perlin, 0.5, 0.5, 2, 0); 
+	return stateGUI.DuneAmplitude * (1.0 - Math.abs(Math.cos((x + n) * stateGUI.DuneFrequency)));
+}
+
+function computeElevation(x, y) {
+	let h1 = dunePrimitive(x, y);
+	let h2 = mountainPrimitive(x, y);
+	return h1 + h2;
 }
 
 function computeElevationForVertices(vertices) {
 	for (let i = 0; i < vertices.length; i += 3) {
 		let x = vertices[i];
 		let y = vertices[i + 2];
-		if (stateGUI.PrimitiveType == 0)
-			vertices[i + 1] = dunePrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 1)
-			vertices[i + 1] = craterPrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 2)
-			vertices[i + 1] = mountainPrimitive(x, y);
-		else if (stateGUI.PrimitiveType == 3)
-			vertices[i + 1] = cliffPrimitive(x, y);
+		vertices[i + 1] = computeElevation(x, y);
 	}
 }
 
@@ -86,8 +74,7 @@ function initScene() {
 	document.getElementById(state.canvasName).appendChild(state.renderer.domElement);
 
 	// Background and ground mesh
-	state.scene.background = new THREE.Color( 0xa0a0a0 );
-	//state.scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
+	state.scene.background = new THREE.Color().setRGB(1.0, 1.0, 1.0);
 
 	const mesh = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshPhongMaterial());
 	mesh.position.y = -2.0;
@@ -123,18 +110,12 @@ function initGUI() {
 	var customContainer = document.getElementById(state.canvasName);
 	customContainer.appendChild(gui.domElement);
 
-	gui.add(stateGUI, 'PrimitiveType', 
-	{ 
-		'Dune': 0, 
-		'Crater': 1, 
-		'Mountain': 2, 
-		'Cliff': 3, 
-	}).onChange(value => { stateGUI.PrimitiveType = value; initTerrain(); });
-	
 	// Controls
-	gui.add(stateGUI, 'Frequency', 1, 5).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Amplitude', 0.1, 1.0).onChange(value => { initTerrain(); });
-	gui.add(stateGUI, 'Radius', 2.0, 7.0).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'DuneFrequency', 1, 5).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'DuneAmplitude', 0.1, 0.5).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'MountainFrequency', 0.1, 3).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'MountainAmplitude', 0.1, 3.0).onChange(value => { initTerrain(); });
+	gui.add(stateGUI, 'MountainRadius', 1.0, 8.0).onChange(value => { initTerrain(); });
 }
 
 function initTerrain() {
@@ -147,7 +128,6 @@ function initTerrain() {
 	// Create object in scene
 	state.scene.remove(state.object);
 	state.object = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial( { color: 0xcfbfae, side: THREE.DoubleSide} ));
-	state.object.castShadow = true;
 	state.scene.add(state.object);
 }
 
