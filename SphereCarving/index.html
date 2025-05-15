@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Sphere Carving: Bounding Volumes for Signed Distance Fields</title>
+		<link rel="canonical" href="https://aparis69.github.io/SphereCarvingWebPage" />
+		<link rel="stylesheet" href="normalize.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body class="h-entry">
+		<h1 class="p-name"><a class="u-url" href="https://aparis69.github.io/SphereCarvingWebPage">Sphere Carving: Bounding Volumes for Signed Distance Fields</a></h1>
+
+		<div class="s-venue">
+			ACM Transaction on Graphics (SIGGRAPH'<time class="dt-published" datetime="2025-08-01 12:00:00">25</time>)
+		</div>
+
+		<div class="s-authorlist">
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="https://h-schott.github.io/">Hugo Schott</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://www.univ-lyon1.fr/">Université de Lyon</a></li>
+					<li><a class="p-org h-card" href="https://research.adobe.com">Adobe</a></li>
+				</ul>
+			</div>
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="https://research.adobe.com/person/theo-thonat/">Theo Thonat</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://research.adobe.com/">Adobe</a></li>
+				</ul>
+			</div>
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="">Thibaud Lambert</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://research.adobe.com/">Adobe</a></li>
+				</ul>
+			</div>
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="https://perso.liris.cnrs.fr/eguerin/new/">Eric Guérin</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://www.univ-lyon1.fr/">Université de Lyon</a></li>
+				</ul>
+			</div>
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="https://perso.liris.cnrs.fr/eric.galin/">Eric Galin</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://www.univ-lyon1.fr/">Université de Lyon</a></li>
+				</ul>
+			</div>
+			<div class="p-author h-card">
+				<a class="p-name u-url" href="https://aparis69.github.io/">Axel Paris</a>
+				<ul>
+					<li><a class="p-org h-card" href="https://research.adobe.com/">Adobe</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<main>
+			<figure>
+				<img alt="Teaser image" src="images/teaser.jpg" />
+				<figcaption>Given an input black box conservative signed distance field, we automatically generate a tight bounding volume around the implicitly defined object, agnostic of its representation. Starting from a large initial volume around the object, we iteratively carve the space using spheres defined by the signed distance field. The bounding volume is then constructed as an assembly of convex primitives (half-spaces, ellipsoids) and allows for faster field function queries.</figcaption>
+			</figure>
+
+			<ul class="s-download-links">
+				<li><a href="./documents/paper.pdf">Paper</a></li>
+				<li><a href="./documents/video.mp4">Video</a></li>
+			</ul>
+
+			<section>
+				<h2>Abstract</h2>
+				<p class="p-summary s-content">
+					We introduce Sphere Carving, a novel method for automatically computing bounding volumes that closely bound a procedurally defined implicit surface. Starting from an initial bounding volume located far from the object, we iteratively approach the surface by leveraging the signed distance function information. Field function queries define a set of empty spheres, from which we extract intersection points that are used to compute a bounding volume. Our method is agnostic of the function representation and  only requires a conservative signed distance field as input. This encompasses a large set of procedurally defined implicit surface models such as exact or Lipschitz functions, BlobTrees, or even neural representations. Sphere Carving is conceptually simple, independent of the function representation, requires a small number of function queries to create bounding volumes, and accelerates queries in Sphere Tracing and polygonization.
+				</p>
+			</section>
+
+			<section>
+				<h2>Workflow</h2>
+				<figure>
+					<img alt="Input" src="images/input.jpg" class="small-figure" />
+					<figcaption>Visualization of the spheres carving the initial volume through several iteration of Sphere Carving. The carved volume converges to the model even for complex geometric shapes with a non-zero genus and several components.</figcaption>
+				</figure>
+				<br/>
+				<figure>
+					<img alt="Pipeline" src="images/pipeline.jpg" />
+					<figcaption>Given a conservative signed distance function f and a volume $V_0$, Sphere Carving progressively carves spheres $S$ around the object while maintaining a point set $P$ defined as the trilateration of $S$. Next, we construct bounding volumes fitting the object using an approximate convex decomposition algorithm over $P$. The resulting set of convex shapes is then used to define an accelerated function $\tilde{f}$.</figcaption>
+				</figure>
+				<br/>
+				<figure>
+					<img alt="Results" src="images/results.jpg"/>
+					<figcaption>Bounding volumes obtained by Sphere Carving on a variety of quasi-exact and conservative signed distance field.</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h2>Citation</h2>
+				<p class="s-citation">@article{schott2025,
+	title = {Sphere Carving: Bounding Volumes For Signed Distance Fields},
+	author = {Schott, Hugo and Thonat, Theo and Lambert, Thibaud and Guérin, Eric and Galin, Eric and Paris, Axel},
+	journal = {ACM Transaction on Graphics (SIGGRAPH '25 Conference Proceedings)},
+	year = {2025},
+	publisher = {ACM},
+	doi = {},
+	number = {},
+	volume = {}
+}</p>
+			</section>
+
+			<footer>&nbsp;</footer>
+		</main>
+
+		<!-- MathJax configuration -->
+		<script>
+		MathJax = {
+			tex: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+				processEscapes: true
+			}
+		};
+		</script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</body>
+</html>
